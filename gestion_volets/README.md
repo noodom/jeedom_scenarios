@@ -3,6 +3,18 @@
 Ces scénarios permettent d'automatiser l'ouverture et la fermeture des volets.
 Les captures des scénarios sont visibles ci-dessous.
 
+## Templates des scénarios
+
+Les templates scénarios sont disponibles ici :
+
+- [programation volets](./templates/programmation volets.json)
+
+- [ask volets](./templates/ask volets.json)
+
+- [action sur volets](./templates/programmation volets.json)
+
+- [test volets](./templates/test volets.json)
+
 ## Description des scénarios suivants de gestion des volets
 
 - Le scénario "programmation volets" permet de déclarer la liste des heures d'ouverture et de fermeture des volets
