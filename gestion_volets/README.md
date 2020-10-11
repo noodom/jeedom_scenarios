@@ -62,6 +62,13 @@ Les templates scénarios sont disponibles ici :
 - Paramétrage de la liste des actions dans le scénario "action sur volets"
   - C'est dans ce scénario qu'on ajoute la liste des actions à effectuer pour l'ouverture et la fermeture des volets (au niveau du SI pour la fermeture et du SINON pour l'ouverture)
 
+## Améliorations possibles
+
+- Gérer les horaires du scénario "programmation volets" par variables et remplacer les valeurs dans le scénario par le nom des variables
+- Gérer les horaires du scénario "programmation volets" par calendrier (plugin Agenda par exemple) et déclencher le scénario sur les occurences de ces événements
+  - Pour chaque heure de programmation, définir un événement dans le calendrier avec un rythme à préciser (ex : tous les jours à 9h, en semaine)
+- Mettre les variables PARAMETRES PERSONNALISES du scénario dans un virtuel pour pouvoir les modifier depuis un Design par exemple
+
 ## Création des scénarios
 
 ### Scénario programmation volets
