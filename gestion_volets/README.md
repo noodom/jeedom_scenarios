@@ -7,13 +7,13 @@ Les captures des scénarios sont visibles ci-dessous.
 
 Les templates scénarios sont disponibles ici :
 
-- [programation volets](./templates/programmation volets.json)
+- [programmation volets](./templates/programmation_volets.json)
 
-- [ask volets](./templates/ask volets.json)
+- [ask volets](./templates/ask_volets.json)
 
-- [action sur volets](./templates/programmation volets.json)
+- [action sur volets](./templates/programmation_volets.json)
 
-- [test volets](./templates/test volets.json)
+- [test volets](./templates/test_volets.json)
 
 ## Description des scénarios suivants de gestion des volets
 
