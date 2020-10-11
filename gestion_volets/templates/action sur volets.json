@@ -1,0 +1,225 @@
+{
+    "name": "action sur volets",
+    "isActive": "1",
+    "group": "Gestion des Volets",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        ""
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "Actions effectuées pour l'ouverture ou la fermeture des volets\nUtilisation du tag action (ouvrir ou fermer) pour le choix des actions effectuées",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0"
+    },
+    "type": "expert",
+    "state": "stop",
+    "elements": [
+        {
+            "name": null,
+            "type": "code",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "code",
+                    "subtype": "action",
+                    "options": {
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "code",
+                            "subtype": null,
+                            "expression": "\/\/ Action par défaut (action effectuée si le tag action est absent) : \"ouvrir\" ou \"fermer\"\n$actionParDefaut = \"fermer\";\n\n\/\/ Récupération des tags passés en paramètre.\n$tags = $scenario->getTags();\n\n\/\/ Vérification de l'existence des tags.\n\/\/ Si un tag n'existe pas, on le crée avec la valeur souhaitée.\n(empty($tags['#action#'])) ? $tags['#action#'] = $actionParDefaut : null;\n\n\/\/ MAJ des tags avant exécution de la suite du scénario.\n$scenario->setTags($tags);",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": null,
+            "type": "if",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "if",
+                    "subtype": "condition",
+                    "options": {
+                        "enable": "1",
+                        "allowRepeatCondition": "0"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "condition",
+                            "subtype": null,
+                            "expression": "tag(action) == \"fermer\"",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "type": "then",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "1",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": null,
+                            "expression": "1014",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": null,
+                                "type": "comment",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": null,
+                                        "type": "comment",
+                                        "subtype": "comment",
+                                        "options": [],
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "comment",
+                                                "subtype": null,
+                                                "expression": "Actions sur fermeture des volets",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Notifications][Discord - Tests][Envoi message]#",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "message": "Lancement actions fermeture des volets"
+                            },
+                            "order": "1"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Cuisine][Volets][Descendre]#",
+                            "options": {
+                                "enable": "0",
+                                "background": "0"
+                            },
+                            "order": "2"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Salon][Volets][Descendre]#",
+                            "options": {
+                                "enable": "0",
+                                "background": "0"
+                            },
+                            "order": "3"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "type": "else",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "2",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": null,
+                            "expression": "1015",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": null,
+                                "type": "comment",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": null,
+                                        "type": "comment",
+                                        "subtype": "comment",
+                                        "options": [],
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "comment",
+                                                "subtype": null,
+                                                "expression": "Actions sur ouverture des volets",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Notifications][Discord - Tests][Envoi message]#",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "message": "Lancement actions ouverture des volets"
+                            },
+                            "order": "1"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Cuisine][Volets][Monter]#",
+                            "options": {
+                                "enable": "1",
+                                "background": "0"
+                            },
+                            "order": "2"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Salon][Volets][Monter]#",
+                            "options": {
+                                "enable": "0",
+                                "background": "0"
+                            },
+                            "order": "3"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
