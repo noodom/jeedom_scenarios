@@ -1,0 +1,86 @@
+{
+    "name": "Lancement attestation couvre feu",
+    "isActive": "1",
+    "group": "Attestation numérique",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        ""
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "Appelle le scénario \"Génération Attestation numérique Couvre-feu\" \n=> Envoi d'un message Discord (Destination à adapter selon son choix dans le scénario) avec le lien pour générer l'attestation numérique de couvre-feu avec le motif\n\n- Passer ses coordonnées avec les paramètres suivants : nom, prenom, dateNaissance, lieuNaissance, adresse, codePostal, ville\n- Passer le motif avec le paramètre motifAttestation avec une des valeurs suivantes : travail, famille, animaux, transits, sante, handicap, missions",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0"
+    },
+    "type": "expert",
+    "state": "stop",
+    "elements": [
+        {
+            "name": null,
+            "type": "comment",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "comment",
+                    "subtype": "comment",
+                    "options": [],
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "comment",
+                            "subtype": null,
+                            "expression": "Appelle le scénario \"Génération Attestation numérique Couvre-feu\" => Envoi d'un message Discord (Destination à adapter selon son choix dans le scénario) avec le lien pour générer l'attestation numérique de couvre-feu avec le motif\n- Passer ses coordonnées avec les paramètres suivants : nom, prenom, dateNaissance, lieuNaissance, adresse, codePostal, ville\n- Passer le motif avec le paramètre motifAttestation avec une des valeurs suivantes : travail, famille, animaux, transits, sante, handicap, missions",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": null,
+            "type": "action",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "action",
+                    "subtype": "action",
+                    "options": {
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "scenario",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "scenario_id": "303",
+                                "action": "start",
+                                "tags": "nom=\"mon nom\" prenom=\"mon prénom\" dateNaissance=\"01\/02\/2000\" lieuNaissance=\"mon lieu de naissance\" adresse=\"mon adresse\" codePostal=\"12345\" ville=\"ma ville\" motifAttestation=\"sante\""
+                            },
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
