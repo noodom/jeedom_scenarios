@@ -20,6 +20,16 @@ Les templates scénarios sont disponibles ici :
 
 ### Captures des scénarios
 
+Génération Attestation numérique Couvre-feu
+
 ![Onglet Général](./doc/images/generation_attestation_numerique_couvre_feu.png)
 
+Lancement attestation couvre feu
+
 ![Onglet Scénario](./doc/images/lancement_attestation_couvre_feu.png)
+
+Message généré sur Discord
+
+![Message Discord](./doc/images/messageDiscord.png)
+
+
