@@ -34,4 +34,4 @@ Message généré sur Discord
 
 Attestation numérique générée
 
-![Attestation numérique](declaration_de_deplacement_attestation.png)
+![Attestation numérique](./doc/images/declaration_de_deplacement_attestation.png)
