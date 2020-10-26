@@ -30,6 +30,6 @@ Lancement attestation couvre feu
 
 Message généré sur Discord
 
-![Message Discord](./doc/images/messageDiscord.png)
+![Message Discord](./doc/images/message_discord.png)
 
 
