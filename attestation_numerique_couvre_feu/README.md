@@ -12,7 +12,7 @@ Les templates scénarios sont disponibles ici :
   
   Il attend en paramètres :
   - les coordonnées de l'utilisateur : nom, prenom, dateNaissance, lieuNaissance, adresse, codePostal, ville
-  - et le motif de l'attestation : motifAttestation
+  - et le motif de l'attestation : motifAttestation (valeurs possibles : travail, famille, animaux, transits, sante, handicap, missions)
 
 - Le scénario "Lancement attestation couvre feu" appelle le scénario précédent "Génération Attestation numérique Couvre-feu"
   
