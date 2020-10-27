@@ -2,9 +2,9 @@
 
 Les templates scénarios sont disponibles ici :
 
-- [Génération Attestation numérique Couvre-feu](./templates/generation_attestation_numerique_couvre_feu.json)
+- [Génération Attestation numérique Couvre-feu](./templates/generation_attestation.json)
 
-- [Lancement attestation couvre feu](./templates/lancement_attestation_couvre_feu.json)
+- [Lancement attestation couvre feu](./templates/lancement_attestation.json)
 
 ## Description des scénarios
 
