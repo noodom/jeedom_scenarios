@@ -44,7 +44,7 @@ Message généré sur Discord
 
 ## Exemple d'exécution avec Discord
 
-![Attestation avec Discord](./doc/images/exempleDiscordAsk.png)
+![Attestation avec Discord](./doc/images/exempleDiscordAsk.jpg)
 
 Attestation numérique générée
 
