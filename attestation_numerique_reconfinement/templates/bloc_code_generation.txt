@@ -1,0 +1,37 @@
+// Encodage des paramètres de l'url
+function encodeTag($string) {
+    $entities = array('+', 'é', 'è', 'à', 'ç', 'ù', '"', '%22', '/');
+    $replacements = array('%20', '%C3%A9', '%C3%A8', '%C3%A0', '%C3%A7', '%C3%B9', '%C3%AB', '', '', '%2F');
+    return str_replace($entities, $replacements, urlencode($string));
+}
+
+// Récupération des tags passés en paramètres.
+$tags = $scenario->getTags();
+
+// Vérification de l'existence des tags.
+// Si ces derniers n'existent pas, on les crée avec une valeur par défaut.
+(empty($tags['#nom#'])) ? $tags['#nom#'] = "pas de Nom" : null;
+(empty($tags['#prenom#'])) ? $tags['#prenom#'] = "pas de Prénom" : null;
+(empty($tags['#dateNaissance#'])) ? $tags['#dateNaissance#'] = "01/01/1919" : null;
+(empty($tags['#lieuNaissance#'])) ? $tags['#lieuNaissance#'] = "pas de lieu de naissance" : null;
+(empty($tags['#adresse#'])) ? $tags['#adresse#'] = "pas d'adresse" : null;
+(empty($tags['#codePostal#'])) ? $tags['#codePostal#'] = "12345" : null;
+(empty($tags['#ville#'])) ? $tags['#ville#'] = "pas de Ville" : null;
+(empty($tags['#motifAttestation#'])) ? $tags['#motifAttestation#'] = "travail" : null;
+
+// Formatage des tags
+$nom = encodeTag($tags['#nom#']);
+$prenom = encodeTag($tags['#prenom#']);
+$date_naissance = encodeTag($tags['#dateNaissance#']);
+$lieu_naissance= encodeTag($tags['#lieuNaissance#']);
+$adresse = encodeTag($tags['#adresse#']);
+$scenario->setLog('### codePostal : '.$tags['#codePostal#']);
+$code_postal = encodeTag($tags['#codePostal#']);
+$ville = encodeTag($tags['#ville#']);
+$motif = encodeTag($tags['#motifAttestation#']);
+
+// Génération de l'url du QR Code
+$tags['#urlAttestation#']="https://covid.luko.eu/generate.html#f=$prenom&l=$nom&b=$date_naissance&p=$lieu_naissance&a=$adresse&c=$ville&z=$code_postal&r=$motif";
+
+// MAJ des tags avant exécution de la suite du scénario.
+$scenario->setTags($tags);
