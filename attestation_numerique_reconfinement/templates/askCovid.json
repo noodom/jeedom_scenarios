@@ -1,0 +1,321 @@
+{
+    "name": "ask covid",
+    "isActive": "1",
+    "group": "",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        "#[Notifications][Discord - Alertes][Dernier message]#"
+    ],
+    "timeout": "0",
+    "object_id": null,
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0",
+        "timeline::folder": ""
+    },
+    "state": "stop",
+    "elements": [
+        {
+            "name": "",
+            "type": "if",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": "",
+                    "type": "if",
+                    "subtype": "condition",
+                    "options": {
+                        "enable": "1",
+                        "allowRepeatCondition": "0",
+                        "collapse": "0"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "condition",
+                            "subtype": "",
+                            "expression": "trigger(#[Notifications][Discord - Alertes][Dernier message]#) == 1",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "type": "then",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "1",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": "",
+                            "expression": "971",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": "",
+                                "type": "if",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": "",
+                                        "type": "if",
+                                        "subtype": "condition",
+                                        "options": {
+                                            "enable": "1",
+                                            "allowRepeatCondition": "0",
+                                            "collapse": "0"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "condition",
+                                                "subtype": "",
+                                                "expression": "strtolower(#[Notifications][Discord - Alertes][Dernier message]#) == \"attestation\" OU strtolower(#[Notifications][Discord - Alertes][Dernier message]#) == \"sortie\" OU strtolower(#[Notifications][Discord - Alertes][Dernier message]#) == \"covid\"",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "",
+                                        "type": "then",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "1",
+                                        "expressions": [
+                                            {
+                                                "type": "action",
+                                                "subtype": "",
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Pour qui souhaitez-vous une attestation de déplacement ?",
+                                                    "answer": "Hugo;Camille",
+                                                    "variable": "covid19_qui",
+                                                    "timeout": "120",
+                                                    "cmd": "#[Notifications][Discord - Alertes][Envoi message évolué]#"
+                                                },
+                                                "order": "0"
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": "",
+                                                "expression": "972",
+                                                "options": [],
+                                                "order": "1",
+                                                "element": {
+                                                    "name": "",
+                                                    "type": "comment",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": "",
+                                                            "type": "comment",
+                                                            "subtype": "comment",
+                                                            "options": {
+                                                                "collapse": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "comment",
+                                                                    "subtype": "",
+                                                                    "expression": "motif : travail;achats;sante;famille;handicap;sport_animaux;convocation;missions;enfants",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": "",
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Quel est le motif de sortie ?",
+                                                    "answer": "travail;achats;sante;sport_animaux;enfants",
+                                                    "variable": "covid19_motif",
+                                                    "timeout": "120",
+                                                    "cmd": "#[Notifications][Discord - Alertes][Envoi message évolué]#"
+                                                },
+                                                "order": "2"
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": "",
+                                                "expression": "973",
+                                                "options": [],
+                                                "order": "3",
+                                                "element": {
+                                                    "name": "",
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": "",
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0",
+                                                                "collapse": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": "",
+                                                                    "expression": "strtolower(variable(covid19_qui)) == \"hugo\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": "",
+                                                                    "expression": "scenario",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "scenario_id": "261",
+                                                                        "action": "start",
+                                                                        "tags": "nom=\"Dupont\" prenom=\"Hugo\" dateNaissance=\"20\/10\/1990\" lieuNaissance=\"Paris\" adresse=\"1 avenue Montaigne\" codePostal=\"75000\" ville=\"Paris\" motifAttestation=variable(covid19_motif)"
+                                                                    },
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": []
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": "",
+                                                "expression": "974",
+                                                "options": [],
+                                                "order": "4",
+                                                "element": {
+                                                    "name": "",
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": "",
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0",
+                                                                "collapse": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": "",
+                                                                    "expression": "strtolower(variable(covid19_qui)) == \"camille\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": "",
+                                                                    "expression": "scenario",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "scenario_id": "261",
+                                                                        "action": "start",
+                                                                        "tags": "nom=\"Dupont\" prenom=\"Camille\" dateNaissance=\"12\/05\/1988\" lieuNaissance=\"Paris\" adresse=\"1 avenue Montaigne\"\" codePostal=\"75000\" ville=\"Paris\" motifAttestation=variable(covid19_motif)"
+                                                                    },
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": []
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "",
+                                        "type": "else",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "2",
+                                        "expressions": []
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "type": "else",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "2",
+                    "expressions": []
+                }
+            ]
+        }
+    ]
+}
