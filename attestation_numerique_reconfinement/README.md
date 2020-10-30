@@ -6,6 +6,8 @@ Les templates scénarios sont disponibles ici :
 
 - [Lancement Attestation Reconfinement](./templates/lancement_attestation.json)
 
+- [Lancement Attestation Reconfinement avec Discord](./templates/askCovid.json)
+
 ## Description des scénarios
 
 - Le scénario "Génération Attestation numérique Reconfinement" permet d'envoyer un message par Discord (avec la possibilité de remplacer par Telegram, Mail, etc..)
@@ -17,6 +19,10 @@ Les templates scénarios sont disponibles ici :
 - Le scénario "Lancement Attestation Reconfinement" appelle le scénario précédent "Génération Attestation numérique Reconfinement"
   
   Il suffit de passer les paramètres attendus.
+  
+- Le scénario "ask covid" permet de faire une demande d'attestation numérique en passant par un questionnaire (Pour qui ? Quel motif ?)
+  
+  Pour l'exécuter, il suffit d'écrire le mot-clé "covid" depuis le channel Discord paramétré dans le scénario, puis de sélectionner la personne concernée et ensuite le motif
 
 ### Captures des scénarios
 
@@ -28,9 +34,17 @@ Lancement attestation Reconfinement
 
 ![Onglet Scénario](./doc/images/lancement_attestation_reconfinement.png)
 
+Lancement attestation Reconfinement par Discord
+
+![Attestation avec Discord](./doc/images/askCovid.png)
+
 Message généré sur Discord
 
 ![Message Discord](./doc/images/message_discord.png)
+
+## Exemple d'exécution avec Discord
+
+![Attestation avec Discord](./doc/images/exempleDiscordAsk.png)
 
 Attestation numérique générée
 
