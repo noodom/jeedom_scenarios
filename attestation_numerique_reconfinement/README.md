@@ -10,6 +10,10 @@ Les templates scénarios sont disponibles ici :
 
 ## Description des scénarios
 
+IMPORTANT : Les scénarios génèrent un lien pour l'attestation numérique.
+La date et l'heure sur l'attestation seront celles correspondant au moment du clic sur le lien !
+Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour générer l'attestation et non pas attendre le contrôle (sinon la date de l'attestation sera l' heure du contrôle..) !
+
 - Le scénario "Génération Attestation numérique Reconfinement" permet d'envoyer un message par Discord (avec la possibilité de remplacer par Telegram, Mail, etc..)
   
   Il attend en paramètres :
