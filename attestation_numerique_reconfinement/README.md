@@ -38,6 +38,7 @@ Lancement attestation Reconfinement par Discord
 
 - Modifier les commandes Jeedom (cadres en rouge)
 - Modifier les renseignements personnels (cadres en vert)
+- Il est possible de remplacer Discord par Telegram ou autres outils (méthode Ask habituelle) pour les demandes 
 
 ![Attestation avec Discord](./doc/images/askCovid.png)
 
