@@ -36,6 +36,9 @@ Lancement attestation Reconfinement
 
 Lancement attestation Reconfinement par Discord
 
+- Modifier les commandes Jeedom (cadres en rouge)
+- Modifier les renseignements personnels (cadres en vert)
+
 ![Attestation avec Discord](./doc/images/askCovid.png)
 
 Message généré sur Discord
