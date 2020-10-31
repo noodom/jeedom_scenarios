@@ -8,6 +8,31 @@ Les templates scénarios sont disponibles ici :
 
 - [Lancement Attestation Reconfinement avec Discord](./templates/askCovid.json)
 
+## Installation
+
+Je vous laisse vérifier les scénarios utiles pour votre installation dans al description des scénarios ci-dessous.
+Le scénario indispensable est le scénario de génération qui crée le lien final de génération de l'attestation numérique.
+
+- Chargement des templates (fichiers json ci-dessus)
+
+  - Aller dans le menu des scénarios
+  - Créer un nouveau scénario avec le nom "Génération Attestation numérique Reconfinement"
+  - Sélectionner le bouton template (en haut à droite)
+  - Depuis la fenêtre des templates des scénarios, sélectionner le bouton "Charger un template" puis sélectionner le fichier json "generation_attestation.json" récupéré ci-dessus
+  - Charger les autres fichiers json de la même façon
+  - Sélectionner le scénario "generation_attestation" dans la liste des Template sous le bouton
+  - Dans les paramètres de scénario, sélectionner l'action correspondante à celle proposée
+  - Sélectionner le bouton "Appliquer" et valider avec le bouton "Ok" => Le scénario est chargé dans le nouveau scénario créé
+  - Sélectionner l'onglet "Scénario" et activer la dernière action qui apparaît grisée par défaut
+  - Sélectionner "Sauvegarder" => Le scénario est créé et prêt
+  
+  - Créer un nouveau scénario à appeler "Lancement attestation Reconfinement" et sélectionner le template correspondant lancement_attestation (comme pour le scénario précédent)
+  - Sélectionner l'onglet "Scénario" et vérifier que le scénario précédent est bien positionné dans la seule action présente, avec les paramètres nécessaires (voir la capture sur cette page).
+  
+  - Créer un nouveau scénario à appeler "ask covid" si vous souhaitez gérer la génération de l'attestation depuis Discord
+  - Répéter les opérations précédentes pour finaliser la création de ce scénario (renseignements des actions, vérification du contenu du scénario, sauvegarde du scénario)
+    
+
 ## Description des scénarios
 
 IMPORTANT : Les scénarios génèrent un lien pour l'attestation numérique.
