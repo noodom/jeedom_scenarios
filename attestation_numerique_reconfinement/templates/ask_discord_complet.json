@@ -1,0 +1,388 @@
+{
+    "name": "ask_discord_complet",
+    "isActive": "1",
+    "group": "Attestation numérique",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        "#[Notifications][attestations][Dernier message]#"
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "Génération de l'attestation numérique de déplacement avec  :\n- demande de la personne concernée\n- demande du motif\n- demande de la date et heure de sortie",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0"
+    },
+    "type": "expert",
+    "state": "stop",
+    "elements": [
+        {
+            "name": null,
+            "type": "action",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "action",
+                    "subtype": "action",
+                    "options": {
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": null,
+                            "expression": "204",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": null,
+                                "type": "if",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": null,
+                                        "type": "if",
+                                        "subtype": "condition",
+                                        "options": {
+                                            "enable": "1",
+                                            "allowRepeatCondition": "0"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "condition",
+                                                "subtype": null,
+                                                "expression": "(trigger(#[Notifications][attestations][Dernier message]#) == 1) && (strtolower(#[Notifications][attestations][Dernier message]#) == \"attestation\" OU strtolower(#[Notifications][attestations][Dernier message]#) == \"sortie\" OU strtolower(#[Notifications][attestations][Dernier message]#) == \"covid\")",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "then",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "1",
+                                        "expressions": [
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Cette attestation est pour qui ?",
+                                                    "answer": "Camille;Hugo",
+                                                    "variable": "destinataire",
+                                                    "timeout": "60",
+                                                    "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                },
+                                                "order": "0"
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "207",
+                                                "options": [],
+                                                "order": "1",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": null,
+                                                                    "expression": "variable(destinataire) == \"Camille\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "tag",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "name": "destinataire",
+                                                                        "value": "Camille_Dupont"
+                                                                    },
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "tag",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "name": "destinataire",
+                                                                        "value": "Hugo_Dupont"
+                                                                    },
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Pour quel motif ?",
+                                                    "answer": "achats;sante;sport_animaux;famille",
+                                                    "variable": "motifAttestation",
+                                                    "timeout": "60",
+                                                    "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                },
+                                                "order": "2"
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Quand devez-vous sortir ?",
+                                                    "answer": "maintenant;saisie de la date",
+                                                    "variable": "choixDate",
+                                                    "timeout": "60",
+                                                    "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                },
+                                                "order": "3"
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "205",
+                                                "options": [],
+                                                "order": "4",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": null,
+                                                                    "expression": "variable(choixDate) == \"maintenant\" OU variable(choixDate) == \"Aucune réponse\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][attestations][Send Attestation]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "user": "tag(destinataire)",
+                                                                        "motif": "variable(motifAttestation)",
+                                                                        "datesortie": "",
+                                                                        "heuresortie": ""
+                                                                    },
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "ask",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "question": "Dans combien de jours ?",
+                                                                        "answer": "0;1;2;3",
+                                                                        "variable": "date_sortie",
+                                                                        "timeout": "60",
+                                                                        "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                                    },
+                                                                    "order": "0"
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "ask",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "question": "Dans combien de minutes ?",
+                                                                        "answer": "0;10;30;60;120",
+                                                                        "variable": "heure_sortie",
+                                                                        "timeout": "60",
+                                                                        "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                                    },
+                                                                    "order": "1"
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "tag",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "name": "date_sortie",
+                                                                        "value": "variable(date_sortie)"
+                                                                    },
+                                                                    "order": "2"
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "tag",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "name": "heure_sortie",
+                                                                        "value": "variable(heure_sortie)"
+                                                                    },
+                                                                    "order": "3"
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "206",
+                                                                    "options": [],
+                                                                    "order": "4",
+                                                                    "element": {
+                                                                        "name": null,
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": null,
+                                                                                        "expression": "date_default_timezone_set('Europe\/Paris');\n\n$tags = $scenario->getTags();\n$heure_sortie = $tags['#heure_sortie#'];\n$date_sortie = $tags['#date_sortie#'];\n\n$scenario->setlog(\"DateSortie : \".$date_sortie);\n$scenario->setlog(\"heure_sortie : \".$heure_sortie);\n  \n$date1 = date(\"Y-m-d\", mktime(date(\"H\"),date(\"i\")+$heure_sortie,date(\"s\"),date(\"m\"),date(\"d\")+$date_sortie, date(\"Y\")));\n$scenario->setlog(\"date1 : \".$date1);\n$tags['#date_sortie#'] = $date1;\n  \n$date2 = date(\"H:i\", mktime(date(\"H\"),date(\"i\")+$heure_sortie,date(\"s\"),date(\"m\"),date(\"d\")+$date_sortie, date(\"Y\")));\n$scenario->setlog(\"date2 : \".$date2);\n$tags['#heure_sortie#'] = $date2;\n\n$scenario->setTags($tags);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][attestations][Send Attestation]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "user": "tag(destinataire)",
+                                                                        "motif": "variable(motifAttestation)",
+                                                                        "datesortie": "tag(date_sortie)",
+                                                                        "heuresortie": "tag(heure_sortie)"
+                                                                    },
+                                                                    "order": "5"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "else",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "2",
+                                        "expressions": []
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
