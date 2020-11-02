@@ -330,7 +330,7 @@
                                                                         "enable": "1",
                                                                         "background": "0",
                                                                         "user": "camille_dupont",
-                                                                        "motif": "#motif#",
+                                                                        "motif": "variable(motifAttestation)",
                                                                         "datesortie": "",
                                                                         "heuresortie": ""
                                                                     },
