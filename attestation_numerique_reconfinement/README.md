@@ -8,6 +8,8 @@ Les templates scénarios sont disponibles ici :
 
 - [Lancement Attestation Reconfinement avec Discord](./templates/askCovid.json)
 
+- [Exemples de scénarios Discord évolués](./templates/ask Covid Discord.json)
+
 ## Installation
 
 Je vous laisse vérifier les scénarios utiles pour votre installation dans al description des scénarios ci-dessous.
