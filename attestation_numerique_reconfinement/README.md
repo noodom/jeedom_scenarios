@@ -54,6 +54,11 @@ Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour 
 - Le scénario "ask covid" permet de faire une demande d'attestation numérique en passant par un questionnaire (Pour qui ? Quel motif ?)
   
   Pour l'exécuter, il suffit d'écrire le mot-clé "covid" depuis le channel Discord paramétré dans le scénario, puis de sélectionner la personne concernée et ensuite le motif
+  
+- Le scénario "ask_covid_discord" génère le lien de l'attestation avec la nouvelle commande Send Attestation du plugin DiscordLink
+
+  Il permet de choisir son jour et son heure de sortie.
+ 
 
 ### Captures des scénarios
 
