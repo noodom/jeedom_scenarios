@@ -60,7 +60,8 @@ Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour 
 - Le scénario "ask_covid_discord" génère le lien de l'attestation avec la nouvelle commande Send Attestation du plugin DiscordLink
 
   Il permet de choisir son jour et son heure de sortie.
- 
+
+- Le scénario "ask_discord_complet" montre l'ensemble des possibilités de la commande d'envoi du lien de l'attestation depuis Discord : choix multi-utilisateurs, choix du motif, choix de la date et heure de sortie
 
 ### Captures des scénarios
 
