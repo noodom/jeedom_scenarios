@@ -14,7 +14,7 @@ Les templates scénarios sont disponibles ici :
 
 ## Installation
 
-Je vous laisse vérifier les scénarios utiles pour votre installation dans al description des scénarios ci-dessous.
+Je vous laisse vérifier les scénarios utiles pour votre installation dans la description des scénarios ci-dessous.
 Le scénario indispensable est le scénario de génération qui crée le lien final de génération de l'attestation numérique.
 
 - Chargement des templates (fichiers json ci-dessus)
