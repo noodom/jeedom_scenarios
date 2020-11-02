@@ -10,6 +10,8 @@ Les templates scénarios sont disponibles ici :
 
 - [Exemples de scénarios Discord évolués](./templates/ask_covid_discord.json)
 
+- [Exemple de scénarios avec choix du destinataire](./templates/ask_discord_complet.json)
+
 ## Installation
 
 Je vous laisse vérifier les scénarios utiles pour votre installation dans al description des scénarios ci-dessous.
