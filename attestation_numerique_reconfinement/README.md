@@ -12,6 +12,8 @@ Les templates scénarios sont disponibles ici :
 
 - [Exemple de scénarios avec choix du destinataire](./templates/ask_discord_complet.json)
 
+- [Génération de l'attestation par Discord configurable](./templates/ask_discord_complet_v2.json)
+
 ## Installation
 
 Je vous laisse vérifier les scénarios utiles pour votre installation dans la description des scénarios ci-dessous.
