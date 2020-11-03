@@ -36,48 +36,6 @@ Je vous laisse vérifier les scénarios utiles pour votre installation dans la d
   
   - Créer un nouveau scénario à appeler "ask covid" si vous souhaitez gérer la génération de l'attestation depuis Discord
   - Répéter les opérations précédentes pour finaliser la création de ce scénario (renseignements des actions, vérification du contenu du scénario, sauvegarde du scénario)
-    
-
-## Description des scénarios
-
-IMPORTANT : Les scénarios génèrent un lien pour l'attestation numérique.
-La date et l'heure sur l'attestation seront celles correspondant au moment du clic sur le lien !
-Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour générer l'attestation et non pas attendre le contrôle (sinon la date de l'attestation sera l' heure du contrôle..) !
-
-- Le scénario "Génération Attestation numérique Reconfinement" permet d'envoyer un message par Discord (avec la possibilité de remplacer par Telegram, Mail, etc..)
-  
-  Il attend en paramètres :
-  - les coordonnées de l'utilisateur : nom, prenom, dateNaissance, lieuNaissance, adresse, codePostal, ville
-  - et le motif de l'attestation : motifAttestation (valeurs possibles : travail, achats, sante, famille, handicap, sport_animaux, convocation, missions, enfants)
-
-- Le scénario "Lancement Attestation Reconfinement" appelle le scénario précédent "Génération Attestation numérique Reconfinement"
-  
-  Il suffit de passer les paramètres attendus.
-  
-- Le scénario "ask covid" permet de faire une demande d'attestation numérique en passant par un questionnaire (Pour qui ? Quel motif ?)
-  
-  Pour l'exécuter, il suffit d'écrire le mot-clé "covid" depuis le channel Discord paramétré dans le scénario, puis de sélectionner la personne concernée et ensuite le motif
-  
-- Le scénario "ask_covid_discord" génère le lien de l'attestation avec la nouvelle commande Send Attestation du plugin DiscordLink
-
-  Il permet de choisir son jour et son heure de sortie.
-
-- Le scénario "ask_discord_complet" montre l'ensemble des possibilités de la commande d'envoi du lien de l'attestation depuis Discord : choix multi-utilisateurs, choix du motif, choix de la date et heure de sortie
-
-- Le scénario "ask_discord_complet_v2" montre l'ensemble des possibilités de la commande d'envoi du lien de l'attestation depuis Discord : choix multi-utilisateurs, choix du motif, choix de la date et heure de sortie
-
-  Mot clé de lancement du scénario depuis un channel discord paramétrable
-  
-  Liste des utilisateurs récupérés depuis la liste créée au niveau du plugin DiscordLink
-  
-  Liste des motifs paramétrables parmi les suivants : travail;achats;sante;famille;handicap;sport_animaux;convocation;missions;enfants
-  
-  Liste du délai de la date de sortie paramétrable (ex: 0;1;2;3)
-  
-  Liste du délai de l'heure de sortie paramétrable (ex : 0;10;30;60;120)
-  
-  Récupération de l'adresse depuis la configuration Jeedom
-
 
 ### Description des scénarios
 
@@ -85,7 +43,9 @@ Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour 
 
     Scénarios à importer : **lancement_attestation.json**, **generation_attestation.json**
     
-    Principe : Génère le lien à l'aide de la commande spécifiée en fin de scénario de génération
+    Principe : 
+      - Génère le lien à l'aide de la commande spécifiée en fin de scénario de génération
+      - Déclenché ex exécutant le scénario lancement_attestation
 
     Paramétrages :
       - Depuis le scénario de lancement, remplir les différents tags de l'appel du scénario de génération (nom, prénom, adresse, motif, ..)
@@ -97,7 +57,9 @@ Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour 
 
     Scénarios à importer : **askCovid.json**, **generation_attestation.json**
 
-    Principe : Génère le lien à l'aide de la commande spécifiée en fin de scénario de génération, suite à un questionnaire sous Discord
+    Principe : 
+      - Génère le lien à l'aide de la commande spécifiée en fin de scénario de génération, suite à un questionnaire sous Discord
+      - Déclenché en écrivant un mot-clé ("covid", "attestation", "sortie") depuis le channel Discord paramétré dans le scénario
 
     Paramétrages :
       - Depuis le scénario askCovid, modifier si besoin les mots clés de votre choix dans le premier SI : 
@@ -111,8 +73,10 @@ Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour 
     Scénarios à importer : **ask_discord_complet_v2.json**
 
     Principe : 
-      - Génère le lien à l'aide de la commande spécifique Send Attestation du plugin Discord, suite à un questionnaire sous Discord
+      - Montre l'ensemble des possibilités de la commande d'envoi du lien de l'attestation depuis le plugin DiscordLink : choix multi-utilisateurs, choix du motif, choix de la date et heure de sortie et génération du lien de l'attestation
+      - Déclenché en écrivant un mot-clé ("covid", "attestation", "sortie") depuis le channel Discord paramétré dans le scénario
       - Les utilisateurs sont récupérés automatiquement depuis le paramétrage de la liste des utilisateurs au niveau du plugin DiscordLink
+      - L'adresse est récupérée depuis la configuration de Jeedom
       - le questionnaire propose de décaler la date de sortie et l'heure de sortie
       
     Paramétrages :
