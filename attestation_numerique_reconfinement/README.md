@@ -2,17 +2,17 @@
 
 Les templates scénarios sont disponibles ici :
 
-- [Génération Attestation numérique Reconfinement](./templates/generation_attestation.json)
+- generation_attestation.json : [Génération Attestation numérique Reconfinement](./templates/generation_attestation.json)
 
-- [Lancement Attestation Reconfinement](./templates/lancement_attestation.json)
+- lancement_attestation.json : [Lancement Attestation Reconfinement](./templates/lancement_attestation.json)
 
-- [Lancement Attestation Reconfinement avec Discord](./templates/askCovid.json)
+- askCovid.json : [Lancement Attestation Reconfinement avec Discord](./templates/askCovid.json)
 
-- [Exemples de scénarios Discord évolués](./templates/ask_covid_discord.json)
+- ask_covid_discord.json : [Exemples de scénarios Discord évolués](./templates/ask_covid_discord.json)
 
-- [Exemple de scénarios avec choix du destinataire](./templates/ask_discord_complet.json)
+- ask_discord_complet.json : [Exemple de scénarios avec choix du destinataire](./templates/ask_discord_complet.json)
 
-- [Génération de l'attestation par Discord configurable](./templates/ask_discord_complet_v2.json)
+- ask_discord_complet_v2.json : [Génération de l'attestation par Discord configurable](./templates/ask_discord_complet_v2.json)
 
 ## Installation
 
