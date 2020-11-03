@@ -1,0 +1,490 @@
+{
+    "name": "ask_discord_complet",
+    "isActive": "1",
+    "group": "Attestation numérique",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        "#[Notifications][attestations][Dernier message]#"
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "Génération de l'attestation numérique de déplacement dérogatoire avec  :\n- demande de la personne concernée\n- demande du motif\n- demande de la date et heure de sortie",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0"
+    },
+    "type": "expert",
+    "state": "stop",
+    "elements": [
+        {
+            "name": null,
+            "type": "action",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "action",
+                    "subtype": "action",
+                    "options": {
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": null,
+                            "expression": "213",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": null,
+                                "type": "comment",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": null,
+                                        "type": "comment",
+                                        "subtype": "comment",
+                                        "options": [],
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "comment",
+                                                "subtype": null,
+                                                "expression": "Valeurs des listes modifiables (à séparer par le caractère \";\" ) :\n\n- tag \"motsCles\" : liste des mots-clés de lancement du scénario depuis Discord (ex : covid;attestation;sortie)\n- tag motifs : liste des motifs à présenter, compris dans la liste suivante \"travail;achats;sante;famille;handicap;sport_animaux;convocation;missions;enfants\"\n- tag delaisJoursSortie : liste des délais (en nombre de jours) à ajouter au jour courant pour la date de sortie (ex: 0;1;2;3)\n- tag delaisMinutesSortie : liste des délais (en minutes) à ajouter à l'heure de sortie (ex : 0;10;30;60;120)",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "tag",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "name": "dernierMessage",
+                                "value": "#[Notifications][attestations][Dernier message]#"
+                            },
+                            "order": "1"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "tag",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "name": "motsCles",
+                                "value": "covid;attestation;sortie"
+                            },
+                            "order": "2"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "tag",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "name": "motifs",
+                                "value": "achats;sante;sport_animaux;famille"
+                            },
+                            "order": "3"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "tag",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "name": "delaisJoursSortie",
+                                "value": "0;1;2;3"
+                            },
+                            "order": "4"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "tag",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "name": "delaisMinutesSortie",
+                                "value": "0;10;30;60;120"
+                            },
+                            "order": "5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": null,
+            "type": "code",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "code",
+                    "subtype": "action",
+                    "options": {
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "code",
+                            "subtype": null,
+                            "expression": "$tags = $scenario->getTags();\n\n\/\/ Vérification du mot-clé saisi depuis le plugin DiscordLink\n$keywordsList = explode(\";\", $tags['#motsCles#']);\n$tags['#validKeyword#'] = (in_array($tags['#dernierMessage#'], $keywordsList))?\"ok\":\"ko\";\n$scenario->setLog(($tags['#validKeyword#']==\"ok\")?'mot-clé '.$tags['#dernierMessage#'].' valide':'mot-clé '.$tags['#dernierMessage#'].' non valide');\n\n$scenario->setTags($tags);",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": null,
+            "type": "action",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "action",
+                    "subtype": "action",
+                    "options": {
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": null,
+                            "expression": "204",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": null,
+                                "type": "if",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": null,
+                                        "type": "if",
+                                        "subtype": "condition",
+                                        "options": {
+                                            "enable": "1",
+                                            "allowRepeatCondition": "0"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "condition",
+                                                "subtype": null,
+                                                "expression": "trigger(#[Notifications][attestations][Dernier message]#) == 1 && tag(validKeyword) == \"ok\"",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "then",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "1",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "209",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "code",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "code",
+                                                            "subtype": "action",
+                                                            "options": {
+                                                                "enable": "1"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "code",
+                                                                    "subtype": null,
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Création des utilisateurs récupérés depuis le plugin DiscordLink\n$tags['#usersList#'] = '';\n$users = config::byKey('user', 'discordlink');\n\n$first = true;\nforeach ($users as $user){\n  $tags['#usersList#'] .= ($first)?'':';';\n  $tags['#usersList#'] .= $user['prenomUser'];\n  $first = false;\n}\n\n$scenario->setTags($tags);",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Cette attestation est pour qui ?",
+                                                    "answer": "tag(usersList)",
+                                                    "variable": "destinataire",
+                                                    "timeout": "60",
+                                                    "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                },
+                                                "order": "1"
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "210",
+                                                "options": [],
+                                                "order": "2",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "code",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "code",
+                                                            "subtype": "action",
+                                                            "options": {
+                                                                "enable": "1"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "code",
+                                                                    "subtype": null,
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Récupération de l'utilisateur sélectionné pour le paramétrage du lien de l'attestation\n$selectedUser = $scenario->getData('destinataire');\n\n$users = config::byKey('user', 'discordlink');\nforeach ($users as $user){\n\tif ($user['prenomUser'] == $selectedUser) {\n      $tags['#destinataire#'] = $user['prenomUser'] . '_' . $user['nomUser'];\n\t}\n}\n\n$scenario->setTags($tags);",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Pour quel motif ?",
+                                                    "answer": "tag(motifs)",
+                                                    "variable": "motifAttestation",
+                                                    "timeout": "60",
+                                                    "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                },
+                                                "order": "3"
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Quand devez-vous sortir ?",
+                                                    "answer": "maintenant;saisie de la date",
+                                                    "variable": "choixDate",
+                                                    "timeout": "60",
+                                                    "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                },
+                                                "order": "4"
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "205",
+                                                "options": [],
+                                                "order": "5",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": null,
+                                                                    "expression": "variable(choixDate) == \"maintenant\" OU variable(choixDate) == \"Aucune réponse\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][attestations][Send Attestation]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "user": "tag(destinataire)",
+                                                                        "motif": "variable(motifAttestation)",
+                                                                        "datesortie": "",
+                                                                        "heuresortie": ""
+                                                                    },
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "ask",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "question": "Dans combien de jours ?",
+                                                                        "answer": "tag(delaisJoursSortie)",
+                                                                        "variable": "date_sortie",
+                                                                        "timeout": "60",
+                                                                        "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                                    },
+                                                                    "order": "0"
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "ask",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "question": "Dans combien de minutes ?",
+                                                                        "answer": "tag(delaisMinutesSortie)",
+                                                                        "variable": "heure_sortie",
+                                                                        "timeout": "60",
+                                                                        "cmd": "#[Notifications][attestations][Envoi message évolué]#"
+                                                                    },
+                                                                    "order": "1"
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "206",
+                                                                    "options": [],
+                                                                    "order": "2",
+                                                                    "element": {
+                                                                        "name": null,
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": null,
+                                                                                        "expression": "date_default_timezone_set('Europe\/Paris');\n\n$date_sortie = $scenario->getData('date_sortie');\n$heure_sortie = $scenario->getData('heure_sortie');\n\n\/\/ Calcul de la date de sortie\n$date = date(\"Y-m-d\", mktime(date(\"H\"),date(\"i\")+$heure_sortie,date(\"s\"),date(\"m\"),date(\"d\")+$date_sortie, date(\"Y\")));\n$scenario->setData('date_sortie', $date);\n\n\/\/ Calcul de l'heure de sortie\n$heure = date(\"H:i\", mktime(date(\"H\"),date(\"i\")+$heure_sortie,date(\"s\"),date(\"m\"),date(\"d\")+$date_sortie, date(\"Y\")));\n$scenario->setData('heure_sortie', $heure);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][attestations][Send Attestation]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "user": "tag(destinataire)",
+                                                                        "motif": "variable(motifAttestation)",
+                                                                        "datesortie": "variable(date_sortie)",
+                                                                        "heuresortie": "variable(heure_sortie)"
+                                                                    },
+                                                                    "order": "3"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "else",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "2",
+                                        "expressions": []
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
