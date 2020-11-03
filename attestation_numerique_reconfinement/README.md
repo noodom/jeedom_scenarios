@@ -65,6 +65,20 @@ Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour 
 
 - Le scénario "ask_discord_complet" montre l'ensemble des possibilités de la commande d'envoi du lien de l'attestation depuis Discord : choix multi-utilisateurs, choix du motif, choix de la date et heure de sortie
 
+- Le scénario "ask_discord_complet_v2" montre l'ensemble des possibilités de la commande d'envoi du lien de l'attestation depuis Discord : choix multi-utilisateurs, choix du motif, choix de la date et heure de sortie
+
+  Mot clé de lancement du scénario depuis un channel discord paramétrable
+  
+  Liste des utilisateurs récupérés depuis la liste créée au niveau du plugin DiscordLink
+  
+  Liste des motifs paramétrables parmi les suivants : travail;achats;sante;famille;handicap;sport_animaux;convocation;missions;enfants
+  
+  Liste du délai de la date de sortie paramétrable (ex: 0;1;2;3)
+  
+  Liste du délai de l'heure de sortie paramétrable (ex : 0;10;30;60;120)
+  
+  Récupération de l'adresse depuis la configuration Jeedom
+
 ### Captures des scénarios
 
 Génération Attestation numérique Reconfinement
