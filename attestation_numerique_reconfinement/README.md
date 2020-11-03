@@ -17,11 +17,10 @@ Les templates scénarios sont disponibles ici :
 ## Installation
 
 Je vous laisse vérifier les scénarios utiles pour votre installation dans la description des scénarios ci-dessous.
-Le scénario indispensable est le scénario de génération qui crée le lien final de génération de l'attestation numérique.
 
 - Chargement des templates (fichiers json ci-dessus)
 
-  - Aller dans le menu des scénarios
+  - Aller dans le menu des scénarios de Jeedom (Outils / Scénarios)
   - Créer un nouveau scénario avec le nom "Génération Attestation numérique Reconfinement"
   - Sélectionner le bouton template (en haut à droite)
   - Depuis la fenêtre des templates des scénarios, sélectionner le bouton "Charger un template" puis sélectionner le fichier json "generation_attestation.json" récupéré ci-dessus
@@ -78,6 +77,49 @@ Bien penser à cliquer sur le lien au moment où vous souhaitez l'utiliser pour 
   Liste du délai de l'heure de sortie paramétrable (ex : 0;10;30;60;120)
   
   Récupération de l'adresse depuis la configuration Jeedom
+
+
+### Description des scénarios
+
+1) Exemple avec simple passage de paramètres du scénario de génération du lien de l'attestation
+
+    Scénarios à importer : **lancement_attestation.json**, **generation_attestation.json**
+    
+    Principe : Génère le lien à l'aide de la commande spécifiée en fin de scénario de génération
+
+    Paramétrages :
+      - Depuis le scénario de lancement, remplir les différents tags de l'appel du scénario de génération (nom, prénom, adresse, motif, ..)
+      - Format de la date : 2020-11-05, format de l'heure : 12:15
+      - Ne pas mettre les paramètres date et heure pour générer un lien à l'heure courante (correspondra au moment de l'exécution du scénario)
+      - Depuis le scénario de génération, modifier si besoin la commande d'envoi du lien généré en fin de scénario (Discord, Telegram, ..)
+    
+2) Exemple avec formulaire géré par Discord
+
+    Scénarios à importer : **askCovid.json**, **generation_attestation.json**
+
+    Principe : Génère le lien à l'aide de la commande spécifiée en fin de scénario de génération, suite à un questionnaire sous Discord
+
+    Paramétrages :
+      - Depuis le scénario askCovid, modifier si besoin les mots clés de votre choix dans le premier SI : 
+      - Depuis le scénario askCovid, modifier les différents utilisateurs et motifs possibles pour le formulaire (ask, si et tags de l'appel du scénario de génération (nom, prénom, adresse, motif, ..))
+      - Format de la date : 2020-11-05, format de l'heure : 12:15
+      - Ne pas mettre les paramètres date et heure pour générer un lien à l'heure courante (correspondra au moment de l'exécution du scénario)
+      - Depuis le scénario de génération, modifier si besoin la commande d'envoi du lien généré en fin de scénario (Discord, Telegram, ..)
+
+3) Exemple avec formulaire et génération du lien de l'attestation gérés par Discord (ask et Send Attestation)
+
+    Scénarios à importer : **ask_discord_complet_v2.json**
+
+    Principe : 
+      - Génère le lien à l'aide de la commande spécifique Send Attestation du plugin Discord, suite à un questionnaire sous Discord
+      - Les utilisateurs sont récupérés automatiquement depuis le paramétrage de la liste des utilisateurs au niveau du plugin DiscordLink
+      - le questionnaire propose de décaler la date de sortie et l'heure de sortie
+      
+    Paramétrages :
+      - tag motsCles : liste des mots-clés de lancement du scénario depuis Discord (ex : covid;attestation;sortie)
+      - tag motifs : liste des motifs à présenter, compris dans la liste suivante "travail;achats;sante;famille;handicap;sport_animaux;convocation;missions;enfants"
+      - tag delaisJoursSortie : liste des délais (en nombre de jours) à ajouter au jour courant pour la date de sortie (ex: 0;1;2;3)
+      - tag delaisMinutesSortie : liste des délais (en minutes) à ajouter à l'heure de sortie (ex : 0;10;30;60;120)
 
 ### Captures des scénarios
 
