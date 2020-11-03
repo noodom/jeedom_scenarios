@@ -16,7 +16,7 @@
     "order": "9999",
     "description": "Génération de l attestation numérique pour le reconfinement en appelant ce scénario en passant le motif en paramètre : motifAttestation=travail\n\nValeurs possibles : \ntravail \/ achats \/ sante \/ famille \/ handicap \/ sport_animaux \/ convocation \/ missions \/ enfants\n",
     "configuration": {
-        "timeDependency": 0,
+        "timeDependency": 1,
         "has_return": 0,
         "logmode": "default",
         "allowMultiInstance": "0",
@@ -45,7 +45,7 @@
                         {
                             "type": "code",
                             "subtype": "",
-                            "expression": "\/\/ Encodage des paramètres de l'url\nfunction encodeTag($string) {\n    $entities = array('+', 'é', 'è', 'à', 'ç', 'ù', '\"', '%22', '\/');\n    $replacements = array('%20', '%C3%A9', '%C3%A8', '%C3%A0', '%C3%A7', '%C3%B9', '%C3%AB', '', '', '%2F');\n    return str_replace($entities, $replacements, urlencode($string));\n}\n\n\/\/ Récupération des tags passés en paramètres.\n$tags = $scenario->getTags();\n\n\/\/ Vérification de l'existence des tags.\n\/\/ Si ces derniers n'existent pas, on les crée avec une valeur par défaut.\n(empty($tags['#nom#'])) ? $tags['#nom#'] = \"pas de Nom\" : null;\n(empty($tags['#prenom#'])) ? $tags['#prenom#'] = \"pas de Prénom\" : null;\n(empty($tags['#dateNaissance#'])) ? $tags['#dateNaissance#'] = \"01\/01\/1919\" : null;\n(empty($tags['#lieuNaissance#'])) ? $tags['#lieuNaissance#'] = \"pas de lieu de naissance\" : null;\n(empty($tags['#adresse#'])) ? $tags['#adresse#'] = \"pas d'adresse\" : null;\n(empty($tags['#codePostal#'])) ? $tags['#codePostal#'] = \"12345\" : null;\n(empty($tags['#ville#'])) ? $tags['#ville#'] = \"pas de Ville\" : null;\n(empty($tags['#motifAttestation#'])) ? $tags['#motifAttestation#'] = \"travail\" : null;\n\n\/\/ Formatage des tags\n$nom = encodeTag($tags['#nom#']);\n$prenom = encodeTag($tags['#prenom#']);\n$date_naissance = encodeTag($tags['#dateNaissance#']);\n$lieu_naissance= encodeTag($tags['#lieuNaissance#']);\n$adresse = encodeTag($tags['#adresse#']);\n$scenario->setLog('### codePostal : '.$tags['#codePostal#']);\n$code_postal = encodeTag($tags['#codePostal#']);\n$ville = encodeTag($tags['#ville#']);\n$motif = encodeTag($tags['#motifAttestation#']);\n\n\/\/ Génération de l'url du QR Code\n$tags['#urlAttestation#']=\"https:\/\/covid.luko.eu\/generate.html#f=$prenom&l=$nom&b=$date_naissance&p=$lieu_naissance&a=$adresse&c=$ville&z=$code_postal&r=$motif\";\n\n\/\/ MAJ des tags avant exécution de la suite du scénario.\n$scenario->setTags($tags);",
+                            "expression": "\/\/ Encodage des paramètres de l'url\nfunction encodeTag($string) {\n    $entities = array('+', 'é', 'è', 'à', 'ç', 'ù', '\"', '%22', '\/');\n    $replacements = array('%20', '%C3%A9', '%C3%A8', '%C3%A0', '%C3%A7', '%C3%B9', '%C3%AB', '', '', '%2F');\n    return str_replace($entities, $replacements, urlencode($string));\n}\n\n\/\/ Récupération des tags passés en paramètres.\n$tags = $scenario->getTags();\n\n\/\/ Vérification de l'existence des tags.\n\/\/ Si ces derniers n'existent pas, on les crée avec une valeur par défaut.\n(empty($tags['#nom#'])) ? $tags['#nom#'] = \"pas de Nom\" : null;\n(empty($tags['#prenom#'])) ? $tags['#prenom#'] = \"pas de Prénom\" : null;\n(empty($tags['#dateNaissance#'])) ? $tags['#dateNaissance#'] = \"01\/01\/1919\" : null;\n(empty($tags['#lieuNaissance#'])) ? $tags['#lieuNaissance#'] = \"pas de lieu de naissance\" : null;\n(empty($tags['#adresse#'])) ? $tags['#adresse#'] = \"pas d'adresse\" : null;\n(empty($tags['#codePostal#'])) ? $tags['#codePostal#'] = \"12345\" : null;\n(empty($tags['#ville#'])) ? $tags['#ville#'] = \"pas de Ville\" : null;\n(empty($tags['#motifAttestation#'])) ? $tags['#motifAttestation#'] = \"travail\" : null;\n(empty($tags['#date#'])) ? $tags['#date#'] = date(\"Y-m-d\") : null;\n(empty($tags['#heure#'])) ? $tags['#heure#'] = date(\"H:i\") : null;\n\n\/\/ Formatage des tags\n$nom = encodeTag($tags['#nom#']);\n$prenom = encodeTag($tags['#prenom#']);\n$date_naissance = encodeTag($tags['#dateNaissance#']);\n$lieu_naissance= encodeTag($tags['#lieuNaissance#']);\n$adresse = encodeTag($tags['#adresse#']);\n$code_postal = encodeTag($tags['#codePostal#']);\n$ville = encodeTag($tags['#ville#']);\n$motif = encodeTag($tags['#motifAttestation#']);\n$date = encodeTag($tags['#date#']);\n$heure = encodeTag($tags['#heure#']);\n$dateCreation = encodeTag(date(\"m\/d\/Y H:i\"));\n$scenario->setLog('### date : '.$tags['#date#']);\n$scenario->setLog('### heure : '.$tags['#heure#']);\n\n\/\/ Génération de l'url du QR Code\n\/\/$tags['#urlAttestation#']=\"https:\/\/covid.luko.eu\/generate.html#f=$prenom&l=$nom&b=$date_naissance&p=$lieu_naissance&a=$adresse&c=$ville&z=$code_postal&r=$motif\";\n$tags['#urlAttestation#']=\"https:\/\/attestation.les2t.fr\/#prenom=$prenom&nom=$nom&date-de-naissance=$date_naissance&lieu-de-naissance=$lieu_naissance&adresse=$adresse&ville=$ville&code-postal=$code_postal&reason=$motif&datesortie=$date&heuresortie=$heure&autogenpdf&createAT=$dateCreation\";\n$scenario->setLog('### url : '.$tags['#urlAttestation#']);\n\n\/\/ MAJ des tags avant exécution de la suite du scénario.\n$scenario->setTags($tags);",
                             "options": [],
                             "order": "0"
                         }
@@ -64,7 +64,7 @@
                     "type": "action",
                     "subtype": "action",
                     "options": {
-                        "enable": "0",
+                        "enable": "1",
                         "collapse": "0"
                     },
                     "order": "0",
@@ -72,9 +72,9 @@
                         {
                             "type": "action",
                             "subtype": "",
-                            "expression": "#[Notifications][Discord - Général][Envoi message]#",
+                            "expression": "#[Notifications][Discord - Alertes][Envoi message]#",
                             "options": {
-                                "enable": "0",
+                                "enable": "1",
                                 "background": "0",
                                 "message": "Voilà l'attestation numérique pour le motif tag(motifAttestation) :\ntag(urlAttestation)"
                             },

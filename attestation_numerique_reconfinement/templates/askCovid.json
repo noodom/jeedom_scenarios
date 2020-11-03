@@ -1,14 +1,13 @@
 {
     "name": "ask covid",
     "isActive": "1",
-    "group": "",
+    "group": "Attestation numérique",
     "mode": "provoke",
     "schedule": "",
     "trigger": [
         "#[Notifications][Discord - Alertes][Dernier message]#"
     ],
     "timeout": "0",
-    "object_id": null,
     "isVisible": "0",
     "display": {
         "name": "",
@@ -63,7 +62,7 @@
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "971",
+                            "expression": "1017",
                             "options": [],
                             "order": "0",
                             "element": {
@@ -117,7 +116,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "972",
+                                                "expression": "1018",
                                                 "options": [],
                                                 "order": "1",
                                                 "element": {
@@ -165,7 +164,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "973",
+                                                "expression": "1019",
                                                 "options": [],
                                                 "order": "3",
                                                 "element": {
@@ -208,7 +207,7 @@
                                                                     "options": {
                                                                         "enable": "1",
                                                                         "background": "0",
-                                                                        "scenario_id": "261",
+                                                                        "scenario_id": "279",
                                                                         "action": "start",
                                                                         "tags": "nom=\"Dupont\" prenom=\"Hugo\" dateNaissance=\"20\/10\/1990\" lieuNaissance=\"Paris\" adresse=\"1 avenue Montaigne\" codePostal=\"75000\" ville=\"Paris\" motifAttestation=variable(covid19_motif)"
                                                                     },
@@ -230,7 +229,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "974",
+                                                "expression": "1020",
                                                 "options": [],
                                                 "order": "4",
                                                 "element": {
@@ -273,7 +272,7 @@
                                                                     "options": {
                                                                         "enable": "1",
                                                                         "background": "0",
-                                                                        "scenario_id": "261",
+                                                                        "scenario_id": "279",
                                                                         "action": "start",
                                                                         "tags": "nom=\"Dupont\" prenom=\"Camille\" dateNaissance=\"12\/05\/1988\" lieuNaissance=\"Paris\" adresse=\"1 avenue Montaigne\"\" codePostal=\"75000\" ville=\"Paris\" motifAttestation=variable(covid19_motif)"
                                                                     },
