@@ -111,6 +111,14 @@ Message généré sur Discord
 
 ![Attestation avec Discord](./doc/images/exempleDiscordAsk.jpg)
 
+Ask Discord Complet V2, un utilisateur (motif: famille, date: +2 jours, +60 minutes)
+
+![Discord V2, 1 utilisateur](./doc/images/ask_discord_complet_V2_1user.png)
+
+Ask Discord Complet V2, deux utilisateurs (motif: achats, date: maintenant)
+
+![Discord V2, 2 utilisateurs](./doc/images/ask_discord_complet_V2_2users.png)
+
 Attestation numérique générée
 
 ![Attestation numérique](./doc/images/declaration_de_deplacement_attestation.png)
