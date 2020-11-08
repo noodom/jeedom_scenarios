@@ -5,7 +5,7 @@
     "mode": "provoke",
     "schedule": "",
     "trigger": [
-        "#[Notifications][Discord - Alertes][Dernier message]#"
+        "#[Notifications][Discord - Attestations][Dernier message]#"
     ],
     "timeout": "0",
     "isVisible": "0",
@@ -14,7 +14,7 @@
         "icon": ""
     },
     "order": "9999",
-    "description": "Génération de l'attestation numérique de déplacement dérogatoire avec  :\n- demande de la personne concernée\n- demande du motif\n- demande de la date et heure de sortie",
+    "description": "Génération de l'attestation numérique de déplacement dérogatoire avec  :\n- demande de la personne concernée (pas de demande si une seule personne enregistrée dans le plugin Discord)\n- demande du motif\n- demande de la date et heure de sortie",
     "configuration": {
         "timeDependency": 0,
         "has_return": 0,
@@ -83,7 +83,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "name": "dernierMessage",
-                                "value": "#[Notifications][Discord - Alertes][Dernier message]#"
+                                "value": "#[Notifications][Discord - Attestations][Dernier message]#"
                             },
                             "order": "1"
                         },
@@ -208,7 +208,7 @@
                                             {
                                                 "type": "condition",
                                                 "subtype": "",
-                                                "expression": "trigger(#[Notifications][Discord - Alertes][Dernier message]#) == 1 && tag(validKeyword) == \"ok\"",
+                                                "expression": "trigger(#[Notifications][Discord - Attestations][Dernier message]#) == 1 && tag(validKeyword) == \"ok\"",
                                                 "options": [],
                                                 "order": "0"
                                             }
@@ -246,7 +246,7 @@
                                                                 {
                                                                     "type": "code",
                                                                     "subtype": "",
-                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Création des utilisateurs récupérés depuis le plugin DiscordLink\n$tags['#usersList#'] = '';\n$users = config::byKey('user', 'discordlink');\n\n$first = true;\nforeach ($users as $user){\n  $tags['#usersList#'] .= ($first)?'':';';\n  $tags['#usersList#'] .= $user['prenomUser'];\n  $first = false;\n}\n\n$scenario->setTags($tags);",
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Création des utilisateurs récupérés depuis le plugin DiscordLink\n$tags['#usersList#'] = '';\n$users = config::byKey('user', 'discordlink');\n\n$first = true;\nforeach ($users as $user){\n  $tags['#destinataire#'] = $first?($user['prenomUser'] . '_' . $user['nomUser']):'';\n  $tags['#usersList#'] .= ($first)?'':';';\n  $tags['#usersList#'] .= $user['prenomUser'];\n  $first = false;\n}\n\n$scenario->setTags($tags);",
                                                                     "options": [],
                                                                     "order": "0"
                                                                 }
@@ -256,50 +256,102 @@
                                                 }
                                             },
                                             {
-                                                "type": "action",
-                                                "subtype": "",
-                                                "expression": "ask",
-                                                "options": {
-                                                    "enable": "1",
-                                                    "background": "0",
-                                                    "question": "Cette attestation est pour qui ?",
-                                                    "answer": "tag(usersList)",
-                                                    "variable": "destinataire",
-                                                    "timeout": "60",
-                                                    "cmd": "#[Notifications][Discord - Alertes][Envoi message évolué]#"
-                                                },
-                                                "order": "1"
-                                            },
-                                            {
                                                 "type": "element",
-                                                "subtype": "",
-                                                "expression": "1002",
+                                                "subtype": null,
+                                                "expression": "1036",
                                                 "options": [],
-                                                "order": "2",
+                                                "order": "1",
                                                 "element": {
-                                                    "name": "",
-                                                    "type": "code",
+                                                    "name": null,
+                                                    "type": "if",
                                                     "options": [],
                                                     "order": "0",
                                                     "subElements": [
                                                         {
-                                                            "name": "",
-                                                            "type": "code",
-                                                            "subtype": "action",
+                                                            "name": null,
+                                                            "type": "if",
+                                                            "subtype": "condition",
                                                             "options": {
+                                                                "collapse": "0",
                                                                 "enable": "1",
-                                                                "collapse": "0"
+                                                                "allowRepeatCondition": "0"
                                                             },
                                                             "order": "0",
                                                             "expressions": [
                                                                 {
-                                                                    "type": "code",
-                                                                    "subtype": "",
-                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Récupération de l'utilisateur sélectionné pour le paramétrage du lien de l'attestation\n$selectedUser = $scenario->getData('destinataire');\n\n$users = config::byKey('user', 'discordlink');\nforeach ($users as $user){\n\tif ($user['prenomUser'] == $selectedUser) {\n      $tags['#destinataire#'] = $user['prenomUser'] . '_' . $user['nomUser'];\n\t}\n}\n\n$scenario->setTags($tags);",
+                                                                    "type": "condition",
+                                                                    "subtype": null,
+                                                                    "expression": "tag(destinataire) == \"\"",
                                                                     "options": [],
                                                                     "order": "0"
                                                                 }
                                                             ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "ask",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "question": "Cette attestation est pour qui ?",
+                                                                        "answer": "tag(usersList)",
+                                                                        "variable": "destinataire",
+                                                                        "timeout": "60",
+                                                                        "cmd": "#[Notifications][Discord - Attestations][Envoi message évolué]#"
+                                                                    },
+                                                                    "order": "0"
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "1002",
+                                                                    "options": [],
+                                                                    "order": "1",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "enable": "1",
+                                                                                    "collapse": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": "",
+                                                                                        "expression": "$tags = $scenario->getTags();\n\n\/\/ Récupération de l'utilisateur sélectionné pour le paramétrage du lien de l'attestation\n$selectedUser = $scenario->getData('destinataire');\n\n$users = config::byKey('user', 'discordlink');\nforeach ($users as $user){\n\tif ($user['prenomUser'] == $selectedUser) {\n      $tags['#destinataire#'] = $user['prenomUser'] . '_' . $user['nomUser'];\n\t}\n}\n\n$scenario->setTags($tags);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": []
                                                         }
                                                     ]
                                                 }
@@ -315,9 +367,9 @@
                                                     "answer": "tag(motifs)",
                                                     "variable": "motifAttestation",
                                                     "timeout": "60",
-                                                    "cmd": "#[Notifications][Discord - Alertes][Envoi message évolué]#"
+                                                    "cmd": "#[Notifications][Discord - Attestations][Envoi message évolué]#"
                                                 },
-                                                "order": "3"
+                                                "order": "2"
                                             },
                                             {
                                                 "type": "action",
@@ -330,16 +382,16 @@
                                                     "answer": "maintenant;saisie de la date",
                                                     "variable": "choixDate",
                                                     "timeout": "60",
-                                                    "cmd": "#[Notifications][Discord - Alertes][Envoi message évolué]#"
+                                                    "cmd": "#[Notifications][Discord - Attestations][Envoi message évolué]#"
                                                 },
-                                                "order": "4"
+                                                "order": "3"
                                             },
                                             {
                                                 "type": "element",
                                                 "subtype": "",
                                                 "expression": "1003",
                                                 "options": [],
-                                                "order": "5",
+                                                "order": "4",
                                                 "element": {
                                                     "name": "",
                                                     "type": "if",
@@ -376,7 +428,7 @@
                                                                 {
                                                                     "type": "action",
                                                                     "subtype": "",
-                                                                    "expression": "#[Notifications][Discord - Alertes][Send Attestation]#",
+                                                                    "expression": "#[Notifications][Discord - Attestations][Send Attestation]#",
                                                                     "options": {
                                                                         "enable": "1",
                                                                         "background": "0",
@@ -407,7 +459,7 @@
                                                                         "answer": "tag(delaisJoursSortie)",
                                                                         "variable": "date_sortie",
                                                                         "timeout": "60",
-                                                                        "cmd": "#[Notifications][Discord - Alertes][Envoi message évolué]#"
+                                                                        "cmd": "#[Notifications][Discord - Attestations][Envoi message évolué]#"
                                                                     },
                                                                     "order": "0"
                                                                 },
@@ -422,7 +474,7 @@
                                                                         "answer": "tag(delaisMinutesSortie)",
                                                                         "variable": "heure_sortie",
                                                                         "timeout": "60",
-                                                                        "cmd": "#[Notifications][Discord - Alertes][Envoi message évolué]#"
+                                                                        "cmd": "#[Notifications][Discord - Attestations][Envoi message évolué]#"
                                                                     },
                                                                     "order": "1"
                                                                 },
@@ -463,7 +515,7 @@
                                                                 {
                                                                     "type": "action",
                                                                     "subtype": "",
-                                                                    "expression": "#[Notifications][Discord - Alertes][Send Attestation]#",
+                                                                    "expression": "#[Notifications][Discord - Attestations][Send Attestation]#",
                                                                     "options": {
                                                                         "enable": "1",
                                                                         "background": "0",
