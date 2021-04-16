@@ -24,7 +24,7 @@ Les templates scénarios sont disponibles ici :
   On peut donc définir une programmation en fonction des jours de la semaine, des heures, du lever ou coucher du soleil, de la météo, etc..
   (Il est alors possible d'utiliser les données de plugins pour les différents paramètres souhaités)
   Exemples :
-    - **SI #sjour# != "Samedi" ET #sjour# != "Samedi"** : programmation pour les jours de la semaine (programmation du WE dans le SINON)
+    - **SI #sjour# != "Samedi" ET #sjour# != "Dimanche"** : programmation pour les jours de la semaine (programmation du WE dans le SINON)
     - **A 900** pour 9h00, **A 2100** pour 21h
 
 - Pour chacune de ces conditions, on demande alors à l'utilisateur si il souhaite confirmer l'ouverture ou la fermeture programmée par l'appel du scénario "ask volets" décrit plus loin
