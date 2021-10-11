@@ -1,13 +1,12 @@
 # Scénario de gestion d'ouverture et de fermeture des volets
 
-Ces scénarios permettent d'automatiser l'ouverture et la fermeture des volets.
-Les captures des scénarios sont visibles ci-dessous.
+Ce scénario permet d'effectuer la mise à jour de plugins à partir de menus Discord.
 
-## Templates des scénarios
+## Templates du scénario
 
-Les templates scénarios sont disponibles ici :
+Le template du scénario est disponible ici :
 
-- [programmation volets](./templates/programmation_volets.json)
+- [action_sur_volets](./templates/action_sur_volets.json)
 
 - [ask volets](./templates/ask_volets.json)
 
