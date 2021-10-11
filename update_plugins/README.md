@@ -14,7 +14,7 @@ Le template du scénario est disponible ici (export depuis Jeedom) :
   Il permet de récupérer la liste des plugins disponibles pour une mise à jour et de choisir les plugins à mettre à jour
 
   Il est exécuté :
-    - toutes les heures
+    - toutes les heures (aucune action si aucun nouveau plugin disponible)
     - en le déclenchant depuis Discord avec le mot-clé "plugins"
 
 ## Déroulement du scénario
