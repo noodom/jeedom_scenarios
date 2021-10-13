@@ -11,7 +11,7 @@ Les templates scénarios sont disponibles ici :
 
 - [ask volets](./templates/ask_volets.json)
 
-- [action sur volets](./templates/programmation_volets.json)
+- [action sur volets](./templates/action_sur_volets.json)
 
 - [test volets](./templates/test_volets.json)
 
