@@ -1,0 +1,672 @@
+{
+    "name": "update plugins",
+    "isActive": "1",
+    "group": "Gestion plugins",
+    "mode": "all",
+    "schedule": "0 * * * *",
+    "trigger": [
+        "strtolower(#[Notifications][Discord - Infos][Dernier message]# ) == \"plugins\""
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "Scénario de mise à jour des plugins Jeedom depuis Discord",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "1",
+        "syncmode": "0",
+        "timeline::enable": "0",
+        "timeline::folder": ""
+    },
+    "state": "stop",
+    "elements": [
+        {
+            "name": null,
+            "type": "code",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "code",
+                    "subtype": "action",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "code",
+                            "subtype": null,
+                            "expression": "\/* @noodom \/ Scénario de mise à jour des plugins Jeedom depuis Discord\n\t- reprise d'une solution proposée sur Discord \/ Community Jeedom\n\t- ajout de la gestion d'un menu de navigation pour le choix des mises à jours\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n\n*\/\n\n$tags = $scenario->getTags();\n\n$messageUpdate = '';\n$nbUpdates = update::nbNeedUpdate();\n$jeedomUpdate = 0;\n\nif ( $nbUpdates == 0 ) {\n\t$scenario->setlog('0 update');\n}\nelse {\n    $messageUpdate .= 'Nombre de mises à jour de plugins disponibles : ' . $nbUpdates . \"\\n\\n\";  \n\n    foreach (update::all() as $update) {\n    \tif (strtolower($update->getStatus())!='update') continue;\n        if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n\n        $messageUpdate  .= '**Plugin : '.$update->getLogicalId(). '**' . \"\\n\";\n        $messageUpdate  .= ':red_circle:  Version installée : ' .$update->getLocalVersion(). \"\\n\";\n        $messageUpdate  .= ':green_circle: Version disponible : ' .$update->getRemoteVersion(). \"\\n\";\n        $scenario->setlog($update->getType().':'.$update->getLogicalId().' - '.$update->getLocalVersion().'\/'.$update->getRemoteVersion());\n\n        if ($update->getType() == 'plugin') {\n          try {\n            $plugin = plugin::byId($update->getLogicalId());\n            $messageUpdate .= '[Changelog](' .$plugin->getChangelog(). ') - [Community](https:\/\/community.jeedom.com\/tags\/plugin-' .$plugin->getId(). ')' . \"\\n\\n\\n\"; \n            $scenario->setlog('changelog:'.$plugin->getChangelog());      \n            $scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n        }\n    }\n}\n\n$tags['#nbUpdates#'] = $nbUpdates;\n$tags['#msgUpdate#'] = $messageUpdate;\n$namescenario .= 'Exécuté par : ' .$scenario->getName();\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": null,
+            "type": "if",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "if",
+                    "subtype": "condition",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1",
+                        "allowRepeatCondition": "0"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "condition",
+                            "subtype": null,
+                            "expression": "tag(nbUpdates) > 0",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "type": "then",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "1",
+                    "expressions": [
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "Titre": "Etat plugins :red_circle:",
+                                "url": "",
+                                "description": "tag(msgUpdate)",
+                                "footer": "tag(nameScenario)",
+                                "colors": "#ff0000"
+                            },
+                            "order": "0"
+                        },
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "ask",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "question": "Faut-il mettre à jour des plugins ?",
+                                "answer": "Oui;Non",
+                                "variable": "askCentreMessage",
+                                "timeout": "60",
+                                "cmd": "#[Notifications][Discord - Infos][Envoi message évolué]#"
+                            },
+                            "order": "1"
+                        },
+                        {
+                            "type": "element",
+                            "subtype": null,
+                            "expression": "1071",
+                            "options": [],
+                            "order": "2",
+                            "element": {
+                                "name": null,
+                                "type": "if",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": null,
+                                        "type": "if",
+                                        "subtype": "condition",
+                                        "options": {
+                                            "collapse": "0",
+                                            "enable": "1",
+                                            "allowRepeatCondition": "0"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "condition",
+                                                "subtype": null,
+                                                "expression": "strtolower(variable(askCentreMessage)) == \"oui\"",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "then",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "1",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "1072",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "code",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "code",
+                                                            "subtype": "action",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "code",
+                                                                    "subtype": null,
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "ask",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "question": "Quels plugins faut-il mettre à jour ?",
+                                                    "answer": "tag(listUpdate)",
+                                                    "variable": "askCentreMessagePluginMAJ",
+                                                    "timeout": "60",
+                                                    "cmd": "#[Notifications][Discord - Infos][Envoi message évolué]#"
+                                                },
+                                                "order": "1"
+                                            },
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "1073",
+                                                "options": [],
+                                                "order": "2",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": null,
+                                                                    "expression": "strtolower(variable(askCentreMessagePluginMAJ)) == \"aucune réponse\" OU strtolower(variable(askCentreMessagePluginMAJ)) == \"annuler\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "Titre": ":white_check_mark: ANNULATION :white_check_mark:",
+                                                                        "url": "",
+                                                                        "description": "Demande de mise à jour annulée",
+                                                                        "footer": "tag(nameScenario)",
+                                                                        "colors": "#ff0000"
+                                                                    },
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "1074",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": null,
+                                                                        "type": "if",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "if",
+                                                                                "subtype": "condition",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1",
+                                                                                    "allowRepeatCondition": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "condition",
+                                                                                        "subtype": null,
+                                                                                        "expression": "strtolower(variable(askCentreMessagePluginMAJ)) == \"tous\"",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "then",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "1",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": null,
+                                                                                        "expression": "1075",
+                                                                                        "options": [],
+                                                                                        "order": "0",
+                                                                                        "element": {
+                                                                                            "name": null,
+                                                                                            "type": "code",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": null,
+                                                                                                    "type": "code",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "code",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "foreach (update::all() as $update) {\n        $update->doUpdate();\n}\n",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "subtype": null,
+                                                                                        "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                        "options": {
+                                                                                            "enable": "1",
+                                                                                            "background": "0",
+                                                                                            "Titre": ":white_check_mark: PLUGIN A JOUR :white_check_mark:",
+                                                                                            "url": "",
+                                                                                            "description": "Mise à jour du(des) plugin(s) **[variable(askCentreMessagePluginMAJ)]** effectuée",
+                                                                                            "footer": "tag(nameScenario)",
+                                                                                            "colors": "#00ff00"
+                                                                                        },
+                                                                                        "order": "1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "else",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "2",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": null,
+                                                                                        "expression": "1079",
+                                                                                        "options": [],
+                                                                                        "order": "0",
+                                                                                        "element": {
+                                                                                            "name": null,
+                                                                                            "type": "code",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": null,
+                                                                                                    "type": "code",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "code",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "$Variable_J = \"askCentreMessagePluginMAJ\";\n$tabJ = $scenario->getData($Variable_J);\n\n$nomUpdateRecherchee = $tabJ;\n$scenario->setLog('nomUpdateRecherchee : '.$nomUpdateRecherchee);\n\nforeach (update::all() as $update) {\n    $monUpdate = $update->getName();\n    if ($monUpdate == $nomUpdateRecherchee){\n        $update->doUpdate();\n    }\n}",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "subtype": null,
+                                                                                        "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                        "options": {
+                                                                                            "enable": "1",
+                                                                                            "background": "0",
+                                                                                            "Titre": ":white_check_mark: PLUGIN A JOUR :white_check_mark:",
+                                                                                            "url": "",
+                                                                                            "description": "Mise à jour du plugin **[variable(askCentreMessagePluginMAJ)]** effectuée",
+                                                                                            "footer": "tag(nameScenario)",
+                                                                                            "colors": "#00ff00"
+                                                                                        },
+                                                                                        "order": "1"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": null,
+                                                                                        "expression": "1080",
+                                                                                        "options": [],
+                                                                                        "order": "2",
+                                                                                        "element": {
+                                                                                            "name": null,
+                                                                                            "type": "code",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": null,
+                                                                                                    "type": "code",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "code",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "$tags = $scenario->getTags();\n\n$NbUpdates = update::nbNeedUpdate();\n$tags['#NbUpdates#'] = $NbUpdates;\n\n$scenario->setTags($tags);",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": null,
+                                                                                        "expression": "1081",
+                                                                                        "options": [],
+                                                                                        "order": "3",
+                                                                                        "element": {
+                                                                                            "name": null,
+                                                                                            "type": "if",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": null,
+                                                                                                    "type": "if",
+                                                                                                    "subtype": "condition",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1",
+                                                                                                        "allowRepeatCondition": "0"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "condition",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "tag(NbUpdates) > 0",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": null,
+                                                                                                    "type": "then",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": [],
+                                                                                                    "order": "1",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "action",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "ask",
+                                                                                                            "options": {
+                                                                                                                "enable": "1",
+                                                                                                                "background": "0",
+                                                                                                                "question": "Nouvelle vérification de mise à jour des plugins ?",
+                                                                                                                "answer": "Oui;Non",
+                                                                                                                "variable": "newCheck",
+                                                                                                                "timeout": "60",
+                                                                                                                "cmd": "#[Notifications][Discord - Infos][Envoi message évolué]#"
+                                                                                                            },
+                                                                                                            "order": "0"
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "type": "element",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "1082",
+                                                                                                            "options": [],
+                                                                                                            "order": "1",
+                                                                                                            "element": {
+                                                                                                                "name": null,
+                                                                                                                "type": "if",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "if",
+                                                                                                                        "subtype": "condition",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0",
+                                                                                                                            "enable": "1",
+                                                                                                                            "allowRepeatCondition": "0"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "condition",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "strtolower(variable(newCheck)) == \"oui\"",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "then",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "1",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "delete_variable",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "name": "askCentreMessagePluginMAJ"
+                                                                                                                                },
+                                                                                                                                "order": "0"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "delete_variable",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "name": "newCheck"
+                                                                                                                                },
+                                                                                                                                "order": "1"
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "scenario",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "scenario_id": "325",
+                                                                                                                                    "action": "start",
+                                                                                                                                    "tags": ""
+                                                                                                                                },
+                                                                                                                                "order": "2"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "else",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "2",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "Titre": ":white_check_mark: ARRET :white_check_mark:",
+                                                                                                                                    "url": "",
+                                                                                                                                    "description": "Mise à jour des plugins arrêtée",
+                                                                                                                                    "footer": "tag(nameScenario)",
+                                                                                                                                    "colors": "#ff0000"
+                                                                                                                                },
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": null,
+                                                                                                    "type": "else",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": [],
+                                                                                                    "order": "2",
+                                                                                                    "expressions": []
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "else",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "2",
+                                        "expressions": [
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "Titre": ":white_check_mark: ANNULATION :white_check_mark:",
+                                                    "url": "",
+                                                    "description": "Mise à jour de plugins annulée",
+                                                    "footer": "tag(nameScenario)",
+                                                    "colors": "#ff0000"
+                                                },
+                                                "order": "0"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "type": "else",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "2",
+                    "expressions": []
+                }
+            ]
+        }
+    ]
+}
