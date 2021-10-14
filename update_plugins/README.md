@@ -4,9 +4,9 @@ Ce scénario permet d'effectuer la mise à jour de plugins à partir de menus Di
 
 ## Template du scénario
 
-Le template du scénario est disponible ici (export depuis Jeedom) :
+Le template du scénario est disponible ici :
 
-- [update_plugins](./templates/update_plugins.txt)
+- [update_plugins](./templates/update_plugins.json)
 
 ## Description du scénario de mise à jour des plugins par Discord
 
@@ -16,6 +16,22 @@ Le template du scénario est disponible ici (export depuis Jeedom) :
   Il est exécuté :
     - toutes les heures (aucune action si aucun nouveau plugin disponible)
     - en le déclenchant depuis Discord avec le mot-clé "plugins"
+
+## Installation du template de scénario
+
+- Télécharger le template JSon ici : [update_plugins](./templates/update_plugins.json)
+
+- Créer un nouveau scénario
+
+![Création du scénario](./doc/images/createScenario.png)
+
+- Charger le template téléchargé pour le scénario créé
+
+![Mise à jour plugin](./doc/images/loadTemplate.png)
+
+- Adaptation des paramètres à son propre Jeedom (commandes d'un équipement du plugin DiscordLink et renommage éventuel des variables utilisées)
+
+![Mise à jour plugin](./doc/images/applyTemplate.png)
 
 ## Déroulement du scénario
 
