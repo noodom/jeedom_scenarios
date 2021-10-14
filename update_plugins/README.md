@@ -4,7 +4,7 @@ Ce scénario permet d'effectuer la mise à jour de plugins à partir de menus Di
 
 ## Template du scénario
 
-Le template du scénario est disponible ici :
+Le template JSon du scénario est disponible ici :
 
 - [update_plugins](./templates/update_plugins.json)
 
