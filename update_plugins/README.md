@@ -1,14 +1,16 @@
-# Scénario de mise à jour de plugins par menus Discord
+# Scénarios de mise à jour de plugins par menus Discord ou Telegram
 
-Ce scénario permet d'effectuer la mise à jour de plugins à partir de menus Discord.
+Ces scénarios permettent d'effectuer la mise à jour de plugins à partir de menus Discord ou Telegram.
 
-## Template du scénario
+## Template des scénarios
 
-Le template JSon du scénario est disponible ici :
+Les templates JSon du scénario sont disponibles ici :
 
 - [update_plugins](./templates/update_plugins.json)
 
-## Description du scénario de mise à jour des plugins par Discord
+- [update_plugins_telegram](./templates/update_plugins_telegram.json)
+
+## Description des scénarios de mise à jour des plugins par Discord ou Telegram
 
 - Le scénario "update plugins" permet d'effectuer des mises à jours des plugins Jeedom depuis un menu Discord.
   Il permet de récupérer la liste des plugins disponibles pour une mise à jour et de choisir les plugins à mettre à jour
@@ -17,9 +19,17 @@ Le template JSon du scénario est disponible ici :
     - toutes les heures (aucune action si aucun nouveau plugin disponible)
     - en le déclenchant depuis Discord avec le mot-clé "plugins"
 
+- Le scénario "update plugins telegram" permet d'effectuer des mises à jours des plugins Jeedom depuis un menu Telegram.
+  Il permet de récupérer la liste des plugins disponibles pour une mise à jour et de choisir les plugins à mettre à jour
+
+  Il est exécuté :
+    - toutes les heures (aucune action si aucun nouveau plugin disponible)
+
 ## Installation du template de scénario
 
-- Télécharger le template JSon ici : [update_plugins](./templates/update_plugins.json)
+- Télécharger le template JSon souhaité : 
+  - [update_plugins Discord](./templates/update_plugins.json)
+  - [update_plugins Telegram](./templates/update_plugins_telegram.json)
 
 - Créer un nouveau scénario
 
@@ -29,7 +39,7 @@ Le template JSon du scénario est disponible ici :
 
 ![Mise à jour plugin](./doc/images/loadTemplate.png)
 
-- Adaptation des paramètres à son propre Jeedom (commandes d'un équipement du plugin DiscordLink et renommage éventuel des variables utilisées)
+- Adaptation des paramètres à son propre Jeedom (commandes d'un équipement du plugin DiscordLink ou Telegram et renommage éventuel des variables utilisées)
 
 ![Mise à jour plugin](./doc/images/applyTemplate.png)
 
