@@ -1,8 +1,8 @@
 # jeedom_scenarios
 
-## Scénario de [mise à jour des plugins par Discord](./update_plugins)
+## Scénarios de [mise à jour des plugins par Discord et Telegram](./update_plugins)
 
-Ce scénario permet d'effectuer la mise à jour de plugins à partir de menus Discord.
+Ces scénarios permettent d'effectuer la mise à jour de plugins à partir de menus Discord et Telegram.
 
 ## Scénarios de [gestion des volets](./gestion_volets)
 
