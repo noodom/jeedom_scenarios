@@ -43,6 +43,8 @@ Les templates JSon du scénario sont disponibles ici :
 
 ![Mise à jour plugin](./doc/images/applyTemplate.png)
 
+- ATTENTION : le scénario s'appelle lui-même. Il faut remplacer "scénario Aucun" par "scénario nomScenarioUpdateTelegram"
+
 ## Déroulement du scénario
 
 ### Mise à jour d'un plugin
