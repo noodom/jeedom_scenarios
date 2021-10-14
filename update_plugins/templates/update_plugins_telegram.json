@@ -1,8 +1,8 @@
 {
     "name": "update plugins Telegram",
     "isActive": "1",
-    "group": "",
-    "mode": "all",
+    "group": "Gestion Plugins",
+    "mode": "schedule",
     "schedule": "0 * * * *",
     "trigger": [
         ""
@@ -46,7 +46,7 @@
                         {
                             "type": "code",
                             "subtype": "",
-                            "expression": "\/* @noodom \/ Scénario de mise à jour des plugins Jeedom depuis Telegram\n\t- reprise d'une solution proposée sur Telegram \/ Community Jeedom\n\t- ajout de la gestion d'un menu de navigation pour le choix des mises à jours\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n\n*\/\n\n$tags = $scenario->getTags();\n\n$tags['#redCircle#'] = \"&\".\"#x2B55;\";\n$tags['#greenCheck#'] = \"&\".\"#x2705;\";\n$tags['#whiteCheck#'] = \"&\".\"#x2611;\";\n$tags['#arrow#'] = \"&\".\"#x27A1;\";\n\n$messageUpdate = '';\n$nbUpdates = update::nbNeedUpdate();\n$jeedomUpdate = 0;\n\nif ( $nbUpdates == 0 ) {\n\t$scenario->setlog('0 update');\n}\nelse {\n    $messageUpdate .= 'Nombre de mises à jour de plugins disponibles : ' . $nbUpdates . \"\\n\\n\";  \n\n    foreach (update::all() as $update) {\n    \tif (strtolower($update->getStatus())!='update') continue;\n        if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n\n        $messageUpdate  .= $tags['#arrow#'].'Plugin : '.$update->getLogicalId().\"\\n\";\n        $messageUpdate  .= $tags['#redCircle#'].' Version installée : ' .$update->getLocalVersion(). \"\\n\";\n        $messageUpdate  .= $tags['#greenCheck#'].' Version disponible : ' .$update->getRemoteVersion(). \"\\n\";\n        $scenario->setlog($update->getType().':'.$update->getLogicalId().' - '.$update->getLocalVersion().'\/'.$update->getRemoteVersion());\n\n        if ($update->getType() == 'plugin') {\n          try {\n            $plugin = plugin::byId($update->getLogicalId());\n            $messageUpdate .= '[Changelog](' .$plugin->getChangelog(). ') - [Community](https:\/\/community.jeedom.com\/tags\/plugin-' .$plugin->getId(). ')' . \"\\n\\n\\n\"; \n            $scenario->setlog('changelog:'.$plugin->getChangelog());      \n            $scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n        }\n    }\n}\n\n$tags['#nbUpdates#'] = $nbUpdates;\n$tags['#msgUpdate#'] = $messageUpdate;\n$namescenario .= 'Exécuté par : ' .$scenario->getName();\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
+                            "expression": "\/* @noodom \/ Scénario de mise à jour des plugins Jeedom depuis Telegram\n\t- reprise d'une solution proposée sur Telegram \/ Community Jeedom\n\t- ajout de la gestion d'un menu de navigation pour le choix des mises à jours\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n\n*\/\n\n$tags = $scenario->getTags();\n\n$tags['#redCircle#'] = \"&\".\"#x2B55;\";\n$tags['#greenCheck#'] = \"&\".\"#x2705;\";\n$tags['#whiteCheck#'] = \"&\".\"#x2611;\";\n$tags['#arrow#'] = \"&\".\"#x27A1;\";\n\n$messageUpdate = '';\n$nbUpdates = update::nbNeedUpdate();\n$jeedomUpdate = 0;\n\nif ( $nbUpdates == 0 ) {\n\t$scenario->setlog('0 update');\n}\nelse {\n    $messageUpdate .= 'Nombre de mises à jour de plugins disponibles : ' . $nbUpdates . \"\\n\\n\";  \n\n    foreach (update::all() as $update) {\n    \tif (strtolower($update->getStatus())!='update') continue;\n        if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n\n        $messageUpdate  .= $tags['#arrow#'].'<u><b>Plugin : '.$update->getLogicalId().\"<\/b><\/u>\\n\";\n        $messageUpdate  .= $tags['#redCircle#'].' Version installée : ' .$update->getLocalVersion(). \"\\n\";\n        $messageUpdate  .= $tags['#greenCheck#'].' Version disponible : ' .$update->getRemoteVersion(). \"\\n\";\n        $scenario->setlog($update->getType().':'.$update->getLogicalId().' - '.$update->getLocalVersion().'\/'.$update->getRemoteVersion());\n\n        if ($update->getType() == 'plugin') {\n          try {\n            $plugin = plugin::byId($update->getLogicalId());\n            $messageUpdate .= \"<a href='\".$plugin->getChangelog().\"'>Changelog<\/a> | \";\n            $messageUpdate .= \"<a href='https:\/\/community.jeedom.com\/tags\/plugin-\".$plugin->getId().\"'>Community<\/a>\".\"\\n\\n\\n\"; \n            $scenario->setlog('changelog:'.$plugin->getChangelog());      \n            $scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n        }\n      \n        if ($update->getType() == 'core') {\n          try {\n            \/\/ Récupere l'information du change Log pour chaque plugin\n            $messageUpdate  .= \"<a href='https:\/\/doc.jeedom.com\/fr_FR\/core\/4.1\/changelog'>Changelog<\/a>  |  \";\n            \/\/ On log un message\n            #$scenario->setlog('changelog:'.$plugin->getChangelog());\n            \/\/ Recupere l'information du community pour chaque plugin\n            $messageUpdate  .= \"<a href='https:\/\/community.jeedom.com\/search?q=\".$update->getRemoteVersion().\"'>Community<\/a>\" . \"\\n\\n\\n\" ;\n            \/\/ On log un message\n            #$scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n      \t}\n    }\n}\n\n$tags['#nbUpdates#'] = $nbUpdates;\n$tags['#msgUpdate#'] = $messageUpdate;\n$namescenario .= 'Exécuté par : ' .$scenario->getName();\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
                             "options": [],
                             "order": "0"
                         }
@@ -116,8 +116,8 @@
                                                 "options": {
                                                     "enable": "1",
                                                     "background": "0",
-                                                    "title": "",
-                                                    "message": "Etat plugins tag(redCircle)\ntag(msgUpdate)"
+                                                    "title": "empty=1",
+                                                    "message": "Etat plugins tag(redCircle)\ntag(msgUpdate)\n\ntag(nameScenario)"
                                                 },
                                                 "order": "0"
                                             }
@@ -275,8 +275,8 @@
                                                                     "options": {
                                                                         "enable": "1",
                                                                         "background": "0",
-                                                                        "title": "",
-                                                                        "message": "tag(whiteCheck) [ANNULATION] tag(whiteCheck)\ntag(redCircle) Demande de mise à jour annulée"
+                                                                        "title": "empty=1",
+                                                                        "message": "tag(whiteCheck) [ANNULATION] tag(whiteCheck)\ntag(redCircle) Demande de mise à jour annulée\n\ntag(nameScenario)"
                                                                     },
                                                                     "order": "0"
                                                                 }
@@ -369,8 +369,8 @@
                                                                                         "options": {
                                                                                             "enable": "1",
                                                                                             "background": "0",
-                                                                                            "title": "",
-                                                                                            "message": "tag(whiteCheck) [PLUGIN A JOUR] tag(whiteCheck)\ntag(greenCheck) Mise à jour du(des) plugin(s) variable(askCentreMessagePluginMAJ) effectuée"
+                                                                                            "title": "empty=1",
+                                                                                            "message": "tag(whiteCheck) [PLUGIN A JOUR] tag(whiteCheck)\ntag(greenCheck) Mise à jour du(des) plugin(s) variable(askCentreMessagePluginMAJ) effectuée\n\ntag(nameScenario)"
                                                                                         },
                                                                                         "order": "1"
                                                                                     }
@@ -424,8 +424,8 @@
                                                                                         "options": {
                                                                                             "enable": "1",
                                                                                             "background": "0",
-                                                                                            "title": "",
-                                                                                            "message": "tag(whiteCheck) [PLUGIN A JOUR] tag(whiteCheck)\ntag(greenCheck) Mise à jour du plugin variable(askCentreMessagePluginMAJ) effectuée"
+                                                                                            "title": "empty=1",
+                                                                                            "message": "tag(whiteCheck) [PLUGIN A JOUR] tag(whiteCheck)\ntag(greenCheck) Mise à jour du plugin variable(askCentreMessagePluginMAJ) effectuée\n\ntag(nameScenario)"
                                                                                         },
                                                                                         "order": "1"
                                                                                     },
@@ -607,8 +607,8 @@
                                                                                                                                 "options": {
                                                                                                                                     "enable": "1",
                                                                                                                                     "background": "0",
-                                                                                                                                    "title": "",
-                                                                                                                                    "message": "tag(whiteCheck) [ARRET] tag(whiteCheck)\ntag(redCircle) Mise à jour des plugins arrêtée"
+                                                                                                                                    "title": "empty=1",
+                                                                                                                                    "message": "tag(whiteCheck) [ARRET] tag(whiteCheck)\ntag(redCircle) Mise à jour des plugins arrêtée\n\ntag(nameScenario)"
                                                                                                                                 },
                                                                                                                                 "order": "0"
                                                                                                                             }
@@ -656,8 +656,8 @@
                                                 "options": {
                                                     "enable": "1",
                                                     "background": "0",
-                                                    "title": "",
-                                                    "message": "tag(whiteCheck) [ANNULATION] tag(whiteCheck)\ntag(redCircle) Mise à jour de plugins annulée"
+                                                    "title": "empty=1",
+                                                    "message": "tag(whiteCheck) [ANNULATION] tag(whiteCheck)\ntag(redCircle) Mise à jour de plugins annulée\n\ntag(nameScenario)"
                                                 },
                                                 "order": "0"
                                             }
