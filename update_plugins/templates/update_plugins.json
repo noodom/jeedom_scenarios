@@ -180,7 +180,7 @@
                                                                 {
                                                                     "type": "code",
                                                                     "subtype": null,
-                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n$tags['#listPluginsUpdate#'] = trim($listUpdate, ';');\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
                                                                     "options": [],
                                                                     "order": "0"
                                                                 }
@@ -349,7 +349,7 @@
                                                                                             "background": "0",
                                                                                             "Titre": ":white_check_mark: PLUGIN A JOUR :white_check_mark:",
                                                                                             "url": "",
-                                                                                            "description": "Mise à jour du(des) plugin(s) **[variable(askCentreMessagePluginMAJ)]** effectuée",
+                                                                                            "description": "Mise à jour du(des) plugin(s)  effectuée : **tag(listPluginsUpdate)**",
                                                                                             "footer": "tag(nameScenario)",
                                                                                             "colors": "#00ff00"
                                                                                         },
@@ -569,7 +569,7 @@
                                                                                                                                 "options": {
                                                                                                                                     "enable": "1",
                                                                                                                                     "background": "0",
-                                                                                                                                    "scenario_id": "325",
+                                                                                                                                    "scenario_id": "-1",
                                                                                                                                     "action": "start",
                                                                                                                                     "tags": ""
                                                                                                                                 },
