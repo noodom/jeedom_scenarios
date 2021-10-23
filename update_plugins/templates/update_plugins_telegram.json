@@ -346,7 +346,7 @@
                                                                                                     "subtype": "action",
                                                                                                     "options": {
                                                                                                         "collapse": "0",
-                                                                                                        "enable": "0"
+                                                                                                        "enable": "1"
                                                                                                     },
                                                                                                     "order": "0",
                                                                                                     "expressions": [
