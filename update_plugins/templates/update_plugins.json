@@ -1,13 +1,14 @@
 {
     "name": "update plugins",
     "isActive": "1",
-    "group": "Gestion plugins",
+    "group": "Gestion Plugins",
     "mode": "all",
     "schedule": "0 * * * *",
     "trigger": [
         "strtolower(#[Notifications][Discord - Infos][Dernier message]# ) == \"plugins\""
     ],
     "timeout": "0",
+    "object_id": null,
     "isVisible": "0",
     "display": {
         "name": "",
@@ -27,13 +28,13 @@
     "state": "stop",
     "elements": [
         {
-            "name": null,
+            "name": "",
             "type": "code",
             "options": [],
             "order": "0",
             "subElements": [
                 {
-                    "name": null,
+                    "name": "",
                     "type": "code",
                     "subtype": "action",
                     "options": {
@@ -44,8 +45,8 @@
                     "expressions": [
                         {
                             "type": "code",
-                            "subtype": null,
-                            "expression": "\/* @noodom \/ Scénario de mise à jour des plugins Jeedom depuis Discord\n\t- reprise d'une solution proposée sur Discord \/ Community Jeedom\n\t- ajout de la gestion d'un menu de navigation pour le choix des mises à jours\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n\n*\/\n\n$tags = $scenario->getTags();\n\n$messageUpdate = '';\n$nbUpdates = update::nbNeedUpdate();\n$jeedomUpdate = 0;\n\nif ( $nbUpdates == 0 ) {\n\t$scenario->setlog('0 update');\n}\nelse {\n    $messageUpdate .= 'Nombre de mises à jour de plugins disponibles : ' . $nbUpdates . \"\\n\\n\";  \n\n    foreach (update::all() as $update) {\n    \tif (strtolower($update->getStatus())!='update') continue;\n        if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n\n        $messageUpdate  .= '**Plugin : '.$update->getLogicalId(). '**' . \"\\n\";\n        $messageUpdate  .= ':red_circle:  Version installée : ' .$update->getLocalVersion(). \"\\n\";\n        $messageUpdate  .= ':green_circle: Version disponible : ' .$update->getRemoteVersion(). \"\\n\";\n        $scenario->setlog($update->getType().':'.$update->getLogicalId().' - '.$update->getLocalVersion().'\/'.$update->getRemoteVersion());\n\n        if ($update->getType() == 'plugin') {\n          try {\n            $plugin = plugin::byId($update->getLogicalId());\n            $messageUpdate .= '[Changelog](' .$plugin->getChangelog(). ') - [Community](https:\/\/community.jeedom.com\/tags\/plugin-' .$plugin->getId(). ')' . \"\\n\\n\\n\"; \n            $scenario->setlog('changelog:'.$plugin->getChangelog());      \n            $scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n        }\n    }\n}\n\n$tags['#nbUpdates#'] = $nbUpdates;\n$tags['#msgUpdate#'] = $messageUpdate;\n$namescenario .= 'Exécuté par : ' .$scenario->getName();\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
+                            "subtype": "",
+                            "expression": "\/* @noodom \/ Scénario de mise à jour des plugins Jeedom depuis Discord\n\t- reprise d'une solution proposée sur Discord \/ Community Jeedom\n\t- ajout de la gestion d'un menu de navigation pour le choix des mises à jours\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n\n*\/\n\n$tags = $scenario->getTags();\n\n$messageUpdate = '';\n$nbUpdates = update::nbNeedUpdate();\n$jeedomUpdate = 0;\n\nif ( $nbUpdates == 0 ) {\n\t$scenario->setlog('0 update');\n}\nelse {\n    $messageUpdate .= 'Nombre de mises à jour de plugins disponibles : ' . $nbUpdates . \"\\n\\n\";  \n\n    foreach (update::all() as $update) {\n    \tif (strtolower($update->getStatus())!='update') continue;\n        if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n\n        $messageUpdate  .= '**Plugin : '.$update->getLogicalId(). '**' . \"\\n\";\n        $messageUpdate  .= ':red_circle:  Version installée : ' .$update->getLocalVersion(). \"\\n\";\n        $messageUpdate  .= ':green_circle: Version disponible : ' .$update->getRemoteVersion(). \"\\n\";\n        $scenario->setlog($update->getType().':'.$update->getLogicalId().' - '.$update->getLocalVersion().'\/'.$update->getRemoteVersion());\n\n        if ($update->getType() == 'plugin') {\n          try {\n            $plugin = plugin::byId($update->getLogicalId());\n            $messageUpdate .= '[Changelog](' .str_replace(' ', '%20', $plugin->getChangelog())\n              . ') - [Community](https:\/\/community.jeedom.com\/tags\/plugin-' .str_replace(' ', '%20', $plugin->getId()). ')' . \"\\n\\n\\n\"; \n            $scenario->setlog('changelog:'.$plugin->getChangelog());      \n            $scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n        }\n    }\n}\n\n$tags['#nbUpdates#'] = $nbUpdates;\n$tags['#msgUpdate#'] = $messageUpdate;\n$namescenario .= 'Exécuté par : ' .$scenario->getName();\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
                             "options": [],
                             "order": "0"
                         }
@@ -54,13 +55,13 @@
             ]
         },
         {
-            "name": null,
+            "name": "",
             "type": "if",
             "options": [],
             "order": "0",
             "subElements": [
                 {
-                    "name": null,
+                    "name": "",
                     "type": "if",
                     "subtype": "condition",
                     "options": {
@@ -72,7 +73,7 @@
                     "expressions": [
                         {
                             "type": "condition",
-                            "subtype": null,
+                            "subtype": "",
                             "expression": "tag(nbUpdates) > 0",
                             "options": [],
                             "order": "0"
@@ -80,7 +81,7 @@
                     ]
                 },
                 {
-                    "name": null,
+                    "name": "",
                     "type": "then",
                     "subtype": "action",
                     "options": [],
@@ -88,7 +89,7 @@
                     "expressions": [
                         {
                             "type": "action",
-                            "subtype": null,
+                            "subtype": "",
                             "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
                             "options": {
                                 "enable": "1",
@@ -103,7 +104,7 @@
                         },
                         {
                             "type": "action",
-                            "subtype": null,
+                            "subtype": "",
                             "expression": "ask",
                             "options": {
                                 "enable": "1",
@@ -118,18 +119,18 @@
                         },
                         {
                             "type": "element",
-                            "subtype": null,
-                            "expression": "1071",
+                            "subtype": "",
+                            "expression": "1206",
                             "options": [],
                             "order": "2",
                             "element": {
-                                "name": null,
+                                "name": "",
                                 "type": "if",
                                 "options": [],
                                 "order": "0",
                                 "subElements": [
                                     {
-                                        "name": null,
+                                        "name": "",
                                         "type": "if",
                                         "subtype": "condition",
                                         "options": {
@@ -141,7 +142,7 @@
                                         "expressions": [
                                             {
                                                 "type": "condition",
-                                                "subtype": null,
+                                                "subtype": "",
                                                 "expression": "strtolower(variable(askCentreMessage)) == \"oui\"",
                                                 "options": [],
                                                 "order": "0"
@@ -149,7 +150,7 @@
                                         ]
                                     },
                                     {
-                                        "name": null,
+                                        "name": "",
                                         "type": "then",
                                         "subtype": "action",
                                         "options": [],
@@ -157,18 +158,18 @@
                                         "expressions": [
                                             {
                                                 "type": "element",
-                                                "subtype": null,
-                                                "expression": "1072",
+                                                "subtype": "",
+                                                "expression": "1207",
                                                 "options": [],
                                                 "order": "0",
                                                 "element": {
-                                                    "name": null,
+                                                    "name": "",
                                                     "type": "code",
                                                     "options": [],
                                                     "order": "0",
                                                     "subElements": [
                                                         {
-                                                            "name": null,
+                                                            "name": "",
                                                             "type": "code",
                                                             "subtype": "action",
                                                             "options": {
@@ -179,8 +180,8 @@
                                                             "expressions": [
                                                                 {
                                                                     "type": "code",
-                                                                    "subtype": null,
-                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n$tags['#listPluginsUpdate#'] = trim($listUpdate, ';');\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
+                                                                    "subtype": "",
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n$tags['#listPluginsUpdateTitle#'] = \":white_check_mark: PLUGIN\".(($tags['#nbUpdates#']==1)?'':'S').\" A JOUR :white_check_mark:\";\n$tags['#listPluginsUpdate#'] = \" Mise à jour \".(($tags['#nbUpdates#']==1)?'du':'des').\" plugin\".(($tags['#nbUpdates#']==1)?'':'s').\" effectuée :\".\"\\n\"\n  .\"\\n\".':white_check_mark: '.str_replace(';', \"\\n\".':white_check_mark: ', trim($listUpdate, ';'));\n\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
                                                                     "options": [],
                                                                     "order": "0"
                                                                 }
@@ -191,7 +192,7 @@
                                             },
                                             {
                                                 "type": "action",
-                                                "subtype": null,
+                                                "subtype": "",
                                                 "expression": "ask",
                                                 "options": {
                                                     "enable": "1",
@@ -206,18 +207,18 @@
                                             },
                                             {
                                                 "type": "element",
-                                                "subtype": null,
-                                                "expression": "1073",
+                                                "subtype": "",
+                                                "expression": "1208",
                                                 "options": [],
                                                 "order": "2",
                                                 "element": {
-                                                    "name": null,
+                                                    "name": "",
                                                     "type": "if",
                                                     "options": [],
                                                     "order": "0",
                                                     "subElements": [
                                                         {
-                                                            "name": null,
+                                                            "name": "",
                                                             "type": "if",
                                                             "subtype": "condition",
                                                             "options": {
@@ -229,7 +230,7 @@
                                                             "expressions": [
                                                                 {
                                                                     "type": "condition",
-                                                                    "subtype": null,
+                                                                    "subtype": "",
                                                                     "expression": "strtolower(variable(askCentreMessagePluginMAJ)) == \"aucune réponse\" OU strtolower(variable(askCentreMessagePluginMAJ)) == \"annuler\"",
                                                                     "options": [],
                                                                     "order": "0"
@@ -237,7 +238,7 @@
                                                             ]
                                                         },
                                                         {
-                                                            "name": null,
+                                                            "name": "",
                                                             "type": "then",
                                                             "subtype": "action",
                                                             "options": [],
@@ -245,7 +246,7 @@
                                                             "expressions": [
                                                                 {
                                                                     "type": "action",
-                                                                    "subtype": null,
+                                                                    "subtype": "",
                                                                     "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
                                                                     "options": {
                                                                         "enable": "1",
@@ -261,7 +262,7 @@
                                                             ]
                                                         },
                                                         {
-                                                            "name": null,
+                                                            "name": "",
                                                             "type": "else",
                                                             "subtype": "action",
                                                             "options": [],
@@ -269,18 +270,18 @@
                                                             "expressions": [
                                                                 {
                                                                     "type": "element",
-                                                                    "subtype": null,
-                                                                    "expression": "1074",
+                                                                    "subtype": "",
+                                                                    "expression": "1209",
                                                                     "options": [],
                                                                     "order": "0",
                                                                     "element": {
-                                                                        "name": null,
+                                                                        "name": "",
                                                                         "type": "if",
                                                                         "options": [],
                                                                         "order": "0",
                                                                         "subElements": [
                                                                             {
-                                                                                "name": null,
+                                                                                "name": "",
                                                                                 "type": "if",
                                                                                 "subtype": "condition",
                                                                                 "options": {
@@ -292,7 +293,7 @@
                                                                                 "expressions": [
                                                                                     {
                                                                                         "type": "condition",
-                                                                                        "subtype": null,
+                                                                                        "subtype": "",
                                                                                         "expression": "strtolower(variable(askCentreMessagePluginMAJ)) == \"tous\"",
                                                                                         "options": [],
                                                                                         "order": "0"
@@ -300,7 +301,7 @@
                                                                                 ]
                                                                             },
                                                                             {
-                                                                                "name": null,
+                                                                                "name": "",
                                                                                 "type": "then",
                                                                                 "subtype": "action",
                                                                                 "options": [],
@@ -308,18 +309,18 @@
                                                                                 "expressions": [
                                                                                     {
                                                                                         "type": "element",
-                                                                                        "subtype": null,
-                                                                                        "expression": "1075",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1210",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
-                                                                                            "name": null,
+                                                                                            "name": "",
                                                                                             "type": "code",
                                                                                             "options": [],
                                                                                             "order": "0",
                                                                                             "subElements": [
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "code",
                                                                                                     "subtype": "action",
                                                                                                     "options": {
@@ -330,7 +331,7 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "code",
-                                                                                                            "subtype": null,
+                                                                                                            "subtype": "",
                                                                                                             "expression": "foreach (update::all() as $update) {\n        $update->doUpdate();\n}\n",
                                                                                                             "options": [],
                                                                                                             "order": "0"
@@ -342,14 +343,14 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "action",
-                                                                                        "subtype": null,
+                                                                                        "subtype": "",
                                                                                         "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
                                                                                         "options": {
                                                                                             "enable": "1",
                                                                                             "background": "0",
-                                                                                            "Titre": ":white_check_mark: PLUGIN A JOUR :white_check_mark:",
+                                                                                            "Titre": "tag(listPluginsUpdateTitle)",
                                                                                             "url": "",
-                                                                                            "description": "Mise à jour du(des) plugin(s)  effectuée : **tag(listPluginsUpdate)**",
+                                                                                            "description": " tag(listPluginsUpdate)",
                                                                                             "footer": "tag(nameScenario)",
                                                                                             "colors": "#00ff00"
                                                                                         },
@@ -358,7 +359,7 @@
                                                                                 ]
                                                                             },
                                                                             {
-                                                                                "name": null,
+                                                                                "name": "",
                                                                                 "type": "else",
                                                                                 "subtype": "action",
                                                                                 "options": [],
@@ -366,18 +367,18 @@
                                                                                 "expressions": [
                                                                                     {
                                                                                         "type": "element",
-                                                                                        "subtype": null,
-                                                                                        "expression": "1079",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1211",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
-                                                                                            "name": null,
+                                                                                            "name": "",
                                                                                             "type": "code",
                                                                                             "options": [],
                                                                                             "order": "0",
                                                                                             "subElements": [
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "code",
                                                                                                     "subtype": "action",
                                                                                                     "options": {
@@ -388,7 +389,7 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "code",
-                                                                                                            "subtype": null,
+                                                                                                            "subtype": "",
                                                                                                             "expression": "$Variable_J = \"askCentreMessagePluginMAJ\";\n$tabJ = $scenario->getData($Variable_J);\n\n$nomUpdateRecherchee = $tabJ;\n$scenario->setLog('nomUpdateRecherchee : '.$nomUpdateRecherchee);\n\nforeach (update::all() as $update) {\n    $monUpdate = $update->getName();\n    if ($monUpdate == $nomUpdateRecherchee){\n        $update->doUpdate();\n    }\n}",
                                                                                                             "options": [],
                                                                                                             "order": "0"
@@ -400,7 +401,7 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "action",
-                                                                                        "subtype": null,
+                                                                                        "subtype": "",
                                                                                         "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
                                                                                         "options": {
                                                                                             "enable": "1",
@@ -415,18 +416,18 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "element",
-                                                                                        "subtype": null,
-                                                                                        "expression": "1080",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1212",
                                                                                         "options": [],
                                                                                         "order": "2",
                                                                                         "element": {
-                                                                                            "name": null,
+                                                                                            "name": "",
                                                                                             "type": "code",
                                                                                             "options": [],
                                                                                             "order": "0",
                                                                                             "subElements": [
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "code",
                                                                                                     "subtype": "action",
                                                                                                     "options": {
@@ -437,7 +438,7 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "code",
-                                                                                                            "subtype": null,
+                                                                                                            "subtype": "",
                                                                                                             "expression": "$tags = $scenario->getTags();\n\n$NbUpdates = update::nbNeedUpdate();\n$tags['#NbUpdates#'] = $NbUpdates;\n\n$scenario->setTags($tags);",
                                                                                                             "options": [],
                                                                                                             "order": "0"
@@ -449,18 +450,18 @@
                                                                                     },
                                                                                     {
                                                                                         "type": "element",
-                                                                                        "subtype": null,
-                                                                                        "expression": "1081",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1213",
                                                                                         "options": [],
                                                                                         "order": "3",
                                                                                         "element": {
-                                                                                            "name": null,
+                                                                                            "name": "",
                                                                                             "type": "if",
                                                                                             "options": [],
                                                                                             "order": "0",
                                                                                             "subElements": [
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "if",
                                                                                                     "subtype": "condition",
                                                                                                     "options": {
@@ -472,7 +473,7 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "condition",
-                                                                                                            "subtype": null,
+                                                                                                            "subtype": "",
                                                                                                             "expression": "tag(NbUpdates) > 0",
                                                                                                             "options": [],
                                                                                                             "order": "0"
@@ -480,7 +481,7 @@
                                                                                                     ]
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "then",
                                                                                                     "subtype": "action",
                                                                                                     "options": [],
@@ -488,7 +489,7 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "action",
-                                                                                                            "subtype": null,
+                                                                                                            "subtype": "",
                                                                                                             "expression": "ask",
                                                                                                             "options": {
                                                                                                                 "enable": "1",
@@ -503,18 +504,18 @@
                                                                                                         },
                                                                                                         {
                                                                                                             "type": "element",
-                                                                                                            "subtype": null,
-                                                                                                            "expression": "1082",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "1214",
                                                                                                             "options": [],
                                                                                                             "order": "1",
                                                                                                             "element": {
-                                                                                                                "name": null,
+                                                                                                                "name": "",
                                                                                                                 "type": "if",
                                                                                                                 "options": [],
                                                                                                                 "order": "0",
                                                                                                                 "subElements": [
                                                                                                                     {
-                                                                                                                        "name": null,
+                                                                                                                        "name": "",
                                                                                                                         "type": "if",
                                                                                                                         "subtype": "condition",
                                                                                                                         "options": {
@@ -526,7 +527,7 @@
                                                                                                                         "expressions": [
                                                                                                                             {
                                                                                                                                 "type": "condition",
-                                                                                                                                "subtype": null,
+                                                                                                                                "subtype": "",
                                                                                                                                 "expression": "strtolower(variable(newCheck)) == \"oui\"",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "0"
@@ -534,7 +535,7 @@
                                                                                                                         ]
                                                                                                                     },
                                                                                                                     {
-                                                                                                                        "name": null,
+                                                                                                                        "name": "",
                                                                                                                         "type": "then",
                                                                                                                         "subtype": "action",
                                                                                                                         "options": [],
@@ -542,7 +543,7 @@
                                                                                                                         "expressions": [
                                                                                                                             {
                                                                                                                                 "type": "action",
-                                                                                                                                "subtype": null,
+                                                                                                                                "subtype": "",
                                                                                                                                 "expression": "delete_variable",
                                                                                                                                 "options": {
                                                                                                                                     "enable": "1",
@@ -553,7 +554,7 @@
                                                                                                                             },
                                                                                                                             {
                                                                                                                                 "type": "action",
-                                                                                                                                "subtype": null,
+                                                                                                                                "subtype": "",
                                                                                                                                 "expression": "delete_variable",
                                                                                                                                 "options": {
                                                                                                                                     "enable": "1",
@@ -564,7 +565,7 @@
                                                                                                                             },
                                                                                                                             {
                                                                                                                                 "type": "action",
-                                                                                                                                "subtype": null,
+                                                                                                                                "subtype": "",
                                                                                                                                 "expression": "scenario",
                                                                                                                                 "options": {
                                                                                                                                     "enable": "1",
@@ -578,7 +579,7 @@
                                                                                                                         ]
                                                                                                                     },
                                                                                                                     {
-                                                                                                                        "name": null,
+                                                                                                                        "name": "",
                                                                                                                         "type": "else",
                                                                                                                         "subtype": "action",
                                                                                                                         "options": [],
@@ -586,7 +587,7 @@
                                                                                                                         "expressions": [
                                                                                                                             {
                                                                                                                                 "type": "action",
-                                                                                                                                "subtype": null,
+                                                                                                                                "subtype": "",
                                                                                                                                 "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
                                                                                                                                 "options": {
                                                                                                                                     "enable": "1",
@@ -607,7 +608,7 @@
                                                                                                     ]
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "else",
                                                                                                     "subtype": "action",
                                                                                                     "options": [],
@@ -630,7 +631,7 @@
                                         ]
                                     },
                                     {
-                                        "name": null,
+                                        "name": "",
                                         "type": "else",
                                         "subtype": "action",
                                         "options": [],
@@ -638,7 +639,7 @@
                                         "expressions": [
                                             {
                                                 "type": "action",
-                                                "subtype": null,
+                                                "subtype": "",
                                                 "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
                                                 "options": {
                                                     "enable": "1",
@@ -659,7 +660,7 @@
                     ]
                 },
                 {
-                    "name": null,
+                    "name": "",
                     "type": "else",
                     "subtype": "action",
                     "options": [],
