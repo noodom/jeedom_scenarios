@@ -1,7 +1,7 @@
 {
-    "name": "update plugins Telegram",
+    "name": "updatePluginsTelegram",
     "isActive": "1",
-    "group": "Gestion Plugins",
+    "group": "",
     "mode": "schedule",
     "schedule": "0 * * * *",
     "trigger": [
@@ -46,7 +46,7 @@
                         {
                             "type": "code",
                             "subtype": "",
-                            "expression": "\/* @noodom \/ Scénario de mise à jour des plugins Jeedom depuis Telegram\n\t- reprise d'une solution proposée sur Telegram \/ Community Jeedom\n\t- ajout de la gestion d'un menu de navigation pour le choix des mises à jours\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n\n*\/\n\n$tags = $scenario->getTags();\n\n$tags['#redCircle#'] = \"&\".\"#x1F534;\";\n$tags['#greenCircle#'] = \"&\".\"#x1F7E2;\";\n$tags['#greenCheck#'] = \"&\".\"#x2705;\";\n$tags['#whiteCheck#'] = \"&\".\"#x2611;\";\n$tags['#arrow#'] = \"&\".\"#x27A1;\";\n\n$messageUpdate = '';\n$nbUpdates = update::nbNeedUpdate();\n$jeedomUpdate = 0;\n\nif ( $nbUpdates == 0 ) {\n\t$scenario->setlog('0 update');\n}\nelse {\n    $messageUpdate .= 'Nombre de mises à jour de plugins disponibles : ' . $nbUpdates . \"\\n\\n\";  \n\n    foreach (update::all() as $update) {\n    \tif (strtolower($update->getStatus())!='update') continue;\n        if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n\n        $messageUpdate  .= $tags['#arrow#'].' <u><b>Plugin : '.$update->getLogicalId().\"<\/b><\/u>\".\"\\n\";\n        $messageUpdate  .= $tags['#redCircle#'].' Version installée : ' .$update->getLocalVersion(). \"\\n\";\n        $messageUpdate  .= $tags['#greenCircle#'].' Version disponible : ' .$update->getRemoteVersion(). \"\\n\\n\";\n        $scenario->setlog($update->getType().':'.$update->getLogicalId().' - '.$update->getLocalVersion().'\/'.$update->getRemoteVersion());\n\n        if ($update->getType() == 'plugin') {\n          try {\n            $plugin = plugin::byId($update->getLogicalId());\n            $messageUpdate .= \"<a href='\".$plugin->getChangelog().\"'>Changelog<\/a>  |  \";\n            $messageUpdate .= \"<a href='https:\/\/community.jeedom.com\/tags\/plugin-\".$plugin->getId().\"'>Community<\/a>\" . \"\\n\\n\" ;\n            $scenario->setlog('changelog:'.$plugin->getChangelog());      \n            $scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n        }\n      \n        if ($update->getType() == 'core') {\n          try {\n            \/\/ Récupere l'information du change Log pour chaque plugin\n            $messageUpdate  .= \"<a href='https:\/\/doc.jeedom.com\/fr_FR\/core\/4.1\/changelog'>Changelog<\/a>  |  \";\n            \/\/ On log un message\n            #$scenario->setlog('changelog:'.$plugin->getChangelog());\n            \/\/ Recupere l'information du community pour chaque plugin\n            $messageUpdate  .= \"<a href='https:\/\/community.jeedom.com\/search?q=\".$update->getRemoteVersion().\"'>Community<\/a>\" . \"\\n\\n\\n\" ;\n            \/\/ On log un message\n            #$scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n      \t}\n    }\n}\n\n$tags['#nbUpdates#'] = $nbUpdates;\n$tags['#msgUpdate#'] = $messageUpdate;\n$namescenario .= 'Exécuté par le scénario \"' .$scenario->getName().'\", le ' .date('d\/m\/Y');\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
+                            "expression": "\/* @noodom \/ Scénario de mise à jour des plugins Jeedom depuis Telegram\n\t- reprise d'une solution proposée sur Telegram \/ Community Jeedom\n\t- ajout de la gestion d'un menu de navigation pour le choix des mises à jours\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n\n*\/\n\n$tags = $scenario->getTags();\n\n$tags['#redCircle#'] = \"&\".\"#x1F534;\";\n$tags['#greenCircle#'] = \"&\".\"#x1F7E2;\";\n$tags['#greenCheck#'] = \"&\".\"#x2705;\";\n$tags['#whiteCheck#'] = \"&\".\"#x2611;\";\n$tags['#arrow#'] = \"&\".\"#x27A1;\";\n\n$messageUpdate = '';\n$nbUpdates = update::nbNeedUpdate();\n$jeedomUpdate = 0;\n\nif ( $nbUpdates == 0 ) {\n\t$scenario->setlog('0 update');\n}\nelse {\n    $messageUpdate .= 'Nombre de mises à jour de plugins disponibles : ' . $nbUpdates . \"\\n\\n\";  \n\n    foreach (update::all() as $update) {\n    \tif (strtolower($update->getStatus())!='update') continue;\n        if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n\n        $messageUpdate  .= $tags['#arrow#'].' <u><b>Plugin : '.$update->getLogicalId().\"<\/b><\/u>\".\"\\n\";\n        $messageUpdate  .= $tags['#redCircle#'].' Version installée : ' .$update->getLocalVersion(). \"\\n\";\n        $messageUpdate  .= $tags['#greenCircle#'].' Version disponible : ' .$update->getRemoteVersion(). \"\\n\\n\";\n        $scenario->setlog($update->getType().':'.$update->getLogicalId().' - '.$update->getLocalVersion().'\/'.$update->getRemoteVersion());\n\n        if ($update->getType() == 'plugin') {\n          try {\n            $plugin = plugin::byId($update->getLogicalId());\n            $messageUpdate .= \"<a href='\".str_replace(' ', '%20', $plugin->getChangelog()).\"'>Changelog<\/a>  |  \";\n            $messageUpdate .= \"<a href='https:\/\/community.jeedom.com\/tags\/plugin-\".str_replace(' ', '%20', $plugin->getId()).\"'>Community<\/a>\" . \"\\n\\n\" ;\n            $scenario->setlog('changelog:'.$plugin->getChangelog());      \n            $scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n        }\n      \n        if ($update->getType() == 'core') {\n          try {\n            \/\/ Récupere l'information du change Log pour chaque plugin\n            $messageUpdate  .= \"<a href='https:\/\/doc.jeedom.com\/fr_FR\/core\/4.1\/changelog'>Changelog<\/a>  |  \";\n            \/\/ On log un message\n            #$scenario->setlog('changelog:'.$plugin->getChangelog());\n            \/\/ Recupere l'information du community pour chaque plugin\n            $messageUpdate  .= \"<a href='https:\/\/community.jeedom.com\/search?q=\".$update->getRemoteVersion().\"'>Community<\/a>\" . \"\\n\\n\\n\" ;\n            \/\/ On log un message\n            #$scenario->setlog('community:https:\/\/community.jeedom.com\/tags\/plugin-'.$plugin->getId());\n          } catch (Exception $e) {\n\n          }\n      \t}\n    }\n}\n\n$tags['#nbUpdates#'] = $nbUpdates;\n$tags['#msgUpdate#'] = $messageUpdate;\n$namescenario .= 'Exécuté par le scénario \"' .$scenario->getName().'\", le ' .date('d\/m\/Y');\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
                             "options": [],
                             "order": "0"
                         }
@@ -90,7 +90,7 @@
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "1161",
+                            "expression": "270",
                             "options": [],
                             "order": "0",
                             "element": {
@@ -112,7 +112,7 @@
                                             {
                                                 "type": "action",
                                                 "subtype": "",
-                                                "expression": "#[Notifications][Telegram Notifications][Noodom]#",
+                                                "expression": "#[Notifications][Telegram][Noodom]#",
                                                 "options": {
                                                     "enable": "1",
                                                     "background": "0",
@@ -137,14 +137,14 @@
                                 "answer": "Oui;Non",
                                 "variable": "askCentreMessage",
                                 "timeout": "60",
-                                "cmd": "#[Notifications][Telegram Notifications][Noodom]#"
+                                "cmd": "#[Notifications][Telegram][Noodom]#"
                             },
                             "order": "1"
                         },
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "1162",
+                            "expression": "271",
                             "options": [],
                             "order": "2",
                             "element": {
@@ -183,7 +183,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "1163",
+                                                "expression": "272",
                                                 "options": [],
                                                 "order": "0",
                                                 "element": {
@@ -205,7 +205,7 @@
                                                                 {
                                                                     "type": "code",
                                                                     "subtype": "",
-                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n$tags['#listPluginsUpdate#'] = trim($listUpdate, ';');\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n\n\/\/tag(whiteCheck) [PLUGIN A JOUR] tag(whiteCheck)\n\/\/tag(greenCheck) Mise à jour du(des) plugin(s) effectuée :\n\n$tags['#listPluginsUpdate#'] = $tags['#whiteCheck#'].\" [PLUGIN\".(($tags['#nbUpdates#']==1)?'':'S').\" A JOUR] \".$tags['#whiteCheck#'].\"\\n\"\n  .$tags['#greenCheck#'].\" Mise à jour \".(($tags['#nbUpdates#']==1)?'du':'des').\" plugin\".(($tags['#nbUpdates#']==1)?'':'s').\" effectuée :\".\"\\n\"\n  .\"\\n\".$tags['#greenCheck#'].str_replace(';', \"\\n\".$tags['#greenCheck#'], trim($listUpdate, ';'));\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
                                                                     "options": [],
                                                                     "order": "0"
                                                                 }
@@ -225,14 +225,14 @@
                                                     "answer": "tag(listUpdate)",
                                                     "variable": "askCentreMessagePluginMAJ",
                                                     "timeout": "60",
-                                                    "cmd": "#[Notifications][Telegram Notifications][Noodom]#"
+                                                    "cmd": "#[Notifications][Telegram][Noodom]#"
                                                 },
                                                 "order": "1"
                                             },
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "1164",
+                                                "expression": "273",
                                                 "options": [],
                                                 "order": "2",
                                                 "element": {
@@ -271,7 +271,7 @@
                                                                 {
                                                                     "type": "action",
                                                                     "subtype": "",
-                                                                    "expression": "#[Notifications][Telegram Notifications][Noodom]#",
+                                                                    "expression": "#[Notifications][Telegram][Noodom]#",
                                                                     "options": {
                                                                         "enable": "1",
                                                                         "background": "0",
@@ -292,7 +292,7 @@
                                                                 {
                                                                     "type": "element",
                                                                     "subtype": "",
-                                                                    "expression": "1165",
+                                                                    "expression": "274",
                                                                     "options": [],
                                                                     "order": "0",
                                                                     "element": {
@@ -331,7 +331,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "1166",
+                                                                                        "expression": "275",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
@@ -346,7 +346,7 @@
                                                                                                     "subtype": "action",
                                                                                                     "options": {
                                                                                                         "collapse": "0",
-                                                                                                        "enable": "1"
+                                                                                                        "enable": "0"
                                                                                                     },
                                                                                                     "order": "0",
                                                                                                     "expressions": [
@@ -365,12 +365,12 @@
                                                                                     {
                                                                                         "type": "action",
                                                                                         "subtype": "",
-                                                                                        "expression": "#[Notifications][Telegram Notifications][Noodom]#",
+                                                                                        "expression": "#[Notifications][Telegram][Noodom]#",
                                                                                         "options": {
                                                                                             "enable": "1",
                                                                                             "background": "0",
                                                                                             "title": "empty=1",
-                                                                                            "message": "tag(whiteCheck) [PLUGIN A JOUR] tag(whiteCheck)\ntag(greenCheck) Mise à jour du(des) plugin(s) effectuée :\ntag(listPluginsUpdate)\n\ntag(nameScenario)"
+                                                                                            "message": "tag(listPluginsUpdate)\n\ntag(nameScenario)"
                                                                                         },
                                                                                         "order": "1"
                                                                                     }
@@ -386,7 +386,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "1167",
+                                                                                        "expression": "276",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
@@ -420,7 +420,7 @@
                                                                                     {
                                                                                         "type": "action",
                                                                                         "subtype": "",
-                                                                                        "expression": "#[Notifications][Telegram Notifications][Noodom]#",
+                                                                                        "expression": "#[Notifications][Telegram][Noodom]#",
                                                                                         "options": {
                                                                                             "enable": "1",
                                                                                             "background": "0",
@@ -432,7 +432,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "1168",
+                                                                                        "expression": "277",
                                                                                         "options": [],
                                                                                         "order": "2",
                                                                                         "element": {
@@ -466,7 +466,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "1169",
+                                                                                        "expression": "278",
                                                                                         "options": [],
                                                                                         "order": "3",
                                                                                         "element": {
@@ -513,14 +513,14 @@
                                                                                                                 "answer": "Oui;Non",
                                                                                                                 "variable": "newCheck",
                                                                                                                 "timeout": "60",
-                                                                                                                "cmd": "#[Notifications][Telegram Notifications][Noodom]#"
+                                                                                                                "cmd": "#[Notifications][Telegram][Noodom]#"
                                                                                                             },
                                                                                                             "order": "0"
                                                                                                         },
                                                                                                         {
                                                                                                             "type": "element",
                                                                                                             "subtype": "",
-                                                                                                            "expression": "1170",
+                                                                                                            "expression": "279",
                                                                                                             "options": [],
                                                                                                             "order": "1",
                                                                                                             "element": {
@@ -580,18 +580,18 @@
                                                                                                                             },
                                                                                                                             {
                                                                                                                                 "type": "element",
-                                                                                                                                "subtype": null,
-                                                                                                                                "expression": "1171",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "280",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "2",
                                                                                                                                 "element": {
-                                                                                                                                    "name": null,
+                                                                                                                                    "name": "",
                                                                                                                                     "type": "comment",
                                                                                                                                     "options": [],
                                                                                                                                     "order": "0",
                                                                                                                                     "subElements": [
                                                                                                                                         {
-                                                                                                                                            "name": null,
+                                                                                                                                            "name": "",
                                                                                                                                             "type": "comment",
                                                                                                                                             "subtype": "comment",
                                                                                                                                             "options": {
@@ -601,7 +601,7 @@
                                                                                                                                             "expressions": [
                                                                                                                                                 {
                                                                                                                                                     "type": "comment",
-                                                                                                                                                    "subtype": null,
+                                                                                                                                                    "subtype": "",
                                                                                                                                                     "expression": "Attention : à l'import, il faut sélectionner ce scénario ci-dessous",
                                                                                                                                                     "options": [],
                                                                                                                                                     "order": "0"
@@ -636,7 +636,7 @@
                                                                                                                             {
                                                                                                                                 "type": "action",
                                                                                                                                 "subtype": "",
-                                                                                                                                "expression": "#[Notifications][Telegram Notifications][Noodom]#",
+                                                                                                                                "expression": "#[Notifications][Telegram][Noodom]#",
                                                                                                                                 "options": {
                                                                                                                                     "enable": "1",
                                                                                                                                     "background": "0",
@@ -685,7 +685,7 @@
                                             {
                                                 "type": "action",
                                                 "subtype": "",
-                                                "expression": "#[Notifications][Telegram Notifications][Noodom]#",
+                                                "expression": "#[Notifications][Telegram][Noodom]#",
                                                 "options": {
                                                     "enable": "1",
                                                     "background": "0",
