@@ -1,7 +1,7 @@
 {
-    "name": "updatePluginsTelegram",
+    "name": "update plugins",
     "isActive": "1",
-    "group": "",
+    "group": "Gestion Plugins",
     "mode": "schedule",
     "schedule": "0 * * * *",
     "trigger": [
@@ -205,7 +205,7 @@
                                                                 {
                                                                     "type": "code",
                                                                     "subtype": "",
-                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n\n\/\/tag(whiteCheck) [PLUGIN A JOUR] tag(whiteCheck)\n\/\/tag(greenCheck) Mise à jour du(des) plugin(s) effectuée :\n\n$tags['#listPluginsUpdate#'] = $tags['#whiteCheck#'].\" [PLUGIN\".(($tags['#nbUpdates#']==1)?'':'S').\" A JOUR] \".$tags['#whiteCheck#'].\"\\n\"\n  .$tags['#greenCheck#'].\" Mise à jour \".(($tags['#nbUpdates#']==1)?'du':'des').\" plugin\".(($tags['#nbUpdates#']==1)?'':'s').\" effectuée :\".\"\\n\"\n  .\"\\n\".$tags['#greenCheck#'].str_replace(';', \"\\n\".$tags['#greenCheck#'], trim($listUpdate, ';'));\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ Parcours de tous les Updates\n$listUpdate = \"\";\nforeach (update::all() as $update) {\n\t$monUpdate = $update->getName();\n\t$statusUpdate = strtolower($update->getStatus());\n\t$configUpdate = $update->getConfiguration('doNotUpdate');\n\tif ($statusUpdate == \"update\" && $configUpdate == 0) {\n      \t$listUpdate .= $monUpdate.\";\";\n\t}\n}\n\n$tags['#listPluginsUpdate#'] = $tags['#whiteCheck#'].\" [PLUGIN\".(($tags['#nbUpdates#']==1)?'':'S').\" A JOUR] \".$tags['#whiteCheck#'].\"\\n\"\n  .$tags['#greenCheck#'].\" Mise à jour \".(($tags['#nbUpdates#']==1)?'du':'des').\" plugin\".(($tags['#nbUpdates#']==1)?'':'s').\" effectuée :\".\"\\n\"\n  .\"\\n\".$tags['#greenCheck#'].\" \".str_replace(';', \"\\n\".$tags['#greenCheck#'].\" \", trim($listUpdate, ';'));\n$listUpdate .= \"Annuler\".\";\";\n$listUpdate .= \"Tous\";\n$scenario->setLog('listUpdate : '.$listUpdate);\n$tags['#listUpdate#'] = $listUpdate;\n\n$scenario->setTags($tags);\n",
                                                                     "options": [],
                                                                     "order": "0"
                                                                 }
