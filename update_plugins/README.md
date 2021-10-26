@@ -6,6 +6,10 @@ Ces scénarios permettent d'effectuer la mise à jour de plugins à partir de me
 
 Les templates JSon du scénario sont disponibles ici :
 
+- [Demande d actions sur plugins](./templates/Demande d actions sur plugins.json)
+
+- [Exécution d actions sur plugins](./templates/Exécution d actions sur plugins.json)
+
 - [update_plugins](./templates/update_plugins.json)
 
 - [update_plugins_telegram](./templates/update_plugins_telegram.json)
