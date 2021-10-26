@@ -1,0 +1,439 @@
+{
+    "name": "Exécution d actions sur plugins",
+    "isActive": "1",
+    "group": "Gestion Plugins",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        ""
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0",
+        "timeline::folder": ""
+    },
+    "state": "stop",
+    "elements": [
+        {
+            "name": null,
+            "type": "code",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "code",
+                    "subtype": "action",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "code",
+                            "subtype": null,
+                            "expression": "\/* @noodom \/ Scénario de gestion des plugins Jeedom depuis Discord (Sauvegarde, Restauration, Mise à jour, Suppression de sauvegardes)\nNom du scénario : Exécution d actions sur plugins\n\nInstallation du menu : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n(Appelé par le scénario \"Demande d actions sur plugins\")\n\n\/!\\ ATTENTION \/!\\ Ce scénario modifie le contenu du répertoires contenant les plugins Jeedom. \n\/!\\ Je vous laisse seul juge de la pertinence et de votre confiance à utiliser ce scénario pour la gestion de l'installation de vos plugins.\n\/!\\ Je décline donc toute responsabilité pour tout problème créé suite à l'exécution de ce scénario.\/!\\ \n\n\/!\\ Définir le répertoire contenant la liste des plugins installés avec la valeur de pluginsPath dans les modifications ci-dessous (pas de raison de le modifier à priori)\n\/!\\ Définir le répertoire de sauvegarde des plugins utilisé par ce scénario avec la valeur de  backupPath dans les modifications ci-dessous\n\nReporter les modifications de pluginsPath et backupPath dans le scénario \"Demande d actions sur plugins\"\n\n*\/\n\n$tags = $scenario->getTags();\n\n\/\/ PATCH POUR TESTS\n\/\/$tags['#action#']  = \"removexx\";\n\/\/$tags['#plugin#']  = \"plugin3\";\n\/\/ FIN PATCH TESTS\n\n\/\/ Définition des répertoires\n\/\/ - Répertoire des plugins Jeedom\n\/\/ pour tests : $tags['#pluginsPath#'] = \"\/var\/www\/html\/data\/custom\/plugins_backup\/origin\";\n$tags['#pluginsPath#'] = \"\/var\/www\/html\/plugins\";\n\/\/ - Répertoire de sauvegarde des plugins\n\/\/ pour tests : $tags['#backupPath#'] = \"\/var\/www\/html\/data\/custom\/plugins_backup\/destination\";\n$tags['#backupPath#'] = \"\/var\/www\/html\/data\/custom\/plugins_backup\";\n\n\n\/\/ Récupération de l'action demandée (passée en paramètre du scénario)\n(!isset($tags['#action#'])) ? $tags['#action#'] = \"\" : null;\n\/\/ Vérification des actions autorisées\n($tags['#action#'] != \"backup\" && $tags['#action#'] != \"restore\" && $tags['#action#'] != \"remove\")?$tags['#action#'] = \"\":null;\n\n\/\/ Récupération du plugin demandé (passé en paramètre du scénario)\n(!isset($tags['#plugin#'])) ? $tags['#plugin#'] = \"\" : null;\n\n\/\/ Signature du scénario pour messages Discord\n$tags['#scenarioName#'] = 'Exécuté par : ' . $scenario->getName();\n\n\/\/ définitions titres, descriptions\n$tags['#titreActionErreur#'] = \"Erreur sur intervention sur les plugins\";\n\n$tags['#descriptionActionErreur)#'] = \":red_circle: Erreur : action non pécisée ou non valide (actions possibles : **backup**, **restore** ou **remove**)\";\n$tags['#descriptionActionInconnue)#'] = \":red_circle: Il y a eu un problème sur une action sur un plugin\";\n\n$scenario->setTags($tags);",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": null,
+            "type": "if",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": null,
+                    "type": "if",
+                    "subtype": "condition",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1",
+                        "allowRepeatCondition": "0"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "condition",
+                            "subtype": null,
+                            "expression": "tag(action) != \"\" && tag(plugin) != \"\"",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "type": "then",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "1",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": null,
+                            "expression": "1196",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": null,
+                                "type": "if",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": null,
+                                        "type": "if",
+                                        "subtype": "condition",
+                                        "options": {
+                                            "collapse": "0",
+                                            "enable": "1",
+                                            "allowRepeatCondition": "0"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "condition",
+                                                "subtype": null,
+                                                "expression": "tag(action) == \"backup\"",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "then",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "1",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "1197",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "code",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "code",
+                                                            "subtype": "action",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "code",
+                                                                    "subtype": null,
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de sauvegarde des plugins si inexistant\nif (!is_dir($tags['#backupPath#'] . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire de sauvegarde '\" . $pluginDir .\"'\");\n  mkdir($tags['#backupPath#']);\n}\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire '\" . $pluginDir .\"'\");\n  mkdir($pluginDir);\n}\nelse {\n  \/\/ répertoire existant, on vide les sauvegardes existantes\n  $scenario->setLog(\"suppression de la sauvegarde précédente '\" . $pluginDir . '\/*.tar.gz\\'');\n  array_map('unlink', glob($pluginDir.'*.tar.gz'));\n}\n\n\/\/ backup du plugin\n$scenario->setLog('Backup => cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\nsystem('cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\n\n\/\/$scenario->setTags($tags);",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": null,
+                                                "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "Titre": "Sauvegarde du plugin tag(plugin)",
+                                                    "url": "",
+                                                    "description": ":green_circle: La sauvegarde du plugin **tag(plugin)** s'est bien passée",
+                                                    "footer": "tag(scenarioName)",
+                                                    "colors": "#00FF00"
+                                                },
+                                                "order": "1"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": null,
+                                        "type": "else",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "2",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": null,
+                                                "expression": "1198",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": null,
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": null,
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": null,
+                                                                    "expression": "tag(action) == \"restore\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "1199",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": null,
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": null,
+                                                                                        "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'];\nif (is_dir($pluginDir . '\/.')) {\n  \/\/ répertoire existant, on le supprime\n  rrmdir($pluginDir);\n}\n\n\/\/ on crée le répertoire du plugin\n$scenario->setLog(\"création du répertoire \" . $pluginDir);\nmkdir($pluginDir);\n\n$pluginDir = $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'];\n$scenario->setLog('Restore => cd ' . $pluginDir . '; tar xfz \"' . $tags['#backupPath#'] . '\/' . $tags['#plugin#'] . '\/' . $tags['#plugin#'] . '.tar.gz\"');\nsystem('cd ' . $pluginDir . '; tar xfz \"' . $tags['#backupPath#'] . '\/' . $tags['#plugin#'] . '\/' . $tags['#plugin#'] . '.tar.gz\"');\n\n\/\/$scenario->setTags($tags);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "Titre": "Restauration du plugin tag(plugin)",
+                                                                        "url": "",
+                                                                        "description": ":green_circle: La restauration du plugin **tag(plugin)** s'est bien passée",
+                                                                        "footer": "tag(scenarioName)",
+                                                                        "colors": "#00FF00"
+                                                                    },
+                                                                    "order": "1"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "1200",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": null,
+                                                                        "type": "if",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "if",
+                                                                                "subtype": "condition",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1",
+                                                                                    "allowRepeatCondition": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "condition",
+                                                                                        "subtype": null,
+                                                                                        "expression": "tag(action) == \"remove\"",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "then",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "1",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": null,
+                                                                                        "expression": "1201",
+                                                                                        "options": [],
+                                                                                        "order": "0",
+                                                                                        "element": {
+                                                                                            "name": null,
+                                                                                            "type": "code",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": null,
+                                                                                                    "type": "code",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "code",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "$tags = $scenario->getTags();\n\n\/\/ suppression du dossier du plugin à supprimer\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ pas de répertoire du plugin, on ne fait rien\n  $tags['#description#'] = ':red_circle: Pas de répertoire ' . $pluginDir . ' à supprimer, aucune action effectuée';\n}\nelse {\n  \/\/ répertoire existant, on le supprime\n  rrmdir($pluginDir);\n  $tags['#description#'] = ':green_circle: La suppression du plugin **' . $tags['#plugin#'] . '** s\\'est bien passée';\n}\n\n$scenario->setTags($tags);",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "subtype": null,
+                                                                                        "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                        "options": {
+                                                                                            "enable": "1",
+                                                                                            "background": "0",
+                                                                                            "Titre": "Suppression de la sauvegarde du plugin tag(plugin)",
+                                                                                            "url": "",
+                                                                                            "description": "tag(description)",
+                                                                                            "footer": "tag(scenarioName)",
+                                                                                            "colors": "#00FF00"
+                                                                                        },
+                                                                                        "order": "1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "else",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "2",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "subtype": null,
+                                                                                        "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                        "options": {
+                                                                                            "enable": "1",
+                                                                                            "background": "0",
+                                                                                            "Titre": "tag(titreActionErreur)",
+                                                                                            "url": "",
+                                                                                            "description": "tag(descriptionActionErreur)",
+                                                                                            "footer": "tag(scenarioName)",
+                                                                                            "colors": "#FF0000"
+                                                                                        },
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": null,
+                    "type": "else",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "2",
+                    "expressions": [
+                        {
+                            "type": "action",
+                            "subtype": null,
+                            "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "Titre": "tag(titreActionErreur)",
+                                "url": "",
+                                "description": "tag(descriptionActionInconnue)",
+                                "footer": "tag(scenarioName)",
+                                "colors": "#FF0000"
+                            },
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
