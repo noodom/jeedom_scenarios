@@ -1,14 +1,18 @@
 # Scénarios de mise à jour de plugins par menus Discord ou Telegram
 
-Ces scénarios permettent d'effectuer la mise à jour de plugins à partir de menus Discord ou Telegram.
+Ces scénarios permettent d'effectuer des actions sur les plugins de son installation Jeedom à partir de menus Discord ou Telegram.
+- faire une sauvegarde d'un plugin
+- restaurer un plugin sauvegardé sur l'arborescence de Jeedom
+- mettre à jour un plugin depuis le Market Jeedom
+- Supprimer une sauvegarde d'un plugin
 
 ## Template des scénarios
 
-Les templates JSon du scénario sont disponibles ici :
+Les templates JSon des scénarios sont disponibles ici :
 
-- [Demande d actions sur plugins](./templates/Demande d actions sur plugins.json)
+- [Demande d actions sur plugins](./templates/demande_d_actions_sur_plugins.json)
 
-- [Exécution d actions sur plugins](./templates/Exécution d actions sur plugins.json)
+- [Exécution d actions sur plugins](./templates/execution_d_actions_sur_plugins.json)
 
 - [update_plugins](./templates/update_plugins.json)
 
@@ -16,12 +20,20 @@ Les templates JSon du scénario sont disponibles ici :
 
 ## Description des scénarios de mise à jour des plugins par Discord ou Telegram
 
+- Le scénario "Demande d actions sur plugins" propose un menu pour faire la demande de sauvegarde d'un plugin de son Jeedom ,de restaurer une sauvegarde d'un plugin vers son Jeedom, de mettre à jour un plugin depuis le Market Jeedom, de supprimer une sauvegarde d'un plugin.
+  Les actions sélectionnées provoque l'appel des scénarios "Exécution d actions sur plugins" et "update plugins" pour effectuer les actions demandées.
+  C'est le scénario principal appelé par l'utilisateur.
+
+- Le scénario "Exécution d actions sur plugins" permet d'effectuer les actions demandées par le scénario "Demande d actions sur plugins"
+
 - Le scénario "update plugins" permet d'effectuer des mises à jours des plugins Jeedom depuis un menu Discord.
-  Il permet de récupérer la liste des plugins disponibles pour une mise à jour et de choisir les plugins à mettre à jour
+  Il permet de récupérer la liste des plugins disponibles pour une mise à jour et de choisir les plugins à mettre à jour.
+  Il peut être appelé directement par l'utilisateur et est aussi appelé par le scénario "Demande d actions sur plugins"
 
   Il est exécuté :
-    - toutes les heures (aucune action si aucun nouveau plugin disponible)
-    - en le déclenchant depuis Discord avec le mot-clé "plugins"
+    - toutes les heures (aucune action si aucun nouveau plugin disponible) : peut-être supprimé des déclencheurs si non souhaité
+    - en le déclenchant depuis Discord avec le mot-clé "plugins" : peut-être supprimé des déclencheurs si non souhaité
+    - si appelé depuis le menu "Mise à jour" du scénario "Demande d actions sur plugins"
 
 - Le scénario "update plugins telegram" permet d'effectuer des mises à jours des plugins Jeedom depuis un menu Telegram.
   Il permet de récupérer la liste des plugins disponibles pour une mise à jour et de choisir les plugins à mettre à jour
@@ -31,7 +43,9 @@ Les templates JSon du scénario sont disponibles ici :
 
 ## Installation du template de scénario
 
-- Télécharger le template JSon souhaité : 
+- Télécharger les templates JSon souhaités : 
+  - [Demande d actions sur plugins](./templates/demande_d_actions_sur_plugins.json)
+  - [Exécution d actions sur plugins](./templates/execution_d_actions_sur_plugins.json)
   - [update_plugins Discord](./templates/update_plugins.json)
   - [update_plugins Telegram](./templates/update_plugins_telegram.json)
 
@@ -47,7 +61,10 @@ Les templates JSon du scénario sont disponibles ici :
 
 ![Mise à jour plugin](./doc/images/applyTemplate.png)
 
-- ATTENTION : le scénario s'appelle lui-même. Il faut remplacer "scénario Aucun" par "scénario nomScenarioUpdateTelegram"
+- ATTENTION : 
+  - le scénario "Demande d actions sur plugins" appelle d'autres scénarios à renseigner et activer (voir commentaires dans le premier bloc Code du scénario)
+  - les scénarios "Demande d actions sur plugins" et "Exécution d actions sur plugins" ont des variables à modifier (obligatoire pour "Demande d actions sur plugins" : DISCORD_MESSAGE_EVOLUE_ID, facultatives avec valeurs par défaut pour les autres)
+  - les scénarios 'update_plugins" et "update_plugins_telegram" s'appellent eux-même. Il faut remplacer "scénario Aucun" par "scénario nomScenarioUpdate"
 
 ## Déroulement du scénario
 
