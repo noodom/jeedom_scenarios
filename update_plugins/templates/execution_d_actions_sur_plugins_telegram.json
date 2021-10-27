@@ -1,0 +1,424 @@
+{
+    "name": "Exécution d actions sur plugins Telegram",
+    "isActive": "1",
+    "group": "Gestion Plugins",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        ""
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0",
+        "timeline::folder": ""
+    },
+    "state": "stop",
+    "elements": [
+        {
+            "name": "",
+            "type": "code",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": "",
+                    "type": "code",
+                    "subtype": "action",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "code",
+                            "subtype": "",
+                            "expression": "\/* @noodom \/ Scénario de gestion des plugins Jeedom depuis Discord (Sauvegarde, Restauration, Mise à jour, Suppression de sauvegardes)\nNom du scénario : Exécution d actions sur plugins\n\nInstallation du scénario : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n(Appelé par le scénario \"Demande d actions sur plugins Telegram\")\n\n\/!\\ ATTENTION \/!\\ Ce scénario modifie le contenu du répertoires contenant les plugins Jeedom. \n\/!\\ Je vous laisse seul juge de la pertinence et de votre confiance à utiliser ce scénario pour la gestion de l'installation de vos plugins.\n\/!\\ Je décline donc toute responsabilité pour tout problème créé suite à l'exécution de ce scénario.\/!\\ \n\n*\/\n\n$tags = $scenario->getTags();\n\n$tags['#redCircle#'] = \"&\".\"#x1F534;\";\n$tags['#greenCircle#'] = \"&\".\"#x1F7E2;\";\n$tags['#greenCheck#'] = \"&\".\"#x2705;\";\n$tags['#whiteCheck#'] = \"&\".\"#x2611;\";\n$tags['#arrow#'] = \"&\".\"#x27A1;\";\n\n\/\/ Récupération de l'action demandée (passée en paramètre du scénario)\n(!isset($tags['#action#'])) ? $tags['#action#'] = \"\" : null;\n\/\/ Vérification des actions autorisées\n($tags['#action#'] != \"backup\" && $tags['#action#'] != \"restore\" && $tags['#action#'] != \"remove\")?$tags['#action#'] = \"\":null;\n\n\/\/ Récupération du plugin demandé (passé en paramètre du scénario)\n(!isset($tags['#plugin#'])) ? $tags['#plugin#'] = \"\" : null;\n\n\/\/ Signature du scénario pour messages Discord\n$tags['#scenarioName#'] = 'Exécuté par : ' . $scenario->getName();\n\n\/\/ définitions titres, descriptions\n$tags['#titreActionErreur#'] = $tags['#whiteCheck#'].\"Erreur sur intervention sur les plugins\".$tags['#whiteCheck#'];\n\n$tags['#descriptionActionErreur)#'] = $tags['#redCircle)#'].\" Erreur : action non pécisée ou non valide (actions possibles : <b>backup<\/b>, <b>restore<\/b> ou <b>remove<\/b>)\";\n$tags['#descriptionActionInconnue)#'] = $tags['#redCircle)#'].\" Il y a eu un problème sur une action sur un plugin\";\n\n$namescenario .= 'Exécuté par le scénario \"' .$scenario->getName().'\", le ' .date('d\/m\/Y');\n$tags['#nameScenario#'] = $namescenario;\n\n$scenario->setTags($tags);",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "",
+            "type": "if",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": "",
+                    "type": "if",
+                    "subtype": "condition",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1",
+                        "allowRepeatCondition": "0"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "condition",
+                            "subtype": "",
+                            "expression": "tag(action) != \"\" && tag(plugin) != \"\"",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "type": "then",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "1",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": "",
+                            "expression": "329",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": "",
+                                "type": "if",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": "",
+                                        "type": "if",
+                                        "subtype": "condition",
+                                        "options": {
+                                            "collapse": "0",
+                                            "enable": "1",
+                                            "allowRepeatCondition": "0"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "condition",
+                                                "subtype": "",
+                                                "expression": "tag(action) == \"backup\"",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "",
+                                        "type": "then",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "1",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": "",
+                                                "expression": "330",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": "",
+                                                    "type": "code",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": "",
+                                                            "type": "code",
+                                                            "subtype": "action",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "code",
+                                                                    "subtype": "",
+                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de sauvegarde des plugins si inexistant\nif (!is_dir($tags['#backupPath#'] . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire de sauvegarde '\" . $pluginDir .\"'\");\n  mkdir($tags['#backupPath#']);\n}\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire '\" . $pluginDir .\"'\");\n  mkdir($pluginDir);\n}\nelse {\n  \/\/ répertoire existant, on vide les sauvegardes existantes\n  $scenario->setLog(\"suppression de la sauvegarde précédente '\" . $pluginDir . '\/*.tar.gz\\'');\n  array_map('unlink', glob($pluginDir.'*.tar.gz'));\n}\n\n\/\/ backup du plugin\n$scenario->setLog('Backup => cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\nsystem('cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\n\n\/\/$scenario->setTags($tags);",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "type": "action",
+                                                "subtype": "",
+                                                "expression": "#[Notifications][Telegram][Noodom]#",
+                                                "options": {
+                                                    "enable": "1",
+                                                    "background": "0",
+                                                    "title": "",
+                                                    "message": "tag(whiteCheck) Sauvegarde du plugin <b>tag(plugin)<\/b> tag(whiteCheck)\n\ntag(greenCircle) La sauvegarde du plugin <b>tag(plugin)<\/b> s'est bien passée\n\ntag(nameScenario)"
+                                                },
+                                                "order": "1"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "",
+                                        "type": "else",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "2",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": "",
+                                                "expression": "331",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": "",
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": "",
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": "",
+                                                                    "expression": "tag(action) == \"restore\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "332",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": "",
+                                                                                        "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'];\nif (is_dir($pluginDir . '\/.')) {\n  \/\/ répertoire existant, on le supprime\n  rrmdir($pluginDir);\n}\n\n\/\/ on crée le répertoire du plugin\n$scenario->setLog(\"création du répertoire \" . $pluginDir);\nmkdir($pluginDir);\n\n$pluginDir = $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'];\n$scenario->setLog('Restore => cd ' . $pluginDir . '; tar xfz \"' . $tags['#backupPath#'] . '\/' . $tags['#plugin#'] . '\/' . $tags['#plugin#'] . '.tar.gz\"');\nsystem('cd ' . $pluginDir . '; tar xfz \"' . $tags['#backupPath#'] . '\/' . $tags['#plugin#'] . '\/' . $tags['#plugin#'] . '.tar.gz\"');\n\n\/\/$scenario->setTags($tags);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": "",
+                                                                    "expression": "#[Notifications][Telegram][Noodom]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "title": "",
+                                                                        "message": "tag(whiteCheck) Restauration du plugin <b>tag(plugin)<\/b> tag(whiteCheck)\n\ntag(greenCircle) La restauration du plugin <b>tag(plugin)<\/b> s'est bien passée\n\ntag(nameScenario)"
+                                                                    },
+                                                                    "order": "1"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "333",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "if",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "if",
+                                                                                "subtype": "condition",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1",
+                                                                                    "allowRepeatCondition": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "condition",
+                                                                                        "subtype": "",
+                                                                                        "expression": "tag(action) == \"remove\"",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "then",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "1",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": "",
+                                                                                        "expression": "334",
+                                                                                        "options": [],
+                                                                                        "order": "0",
+                                                                                        "element": {
+                                                                                            "name": "",
+                                                                                            "type": "code",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": "",
+                                                                                                    "type": "code",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "code",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "$tags = $scenario->getTags();\n\n\/\/ suppression du dossier du plugin à supprimer\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ pas de répertoire du plugin, on ne fait rien\n  $tags['#description#'] = $tags['#redCircle#'].' Pas de répertoire ' . $pluginDir . ' à supprimer, aucune action effectuée';\n}\nelse {\n  \/\/ répertoire existant, on le supprime\n  rrmdir($pluginDir);\n  $tags['#description#'] = $tags['#greenCircle#'].' La suppression du plugin <b>' . $tags['#plugin#'] . '<\/b> s\\'est bien passée';\n}\n\n$scenario->setTags($tags);",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "subtype": "",
+                                                                                        "expression": "#[Notifications][Telegram][Noodom]#",
+                                                                                        "options": {
+                                                                                            "enable": "1",
+                                                                                            "background": "0",
+                                                                                            "title": "",
+                                                                                            "message": "tag(whiteCheck) Suppression de la sauvegarde du plugin <b>tag(plugin)<\/b> tag(whiteCheck)\n\ntag(description)\n\ntag(nameScenario)"
+                                                                                        },
+                                                                                        "order": "1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "else",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "2",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "action",
+                                                                                        "subtype": "",
+                                                                                        "expression": "#[Notifications][Telegram][Noodom]#",
+                                                                                        "options": {
+                                                                                            "enable": "1",
+                                                                                            "background": "0",
+                                                                                            "title": "",
+                                                                                            "message": "tag(titreActionErreur)\n\ntag(descriptionActionErreur)\n\ntag(nameScenario)"
+                                                                                        },
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "type": "else",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "2",
+                    "expressions": [
+                        {
+                            "type": "action",
+                            "subtype": "",
+                            "expression": "#[Notifications][Telegram][Noodom]#",
+                            "options": {
+                                "enable": "1",
+                                "background": "0",
+                                "title": "",
+                                "message": "tag(titreActionErreur)\n\ntag(descriptionActionInconnue)\n\ntag(nameScenario)"
+                            },
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
