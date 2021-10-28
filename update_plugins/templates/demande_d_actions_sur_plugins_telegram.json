@@ -178,7 +178,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "question": "tag(askActions)",
-                                "answer": "answers_per_line=2;Sauvegarde;Restauration;Mise à jour;Suppression de sauvegarde;Annuler",
+                                "answer": "answers_per_line=2;Sauvegarde;Restauration;Mise à jour;Suppression de sauvegarde;Sauvegarde Jeedom;Annuler",
                                 "variable": "askActionOnPlugin",
                                 "timeout": "60",
                                 "cmd": "#[Notifications][Telegram][Noodom]#"
@@ -1345,18 +1345,18 @@
                                                                                 "expressions": [
                                                                                     {
                                                                                         "type": "element",
-                                                                                        "subtype": "",
-                                                                                        "expression": "326",
+                                                                                        "subtype": null,
+                                                                                        "expression": "339",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
-                                                                                            "name": "",
+                                                                                            "name": null,
                                                                                             "type": "if",
                                                                                             "options": [],
                                                                                             "order": "0",
                                                                                             "subElements": [
                                                                                                 {
-                                                                                                    "name": "",
+                                                                                                    "name": null,
                                                                                                     "type": "if",
                                                                                                     "subtype": "condition",
                                                                                                     "options": {
@@ -1368,52 +1368,178 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "condition",
-                                                                                                            "subtype": "",
-                                                                                                            "expression": "strtolower(variable(askActionOnPlugin)) === \"aucune réponse\" OU strtolower(variable(askActionOnPlugin)) === \"annuler\" OU strtolower(variable(askActionOnPlugin)) === 0",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "strtolower(variable(askActionOnPlugin)) === \"sauvegarde jeedom\"",
                                                                                                             "options": [],
                                                                                                             "order": "0"
                                                                                                         }
                                                                                                     ]
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "",
+                                                                                                    "name": null,
                                                                                                     "type": "then",
                                                                                                     "subtype": "action",
                                                                                                     "options": [],
                                                                                                     "order": "1",
                                                                                                     "expressions": [
                                                                                                         {
-                                                                                                            "type": "action",
-                                                                                                            "subtype": "",
-                                                                                                            "expression": "#[Notifications][Telegram][Noodom]#",
-                                                                                                            "options": {
-                                                                                                                "enable": "1",
-                                                                                                                "background": "0",
-                                                                                                                "title": "",
-                                                                                                                "message": "tag(titreAnnulerActions)\n\ntag(descriptionAnnulerActions)\n\ntag(nameScenario)"
-                                                                                                            },
-                                                                                                            "order": "0"
+                                                                                                            "type": "element",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "340",
+                                                                                                            "options": [],
+                                                                                                            "order": "0",
+                                                                                                            "element": {
+                                                                                                                "name": null,
+                                                                                                                "type": "comment",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "comment",
+                                                                                                                        "subtype": "comment",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "comment",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins\"",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "type": "element",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "341",
+                                                                                                            "options": [],
+                                                                                                            "order": "1",
+                                                                                                            "element": {
+                                                                                                                "name": null,
+                                                                                                                "type": "action",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "action",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0",
+                                                                                                                            "enable": "1"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "scenario",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "0",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "scenario_id": "70",
+                                                                                                                                    "action": "start",
+                                                                                                                                    "tags": "action=\"backup\" plugin=\"Jeedom\""
+                                                                                                                                },
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
                                                                                                         }
                                                                                                     ]
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "",
+                                                                                                    "name": null,
                                                                                                     "type": "else",
                                                                                                     "subtype": "action",
                                                                                                     "options": [],
                                                                                                     "order": "2",
                                                                                                     "expressions": [
                                                                                                         {
-                                                                                                            "type": "action",
-                                                                                                            "subtype": "",
-                                                                                                            "expression": "#[Notifications][Telegram][Noodom]#",
-                                                                                                            "options": {
-                                                                                                                "enable": "1",
-                                                                                                                "background": "0",
-                                                                                                                "title": "",
-                                                                                                                "message": "tag(titreActionInconnue)\n\ntag(descriptionActionInconnue)\n\ntag(nameScenario)"
-                                                                                                            },
-                                                                                                            "order": "0"
+                                                                                                            "type": "element",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "326",
+                                                                                                            "options": [],
+                                                                                                            "order": "0",
+                                                                                                            "element": {
+                                                                                                                "name": "",
+                                                                                                                "type": "if",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "if",
+                                                                                                                        "subtype": "condition",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0",
+                                                                                                                            "enable": "1",
+                                                                                                                            "allowRepeatCondition": "0"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "condition",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "strtolower(variable(askActionOnPlugin)) === \"aucune réponse\" OU strtolower(variable(askActionOnPlugin)) === \"annuler\" OU strtolower(variable(askActionOnPlugin)) === 0",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "then",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "1",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "#[Notifications][Telegram][Noodom]#",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "title": "",
+                                                                                                                                    "message": "tag(titreAnnulerActions)\n\ntag(descriptionAnnulerActions)\n\ntag(nameScenario)"
+                                                                                                                                },
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "else",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "2",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "#[Notifications][Telegram][Noodom]#",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "title": "",
+                                                                                                                                    "message": "tag(titreActionInconnue)\n\ntag(descriptionActionInconnue)\n\ntag(nameScenario)"
+                                                                                                                                },
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
                                                                                                         }
                                                                                                     ]
                                                                                                 }
