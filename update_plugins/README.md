@@ -1,10 +1,11 @@
 # Scénarios de mise à jour de plugins par menus Discord ou Telegram
 
 Ces scénarios permettent d'effectuer des actions sur les plugins de son installation Jeedom à partir de menus **Discord** ou **Telegram**.
-- faire une sauvegarde d'un plugin
-- restaurer un plugin sauvegardé sur l'arborescence de Jeedom
-- mettre à jour un plugin depuis le Market Jeedom
+- Faire une sauvegarde d'un plugin
+- Restaurer un plugin sauvegardé sur l'arborescence de Jeedom
+- Mettre à jour un plugin depuis le Market Jeedom
 - Supprimer une sauvegarde d'un plugin
+- Faire une sauvegarde de Jeedom
 
 ## Template des scénarios
 
@@ -30,7 +31,7 @@ Pour Telegram :
 
 Version Discord :
 
-- Le scénario **"Demande d actions sur plugins Discord"** propose un menu pour faire la demande de sauvegarde d'un plugin de son Jeedom ,de restaurer une sauvegarde d'un plugin vers son Jeedom, de mettre à jour un plugin depuis le Market Jeedom, de supprimer une sauvegarde d'un plugin.
+- Le scénario **"Demande d actions sur plugins Discord"** propose un menu pour faire la demande de sauvegarde d'un plugin de son Jeedom, de restaurer une sauvegarde d'un plugin vers son Jeedom, de mettre à jour un plugin depuis le Market Jeedom, de supprimer une sauvegarde d'un plugin, de faire un backup de Jeedom.
   Les actions sélectionnées provoque l'appel des scénarios "Exécution d actions sur plugins Discord" et "update plugins Discord" pour effectuer les actions demandées.
   C'est le scénario principal appelé par l'utilisateur.
 
