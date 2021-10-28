@@ -128,51 +128,153 @@
                                             {
                                                 "type": "element",
                                                 "subtype": null,
-                                                "expression": "1197",
+                                                "expression": "1270",
                                                 "options": [],
                                                 "order": "0",
                                                 "element": {
                                                     "name": null,
-                                                    "type": "code",
+                                                    "type": "if",
                                                     "options": [],
                                                     "order": "0",
                                                     "subElements": [
                                                         {
                                                             "name": null,
-                                                            "type": "code",
-                                                            "subtype": "action",
+                                                            "type": "if",
+                                                            "subtype": "condition",
                                                             "options": {
                                                                 "collapse": "0",
-                                                                "enable": "1"
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
                                                             },
                                                             "order": "0",
                                                             "expressions": [
                                                                 {
-                                                                    "type": "code",
+                                                                    "type": "condition",
                                                                     "subtype": null,
-                                                                    "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de sauvegarde des plugins si inexistant\nif (!is_dir($tags['#backupPath#'] . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire de sauvegarde '\" . $pluginDir .\"'\");\n  mkdir($tags['#backupPath#']);\n}\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire '\" . $pluginDir .\"'\");\n  mkdir($pluginDir);\n}\nelse {\n  \/\/ répertoire existant, on vide les sauvegardes existantes\n  $scenario->setLog(\"suppression de la sauvegarde précédente '\" . $pluginDir . '\/*.tar.gz\\'');\n  array_map('unlink', glob($pluginDir.'*.tar.gz'));\n}\n\n\/\/ backup du plugin\n$scenario->setLog('Backup => cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\nsystem('cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\n\n\/\/$scenario->setTags($tags);",
+                                                                    "expression": "tag(plugin) === \"Jeedom\"",
                                                                     "options": [],
                                                                     "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "1271",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": null,
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": null,
+                                                                                        "expression": "$scenario->setLog(\"lancement du backup Jeedom..\");\njeedom::backup(true);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "Titre": "Sauvegarde de Jeedom",
+                                                                        "url": "",
+                                                                        "description": ":green_circle: La sauvegarde de Jeedom vient d'être lancée",
+                                                                        "footer": "tag(scenarioName)",
+                                                                        "colors": "#00FF00"
+                                                                    },
+                                                                    "order": "1"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": null,
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": null,
+                                                                    "expression": "1197",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": null,
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": null,
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": null,
+                                                                                        "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de sauvegarde des plugins si inexistant\nif (!is_dir($tags['#backupPath#'] . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire de sauvegarde '\" . $pluginDir .\"'\");\n  mkdir($tags['#backupPath#']);\n}\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire '\" . $pluginDir .\"'\");\n  mkdir($pluginDir);\n}\nelse {\n  \/\/ répertoire existant, on vide les sauvegardes existantes\n  $scenario->setLog(\"suppression de la sauvegarde précédente '\" . $pluginDir . '\/*.tar.gz\\'');\n  array_map('unlink', glob($pluginDir.'*.tar.gz'));\n}\n\n\/\/ backup du plugin\n$scenario->setLog('Backup => cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\nsystem('cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\n\n\/\/$scenario->setTags($tags);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "action",
+                                                                    "subtype": null,
+                                                                    "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                    "options": {
+                                                                        "enable": "1",
+                                                                        "background": "0",
+                                                                        "Titre": "Sauvegarde du plugin tag(plugin)",
+                                                                        "url": "",
+                                                                        "description": ":green_circle: La sauvegarde du plugin **tag(plugin)** s'est bien passée",
+                                                                        "footer": "tag(scenarioName)",
+                                                                        "colors": "#00FF00"
+                                                                    },
+                                                                    "order": "1"
                                                                 }
                                                             ]
                                                         }
                                                     ]
                                                 }
-                                            },
-                                            {
-                                                "type": "action",
-                                                "subtype": null,
-                                                "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
-                                                "options": {
-                                                    "enable": "1",
-                                                    "background": "0",
-                                                    "Titre": "Sauvegarde du plugin tag(plugin)",
-                                                    "url": "",
-                                                    "description": ":green_circle: La sauvegarde du plugin **tag(plugin)** s'est bien passée",
-                                                    "footer": "tag(scenarioName)",
-                                                    "colors": "#00FF00"
-                                                },
-                                                "order": "1"
                                             }
                                         ]
                                     },

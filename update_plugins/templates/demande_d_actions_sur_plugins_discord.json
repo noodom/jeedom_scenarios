@@ -179,7 +179,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "question": "tag(askActions)",
-                                "answer": "Sauvegarde;Restauration;Mise à jour;Suppression de sauvegarde;Annuler",
+                                "answer": "Sauvegarde;Restauration;Mise à jour;Suppression de sauvegarde;Sauvegarde Jeedom;Annuler",
                                 "variable": "askActionOnPlugin",
                                 "timeout": "60",
                                 "cmd": "#[Notifications][Discord - Infos][Envoi message évolué]#"
@@ -850,7 +850,7 @@
                                                                                                                 "background": "0",
                                                                                                                 "scenario_id": "354",
                                                                                                                 "action": "start",
-                                                                                                                "tags": "action=\"restore\" plugin=tag(pluginToRestore) pluginsPath=tag(pluginsPath)"
+                                                                                                                "tags": "action=\"restore\" plugin=tag(pluginToRestore) pluginsPath=tag(pluginsPath)  backupPath=tag(backupPath)"
                                                                                                             },
                                                                                                             "order": "1"
                                                                                                         }
@@ -1356,7 +1356,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": null,
-                                                                                        "expression": "1193",
+                                                                                        "expression": "1268",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
@@ -1379,7 +1379,7 @@
                                                                                                         {
                                                                                                             "type": "condition",
                                                                                                             "subtype": null,
-                                                                                                            "expression": "strtolower(variable(askActionOnPlugin)) === \"aucune réponse\" OU strtolower(variable(askActionOnPlugin)) === \"annuler\" OU strtolower(variable(askActionOnPlugin)) === 0",
+                                                                                                            "expression": "strtolower(variable(askActionOnPlugin)) === \"sauvegarde jeedom\"",
                                                                                                             "options": [],
                                                                                                             "order": "0"
                                                                                                         }
@@ -1393,19 +1393,50 @@
                                                                                                     "order": "1",
                                                                                                     "expressions": [
                                                                                                         {
+                                                                                                            "type": "element",
+                                                                                                            "subtype": null,
+                                                                                                            "expression": "1272",
+                                                                                                            "options": [],
+                                                                                                            "order": "0",
+                                                                                                            "element": {
+                                                                                                                "name": null,
+                                                                                                                "type": "comment",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "comment",
+                                                                                                                        "subtype": "comment",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "comment",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins\"",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        },
+                                                                                                        {
                                                                                                             "type": "action",
                                                                                                             "subtype": null,
-                                                                                                            "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                                            "expression": "scenario",
                                                                                                             "options": {
-                                                                                                                "enable": "1",
+                                                                                                                "enable": "0",
                                                                                                                 "background": "0",
-                                                                                                                "Titre": "tag(titreAnnulerActions)",
-                                                                                                                "url": "",
-                                                                                                                "description": "tag(descriptionAnnulerActions)",
-                                                                                                                "footer": "tag(scenarioName)",
-                                                                                                                "colors": "#ff0000"
+                                                                                                                "scenario_id": "354",
+                                                                                                                "action": "start",
+                                                                                                                "tags": "action=\"backup\" plugin=\"Jeedom\""
                                                                                                             },
-                                                                                                            "order": "0"
+                                                                                                            "order": "1"
                                                                                                         }
                                                                                                     ]
                                                                                                 },
@@ -1417,19 +1448,87 @@
                                                                                                     "order": "2",
                                                                                                     "expressions": [
                                                                                                         {
-                                                                                                            "type": "action",
+                                                                                                            "type": "element",
                                                                                                             "subtype": null,
-                                                                                                            "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
-                                                                                                            "options": {
-                                                                                                                "enable": "1",
-                                                                                                                "background": "0",
-                                                                                                                "Titre": "tag(titreActionInconnue)",
-                                                                                                                "url": "",
-                                                                                                                "description": "tag(descriptionActionInconnue)",
-                                                                                                                "footer": "tag(scenarioName)",
-                                                                                                                "colors": "#ff0000"
-                                                                                                            },
-                                                                                                            "order": "0"
+                                                                                                            "expression": "1193",
+                                                                                                            "options": [],
+                                                                                                            "order": "0",
+                                                                                                            "element": {
+                                                                                                                "name": null,
+                                                                                                                "type": "if",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "if",
+                                                                                                                        "subtype": "condition",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0",
+                                                                                                                            "enable": "1",
+                                                                                                                            "allowRepeatCondition": "0"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "condition",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "strtolower(variable(askActionOnPlugin)) === \"aucune réponse\" OU strtolower(variable(askActionOnPlugin)) === \"annuler\" OU strtolower(variable(askActionOnPlugin)) === 0",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "then",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "1",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "Titre": "tag(titreAnnulerActions)",
+                                                                                                                                    "url": "",
+                                                                                                                                    "description": "tag(descriptionAnnulerActions)",
+                                                                                                                                    "footer": "tag(scenarioName)",
+                                                                                                                                    "colors": "#ff0000"
+                                                                                                                                },
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": null,
+                                                                                                                        "type": "else",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "2",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "action",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "#[Notifications][Discord - Infos][Envoi message évolué]#",
+                                                                                                                                "options": {
+                                                                                                                                    "enable": "1",
+                                                                                                                                    "background": "0",
+                                                                                                                                    "Titre": "tag(titreActionInconnue)",
+                                                                                                                                    "url": "",
+                                                                                                                                    "description": "tag(descriptionActionInconnue)",
+                                                                                                                                    "footer": "tag(scenarioName)",
+                                                                                                                                    "colors": "#ff0000"
+                                                                                                                                },
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
                                                                                                         }
                                                                                                     ]
                                                                                                 }
