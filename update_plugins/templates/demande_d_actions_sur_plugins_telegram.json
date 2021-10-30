@@ -14,7 +14,7 @@
         "icon": ""
     },
     "order": "9999",
-    "description": "Affichage d'un menu des actions possibles sur les plugins Jeedom :\nSauvegarde, Restauration, Mise à jour et Suppression de sauvegarde",
+    "description": "Affichage d'un menu Telegram des actions possibles sur les plugins Jeedom :\nSauvegarde, Restauration, Mise à jour, Suppression de sauvegarde de plugins et Sauvegarde de Jeedom",
     "configuration": {
         "timeDependency": 0,
         "has_return": 0,
@@ -24,16 +24,15 @@
         "timeline::enable": "0",
         "timeline::folder": ""
     },
-    "state": "stop",
     "elements": [
         {
-            "name": null,
+            "name": "",
             "type": "action",
             "options": [],
             "order": "0",
             "subElements": [
                 {
-                    "name": null,
+                    "name": "",
                     "type": "action",
                     "subtype": "action",
                     "options": {
@@ -44,18 +43,18 @@
                     "expressions": [
                         {
                             "type": "element",
-                            "subtype": null,
-                            "expression": "336",
+                            "subtype": "",
+                            "expression": "1155",
                             "options": [],
                             "order": "0",
                             "element": {
-                                "name": null,
+                                "name": "",
                                 "type": "comment",
                                 "options": [],
                                 "order": "0",
                                 "subElements": [
                                     {
-                                        "name": null,
+                                        "name": "",
                                         "type": "comment",
                                         "subtype": "comment",
                                         "options": {
@@ -65,7 +64,7 @@
                                         "expressions": [
                                             {
                                                 "type": "comment",
-                                                "subtype": null,
+                                                "subtype": "",
                                                 "expression": "Paramétrage du scénario :\n- telegramMessageId : ID de la commande \"Envoi message évolué\" d'un équipement du plugin Discord ( \/!\\\/!\\ A MODIFIER OBLIGATOIREMENT \/!\\\/!\\)\n- nbPluginsGrouped : Nombre de plugins pour chaque groupe de la liste des plugins affichés\n- pluginsPath : répertoire des plugins sous Jeedom (par défaut : \/var\/www\/html\/plugins)\n- backupPath : répertoire de sauvegarde des plugins (par défaut : \/var\/www\/html\/data\/custom\/plugins_backup)",
                                                 "options": [],
                                                 "order": "0"
@@ -77,19 +76,19 @@
                         },
                         {
                             "type": "action",
-                            "subtype": null,
+                            "subtype": "",
                             "expression": "tag",
                             "options": {
                                 "enable": "1",
                                 "background": "0",
                                 "name": "telegramMessageId",
-                                "value": "1047"
+                                "value": "3653"
                             },
                             "order": "1"
                         },
                         {
                             "type": "action",
-                            "subtype": null,
+                            "subtype": "",
                             "expression": "tag",
                             "options": {
                                 "enable": "1",
@@ -101,7 +100,7 @@
                         },
                         {
                             "type": "action",
-                            "subtype": null,
+                            "subtype": "",
                             "expression": "tag",
                             "options": {
                                 "enable": "1",
@@ -113,7 +112,7 @@
                         },
                         {
                             "type": "action",
-                            "subtype": null,
+                            "subtype": "",
                             "expression": "tag",
                             "options": {
                                 "enable": "1",
@@ -225,7 +224,7 @@
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "305",
+                            "expression": "1159",
                             "options": [],
                             "order": "0",
                             "element": {
@@ -274,7 +273,7 @@
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "306",
+                            "expression": "1160",
                             "options": [],
                             "order": "2",
                             "element": {
@@ -334,7 +333,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "307",
+                                                "expression": "1161",
                                                 "options": [],
                                                 "order": "0",
                                                 "element": {
@@ -368,7 +367,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "308",
+                                                "expression": "1162",
                                                 "options": [],
                                                 "order": "1",
                                                 "element": {
@@ -428,7 +427,7 @@
                                                                 {
                                                                     "type": "element",
                                                                     "subtype": "",
-                                                                    "expression": "309",
+                                                                    "expression": "1163",
                                                                     "options": [],
                                                                     "order": "0",
                                                                     "element": {
@@ -449,7 +448,7 @@
                                                                                     {
                                                                                         "type": "comment",
                                                                                         "subtype": "",
-                                                                                        "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins\"",
+                                                                                        "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins telegram\"",
                                                                                         "options": [],
                                                                                         "order": "0"
                                                                                     }
@@ -463,9 +462,9 @@
                                                                     "subtype": "",
                                                                     "expression": "scenario",
                                                                     "options": {
-                                                                        "enable": "0",
+                                                                        "enable": "1",
                                                                         "background": "0",
-                                                                        "scenario_id": "70",
+                                                                        "scenario_id": "298",
                                                                         "action": "start",
                                                                         "tags": "action=\"backup\" plugin=tag(pluginToBackup) pluginsPath=tag(pluginsPath) backupPath=tag(backupPath)"
                                                                     },
@@ -493,7 +492,7 @@
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "310",
+                            "expression": "1164",
                             "options": [],
                             "order": "0",
                             "element": {
@@ -532,7 +531,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "311",
+                                                "expression": "1165",
                                                 "options": [],
                                                 "order": "0",
                                                 "element": {
@@ -566,7 +565,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "312",
+                                                "expression": "1166",
                                                 "options": [],
                                                 "order": "1",
                                                 "element": {
@@ -641,7 +640,7 @@
                                                                 {
                                                                     "type": "element",
                                                                     "subtype": "",
-                                                                    "expression": "313",
+                                                                    "expression": "1167",
                                                                     "options": [],
                                                                     "order": "1",
                                                                     "element": {
@@ -701,7 +700,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "314",
+                                                                                        "expression": "1168",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
@@ -735,7 +734,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "315",
+                                                                                        "expression": "1169",
                                                                                         "options": [],
                                                                                         "order": "1",
                                                                                         "element": {
@@ -795,7 +794,7 @@
                                                                                                         {
                                                                                                             "type": "element",
                                                                                                             "subtype": "",
-                                                                                                            "expression": "316",
+                                                                                                            "expression": "1170",
                                                                                                             "options": [],
                                                                                                             "order": "0",
                                                                                                             "element": {
@@ -816,7 +815,7 @@
                                                                                                                             {
                                                                                                                                 "type": "comment",
                                                                                                                                 "subtype": "",
-                                                                                                                                "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins\"",
+                                                                                                                                "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins telegram\"",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "0"
                                                                                                                             }
@@ -830,9 +829,9 @@
                                                                                                             "subtype": "",
                                                                                                             "expression": "scenario",
                                                                                                             "options": {
-                                                                                                                "enable": "0",
+                                                                                                                "enable": "1",
                                                                                                                 "background": "0",
-                                                                                                                "scenario_id": "70",
+                                                                                                                "scenario_id": "298",
                                                                                                                 "action": "start",
                                                                                                                 "tags": "action=\"restore\" plugin=tag(pluginToRestore) pluginsPath=tag(pluginsPath) backupPath=tag(backupPath)"
                                                                                                             },
@@ -865,7 +864,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "317",
+                                                "expression": "1171",
                                                 "options": [],
                                                 "order": "0",
                                                 "element": {
@@ -904,7 +903,7 @@
                                                                 {
                                                                     "type": "element",
                                                                     "subtype": "",
-                                                                    "expression": "318",
+                                                                    "expression": "1172",
                                                                     "options": [],
                                                                     "order": "0",
                                                                     "element": {
@@ -925,7 +924,7 @@
                                                                                     {
                                                                                         "type": "comment",
                                                                                         "subtype": "",
-                                                                                        "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"update plugins\"",
+                                                                                        "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"update plugins telegram\"",
                                                                                         "options": [],
                                                                                         "order": "0"
                                                                                     }
@@ -939,9 +938,9 @@
                                                                     "subtype": "",
                                                                     "expression": "scenario",
                                                                     "options": {
-                                                                        "enable": "0",
+                                                                        "enable": "1",
                                                                         "background": "0",
-                                                                        "scenario_id": "66",
+                                                                        "scenario_id": "299",
                                                                         "action": "start",
                                                                         "tags": ""
                                                                     },
@@ -959,7 +958,7 @@
                                                                 {
                                                                     "type": "element",
                                                                     "subtype": "",
-                                                                    "expression": "319",
+                                                                    "expression": "1173",
                                                                     "options": [],
                                                                     "order": "0",
                                                                     "element": {
@@ -998,7 +997,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "320",
+                                                                                        "expression": "1174",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
@@ -1032,7 +1031,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "321",
+                                                                                        "expression": "1175",
                                                                                         "options": [],
                                                                                         "order": "1",
                                                                                         "element": {
@@ -1107,7 +1106,7 @@
                                                                                                         {
                                                                                                             "type": "element",
                                                                                                             "subtype": "",
-                                                                                                            "expression": "322",
+                                                                                                            "expression": "1176",
                                                                                                             "options": [],
                                                                                                             "order": "1",
                                                                                                             "element": {
@@ -1167,7 +1166,7 @@
                                                                                                                             {
                                                                                                                                 "type": "element",
                                                                                                                                 "subtype": "",
-                                                                                                                                "expression": "323",
+                                                                                                                                "expression": "1177",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "0",
                                                                                                                                 "element": {
@@ -1201,7 +1200,7 @@
                                                                                                                             {
                                                                                                                                 "type": "element",
                                                                                                                                 "subtype": "",
-                                                                                                                                "expression": "324",
+                                                                                                                                "expression": "1178",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "1",
                                                                                                                                 "element": {
@@ -1240,21 +1239,6 @@
                                                                                                                                                 {
                                                                                                                                                     "type": "action",
                                                                                                                                                     "subtype": "",
-                                                                                                                                                    "expression": "#[Notifications][alertes][Envoi message évolué]#",
-                                                                                                                                                    "options": {
-                                                                                                                                                        "enable": "1",
-                                                                                                                                                        "background": "0",
-                                                                                                                                                        "Titre": "tag(titreSupprimerSauvegarde)",
-                                                                                                                                                        "url": "",
-                                                                                                                                                        "description": "tag(descriptionSupprimerSauvegardeErreur)",
-                                                                                                                                                        "footer": "tag(scenarioName)",
-                                                                                                                                                        "colors": "#ff0000"
-                                                                                                                                                    },
-                                                                                                                                                    "order": "0"
-                                                                                                                                                },
-                                                                                                                                                {
-                                                                                                                                                    "type": "action",
-                                                                                                                                                    "subtype": "",
                                                                                                                                                     "expression": "#[Notifications][Telegram][Noodom]#",
                                                                                                                                                     "options": {
                                                                                                                                                         "enable": "1",
@@ -1262,7 +1246,7 @@
                                                                                                                                                         "title": "",
                                                                                                                                                         "message": "tag(titreSupprimerSauvegarde)\n\ntag(descriptionSupprimerSauvegardeErreur)\n\ntag(nameScenario)"
                                                                                                                                                     },
-                                                                                                                                                    "order": "1"
+                                                                                                                                                    "order": "0"
                                                                                                                                                 }
                                                                                                                                             ]
                                                                                                                                         },
@@ -1276,7 +1260,7 @@
                                                                                                                                                 {
                                                                                                                                                     "type": "element",
                                                                                                                                                     "subtype": "",
-                                                                                                                                                    "expression": "325",
+                                                                                                                                                    "expression": "1179",
                                                                                                                                                     "options": [],
                                                                                                                                                     "order": "0",
                                                                                                                                                     "element": {
@@ -1297,7 +1281,7 @@
                                                                                                                                                                     {
                                                                                                                                                                         "type": "comment",
                                                                                                                                                                         "subtype": "",
-                                                                                                                                                                        "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins\"",
+                                                                                                                                                                        "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins telegram\"",
                                                                                                                                                                         "options": [],
                                                                                                                                                                         "order": "0"
                                                                                                                                                                     }
@@ -1311,9 +1295,9 @@
                                                                                                                                                     "subtype": "",
                                                                                                                                                     "expression": "scenario",
                                                                                                                                                     "options": {
-                                                                                                                                                        "enable": "0",
+                                                                                                                                                        "enable": "1",
                                                                                                                                                         "background": "0",
-                                                                                                                                                        "scenario_id": "70",
+                                                                                                                                                        "scenario_id": "298",
                                                                                                                                                         "action": "start",
                                                                                                                                                         "tags": "action=\"remove\" plugin=tag(pluginToRemove) pluginsPath=tag(pluginsPath) backupPath=tag(backupPath)"
                                                                                                                                                     },
@@ -1345,18 +1329,18 @@
                                                                                 "expressions": [
                                                                                     {
                                                                                         "type": "element",
-                                                                                        "subtype": null,
-                                                                                        "expression": "339",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1180",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
-                                                                                            "name": null,
+                                                                                            "name": "",
                                                                                             "type": "if",
                                                                                             "options": [],
                                                                                             "order": "0",
                                                                                             "subElements": [
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "if",
                                                                                                     "subtype": "condition",
                                                                                                     "options": {
@@ -1368,7 +1352,7 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "condition",
-                                                                                                            "subtype": null,
+                                                                                                            "subtype": "",
                                                                                                             "expression": "strtolower(variable(askActionOnPlugin)) === \"sauvegarde jeedom\"",
                                                                                                             "options": [],
                                                                                                             "order": "0"
@@ -1376,7 +1360,7 @@
                                                                                                     ]
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "then",
                                                                                                     "subtype": "action",
                                                                                                     "options": [],
@@ -1384,18 +1368,18 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "element",
-                                                                                                            "subtype": null,
-                                                                                                            "expression": "340",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "1181",
                                                                                                             "options": [],
                                                                                                             "order": "0",
                                                                                                             "element": {
-                                                                                                                "name": null,
+                                                                                                                "name": "",
                                                                                                                 "type": "comment",
                                                                                                                 "options": [],
                                                                                                                 "order": "0",
                                                                                                                 "subElements": [
                                                                                                                     {
-                                                                                                                        "name": null,
+                                                                                                                        "name": "",
                                                                                                                         "type": "comment",
                                                                                                                         "subtype": "comment",
                                                                                                                         "options": {
@@ -1405,8 +1389,8 @@
                                                                                                                         "expressions": [
                                                                                                                             {
                                                                                                                                 "type": "comment",
-                                                                                                                                "subtype": null,
-                                                                                                                                "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins\"",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "- réactiver la commande scénario\n- sélectionner le scénario \"Exécution d actions sur plugins telegram\"",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "0"
                                                                                                                             }
@@ -1417,18 +1401,18 @@
                                                                                                         },
                                                                                                         {
                                                                                                             "type": "element",
-                                                                                                            "subtype": null,
-                                                                                                            "expression": "341",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "1182",
                                                                                                             "options": [],
                                                                                                             "order": "1",
                                                                                                             "element": {
-                                                                                                                "name": null,
+                                                                                                                "name": "",
                                                                                                                 "type": "action",
                                                                                                                 "options": [],
                                                                                                                 "order": "0",
                                                                                                                 "subElements": [
                                                                                                                     {
-                                                                                                                        "name": null,
+                                                                                                                        "name": "",
                                                                                                                         "type": "action",
                                                                                                                         "subtype": "action",
                                                                                                                         "options": {
@@ -1439,12 +1423,12 @@
                                                                                                                         "expressions": [
                                                                                                                             {
                                                                                                                                 "type": "action",
-                                                                                                                                "subtype": null,
+                                                                                                                                "subtype": "",
                                                                                                                                 "expression": "scenario",
                                                                                                                                 "options": {
-                                                                                                                                    "enable": "0",
+                                                                                                                                    "enable": "1",
                                                                                                                                     "background": "0",
-                                                                                                                                    "scenario_id": "70",
+                                                                                                                                    "scenario_id": "298",
                                                                                                                                     "action": "start",
                                                                                                                                     "tags": "action=\"backup\" plugin=\"Jeedom\""
                                                                                                                                 },
@@ -1458,7 +1442,7 @@
                                                                                                     ]
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": null,
+                                                                                                    "name": "",
                                                                                                     "type": "else",
                                                                                                     "subtype": "action",
                                                                                                     "options": [],
@@ -1466,8 +1450,8 @@
                                                                                                     "expressions": [
                                                                                                         {
                                                                                                             "type": "element",
-                                                                                                            "subtype": null,
-                                                                                                            "expression": "326",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "1183",
                                                                                                             "options": [],
                                                                                                             "order": "0",
                                                                                                             "element": {

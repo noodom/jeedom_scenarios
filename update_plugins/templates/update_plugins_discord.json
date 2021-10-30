@@ -1,9 +1,9 @@
 {
-    "name": "update plugins",
+    "name": "update plugins Discord",
     "isActive": "1",
     "group": "Gestion Plugins",
     "mode": "all",
-    "schedule": "0 * * * *",
+    "schedule": "0 19 * * *",
     "trigger": [
         "strtolower(#[Notifications][Discord - Infos][Dernier message]# ) === \"plugins\""
     ],

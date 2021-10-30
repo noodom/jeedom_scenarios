@@ -1,14 +1,13 @@
 {
-    "name": "update plugins telegram",
+    "name": "update plugins Telegram",
     "isActive": "1",
     "group": "Gestion Plugins",
     "mode": "schedule",
-    "schedule": "0 * * * *",
+    "schedule": "0 19 * * *",
     "trigger": [
         ""
     ],
     "timeout": "0",
-    "object_id": null,
     "isVisible": "0",
     "display": {
         "name": "",
@@ -25,7 +24,6 @@
         "timeline::enable": "0",
         "timeline::folder": ""
     },
-    "state": "stop",
     "elements": [
         {
             "name": "",
@@ -90,7 +88,7 @@
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "270",
+                            "expression": "1197",
                             "options": [],
                             "order": "0",
                             "element": {
@@ -144,7 +142,7 @@
                         {
                             "type": "element",
                             "subtype": "",
-                            "expression": "271",
+                            "expression": "1198",
                             "options": [],
                             "order": "2",
                             "element": {
@@ -183,7 +181,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "272",
+                                                "expression": "1199",
                                                 "options": [],
                                                 "order": "0",
                                                 "element": {
@@ -232,7 +230,7 @@
                                             {
                                                 "type": "element",
                                                 "subtype": "",
-                                                "expression": "273",
+                                                "expression": "1200",
                                                 "options": [],
                                                 "order": "2",
                                                 "element": {
@@ -292,7 +290,7 @@
                                                                 {
                                                                     "type": "element",
                                                                     "subtype": "",
-                                                                    "expression": "274",
+                                                                    "expression": "1201",
                                                                     "options": [],
                                                                     "order": "0",
                                                                     "element": {
@@ -331,7 +329,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "275",
+                                                                                        "expression": "1202",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
@@ -386,7 +384,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "276",
+                                                                                        "expression": "1203",
                                                                                         "options": [],
                                                                                         "order": "0",
                                                                                         "element": {
@@ -432,7 +430,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "277",
+                                                                                        "expression": "1204",
                                                                                         "options": [],
                                                                                         "order": "2",
                                                                                         "element": {
@@ -466,7 +464,7 @@
                                                                                     {
                                                                                         "type": "element",
                                                                                         "subtype": "",
-                                                                                        "expression": "278",
+                                                                                        "expression": "1205",
                                                                                         "options": [],
                                                                                         "order": "3",
                                                                                         "element": {
@@ -520,7 +518,7 @@
                                                                                                         {
                                                                                                             "type": "element",
                                                                                                             "subtype": "",
-                                                                                                            "expression": "279",
+                                                                                                            "expression": "1206",
                                                                                                             "options": [],
                                                                                                             "order": "1",
                                                                                                             "element": {
@@ -581,7 +579,7 @@
                                                                                                                             {
                                                                                                                                 "type": "element",
                                                                                                                                 "subtype": "",
-                                                                                                                                "expression": "280",
+                                                                                                                                "expression": "1207",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "2",
                                                                                                                                 "element": {

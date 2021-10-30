@@ -15,7 +15,7 @@
         "icon": ""
     },
     "order": "9999",
-    "description": "",
+    "description": "Affichage d'un menu Discord des actions possibles sur les plugins Jeedom :\nSauvegarde, Restauration, Mise à jour, Suppression de sauvegarde de plugins et Sauvegarde de Jeedom",
     "configuration": {
         "timeDependency": 0,
         "has_return": 0,
@@ -470,7 +470,7 @@
                                                                     "subtype": null,
                                                                     "expression": "scenario",
                                                                     "options": {
-                                                                        "enable": "0",
+                                                                        "enable": "1",
                                                                         "background": "0",
                                                                         "scenario_id": "354",
                                                                         "action": "start",
@@ -846,7 +846,7 @@
                                                                                                             "subtype": null,
                                                                                                             "expression": "scenario",
                                                                                                             "options": {
-                                                                                                                "enable": "0",
+                                                                                                                "enable": "1",
                                                                                                                 "background": "0",
                                                                                                                 "scenario_id": "354",
                                                                                                                 "action": "start",
@@ -955,7 +955,7 @@
                                                                     "subtype": null,
                                                                     "expression": "scenario",
                                                                     "options": {
-                                                                        "enable": "0",
+                                                                        "enable": "1",
                                                                         "background": "0",
                                                                         "scenario_id": "355",
                                                                         "action": "start",
@@ -1321,7 +1321,7 @@
                                                                                                                                                     "subtype": null,
                                                                                                                                                     "expression": "scenario",
                                                                                                                                                     "options": {
-                                                                                                                                                        "enable": "0",
+                                                                                                                                                        "enable": "1",
                                                                                                                                                         "background": "0",
                                                                                                                                                         "scenario_id": "354",
                                                                                                                                                         "action": "start",
@@ -1430,7 +1430,7 @@
                                                                                                             "subtype": null,
                                                                                                             "expression": "scenario",
                                                                                                             "options": {
-                                                                                                                "enable": "0",
+                                                                                                                "enable": "1",
                                                                                                                 "background": "0",
                                                                                                                 "scenario_id": "354",
                                                                                                                 "action": "start",
