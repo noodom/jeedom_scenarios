@@ -87,7 +87,7 @@ Version Telegram :
 ![Mise à jour plugin](./doc/images/applyTemplate.png)
 
 - ATTENTION : 
-  - les scénarios "Demande d actions sur plugins Discord" et "Demande d actions sur plugins Telegram" ont des tags à modifier (obligatoire pour les tags **scenarioExecutionActionsPluginsId**, **scenarioUpdatePluginsId** et **"discordMessageEvolueId"** (respectivement **"telegramMessageId"**), facultatif avec valeurs par défaut pour **nbPluginsGrouped** et **backupPath**)  
+  - les scénarios "Demande d actions sur plugins Discord" et "Demande d actions sur plugins Telegram" ont des tags à modifier (obligatoire pour les tags **"scenarioExecutionActionsPluginsId"**, **"scenarioUpdatePluginsId"** et **"discordMessageEvolueId"** (respectivement **"telegramMessageId"**), facultatif avec valeurs par défaut pour **"nbPluginsGrouped"** et **"backupPath"**)  
 
 ## Déroulement du scénario
 
