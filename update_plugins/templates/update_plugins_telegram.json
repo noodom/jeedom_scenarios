@@ -578,29 +578,30 @@
                                                                                                                             },
                                                                                                                             {
                                                                                                                                 "type": "element",
-                                                                                                                                "subtype": "",
-                                                                                                                                "expression": "1207",
+                                                                                                                                "subtype": null,
+                                                                                                                                "expression": "1218",
                                                                                                                                 "options": [],
                                                                                                                                 "order": "2",
                                                                                                                                 "element": {
-                                                                                                                                    "name": "",
-                                                                                                                                    "type": "comment",
+                                                                                                                                    "name": null,
+                                                                                                                                    "type": "code",
                                                                                                                                     "options": [],
                                                                                                                                     "order": "0",
                                                                                                                                     "subElements": [
                                                                                                                                         {
-                                                                                                                                            "name": "",
-                                                                                                                                            "type": "comment",
-                                                                                                                                            "subtype": "comment",
+                                                                                                                                            "name": null,
+                                                                                                                                            "type": "code",
+                                                                                                                                            "subtype": "action",
                                                                                                                                             "options": {
-                                                                                                                                                "collapse": "0"
+                                                                                                                                                "collapse": "0",
+                                                                                                                                                "enable": "1"
                                                                                                                                             },
                                                                                                                                             "order": "0",
                                                                                                                                             "expressions": [
                                                                                                                                                 {
-                                                                                                                                                    "type": "comment",
-                                                                                                                                                    "subtype": "",
-                                                                                                                                                    "expression": "Attention : à l'import, il faut sélectionner ce même scénario ci-dessous",
+                                                                                                                                                    "type": "code",
+                                                                                                                                                    "subtype": null,
+                                                                                                                                                    "expression": "$idScenarioUpdatePlugins = $scenario->getId();\n$scenarioExecution = scenario::byId($idScenarioUpdatePlugins);\n$scenarioExecution->launch();",
                                                                                                                                                     "options": [],
                                                                                                                                                     "order": "0"
                                                                                                                                                 }
@@ -608,19 +609,6 @@
                                                                                                                                         }
                                                                                                                                     ]
                                                                                                                                 }
-                                                                                                                            },
-                                                                                                                            {
-                                                                                                                                "type": "action",
-                                                                                                                                "subtype": "",
-                                                                                                                                "expression": "scenario",
-                                                                                                                                "options": {
-                                                                                                                                    "enable": "1",
-                                                                                                                                    "background": "0",
-                                                                                                                                    "scenario_id": "-1",
-                                                                                                                                    "action": "start",
-                                                                                                                                    "tags": ""
-                                                                                                                                },
-                                                                                                                                "order": "3"
                                                                                                                             }
                                                                                                                         ]
                                                                                                                     },
