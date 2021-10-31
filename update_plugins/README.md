@@ -45,7 +45,7 @@ Version Discord :
   Il peut être appelé directement par l'utilisateur et est aussi appelé par le scénario "Demande d actions sur plugins"
 
   Il est exécuté :
-    - toutes les heures (aucune action si aucun nouveau plugin disponible) : peut-être supprimé des déclencheurs si non souhaité
+    - tous les jours à 19h (aucune action si aucun nouveau plugin disponible) : peut-être supprimé des déclencheurs si non souhaité
     - en le déclenchant depuis Discord avec le mot-clé "plugins" : peut-être supprimé des déclencheurs si non souhaité
     - si appelé depuis le menu "Mise à jour" du scénario "Demande d actions sur plugins"
 
@@ -61,7 +61,7 @@ Version Telegram :
   Il permet de récupérer la liste des plugins disponibles pour une mise à jour et de choisir les plugins à mettre à jour
 
   Il est exécuté :
-    - toutes les heures (aucune action si aucun nouveau plugin disponible)
+    - tous les jours à 19h (aucune action si aucun nouveau plugin disponible)
     - si appelé depuis le menu "Mise à jour" du scénario "Demande d actions sur plugins Telegram"
 
 ## Installation du template de scénario
@@ -87,9 +87,7 @@ Version Telegram :
 ![Mise à jour plugin](./doc/images/applyTemplate.png)
 
 - ATTENTION : 
-  - les scénarios "Demande d actions sur plugins Discord" et "Demande d actions sur plugins Telegram" appellent d'autres scénarios à renseigner et activer (voir commentaires dans le premier bloc Code du scénario)
-  - les scénarios "Demande d actions sur plugins Discord" et "Demande d actions sur plugins Telegram" ont des tags à modifier (obligatoire pour le tag **"discordMessageEvolueId"** (respectivement **"telegramMessageId"**), facultatif avec valeurs par défaut pour les autres)  
-  - les scénarios 'update plugins Discord" et "update plugins Telegram" s'appellent eux-même. Il faut remplacer "scénario Aucun" par "scénario nomScenarioUpdate"
+  - les scénarios "Demande d actions sur plugins Discord" et "Demande d actions sur plugins Telegram" ont des tags à modifier (obligatoire pour les tags **scenarioExecutionActionsPluginsId**, **scenarioUpdatePluginsId** et **"discordMessageEvolueId"** (respectivement **"telegramMessageId"**), facultatif avec valeurs par défaut pour **nbPluginsGrouped** et **backupPath**)  
 
 ## Déroulement du scénario
 
