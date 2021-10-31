@@ -462,7 +462,7 @@
                                                                     "subtype": "",
                                                                     "expression": "scenario",
                                                                     "options": {
-                                                                        "enable": "1",
+                                                                        "enable": "0",
                                                                         "background": "0",
                                                                         "scenario_id": "298",
                                                                         "action": "start",
@@ -829,7 +829,7 @@
                                                                                                             "subtype": "",
                                                                                                             "expression": "scenario",
                                                                                                             "options": {
-                                                                                                                "enable": "1",
+                                                                                                                "enable": "0",
                                                                                                                 "background": "0",
                                                                                                                 "scenario_id": "298",
                                                                                                                 "action": "start",
@@ -938,7 +938,7 @@
                                                                     "subtype": "",
                                                                     "expression": "scenario",
                                                                     "options": {
-                                                                        "enable": "1",
+                                                                        "enable": "0",
                                                                         "background": "0",
                                                                         "scenario_id": "299",
                                                                         "action": "start",
@@ -1295,7 +1295,7 @@
                                                                                                                                                     "subtype": "",
                                                                                                                                                     "expression": "scenario",
                                                                                                                                                     "options": {
-                                                                                                                                                        "enable": "1",
+                                                                                                                                                        "enable": "0",
                                                                                                                                                         "background": "0",
                                                                                                                                                         "scenario_id": "298",
                                                                                                                                                         "action": "start",
@@ -1417,7 +1417,7 @@
                                                                                                                         "subtype": "action",
                                                                                                                         "options": {
                                                                                                                             "collapse": "0",
-                                                                                                                            "enable": "1"
+                                                                                                                            "enable": "0"
                                                                                                                         },
                                                                                                                         "order": "0",
                                                                                                                         "expressions": [
