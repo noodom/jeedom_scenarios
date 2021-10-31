@@ -351,7 +351,7 @@
                                                                                                         {
                                                                                                             "type": "code",
                                                                                                             "subtype": "",
-                                                                                                            "expression": "foreach (update::all() as $update) {\n        $update->doUpdate();\n}\n",
+                                                                                                            "expression": "foreach (update::all() as $update) {\n  if (strtolower($update->getStatus())!='update') continue;\n  if ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n  $update->doUpdate();\n}",
                                                                                                             "options": [],
                                                                                                             "order": "0"
                                                                                                         }
