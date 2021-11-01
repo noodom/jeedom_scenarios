@@ -82,7 +82,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "name": "scenarioExecutionActionsPluginsId",
-                                "value": "-1"
+                                "value": "298"
                             },
                             "order": "1"
                         },
@@ -94,7 +94,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "name": "scenarioUpdatePluginsId",
-                                "value": "-1"
+                                "value": "299"
                             },
                             "order": "2"
                         },
@@ -106,7 +106,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "name": "telegramMessageId",
-                                "value": "-1"
+                                "value": "3653"
                             },
                             "order": "3"
                         },
@@ -980,7 +980,7 @@
                                                                                                         {
                                                                                                             "type": "code",
                                                                                                             "subtype": null,
-                                                                                                            "expression": "$idScenarioUpdatePlugins = $tags['#scenarioUpdatePluginsId#'];\n$scenarioExecution = scenario::byId($idScenarioUpdatePlugins);\n$scenarioExecution->launch();",
+                                                                                                            "expression": "$tags = $scenario->getTags();\n$idScenarioUpdatePlugins = $tags['#scenarioUpdatePluginsId#'];\n$scenarioExecution = scenario::byId($idScenarioUpdatePlugins);\n$scenarioExecution->launch();",
                                                                                                             "options": [],
                                                                                                             "order": "0"
                                                                                                         }
