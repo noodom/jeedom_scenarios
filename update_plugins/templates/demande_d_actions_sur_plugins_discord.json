@@ -84,7 +84,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "name": "scenarioExecutionActionsPluginsId",
-                                "value": "354"
+                                "value": "-1"
                             },
                             "order": "1"
                         },
@@ -96,7 +96,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "name": "scenarioUpdatePluginsId",
-                                "value": "355"
+                                "value": "-1"
                             },
                             "order": "2"
                         },
@@ -108,7 +108,7 @@
                                 "enable": "1",
                                 "background": "0",
                                 "name": "discordMessageEvolueId",
-                                "value": "12737"
+                                "value": "-1"
                             },
                             "order": "3"
                         },
