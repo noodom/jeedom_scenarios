@@ -331,7 +331,7 @@
                                                                                                         {
                                                                                                             "type": "code",
                                                                                                             "subtype": "",
-                                                                                                            "expression": "foreach (update::all() as $update) {\n        $update->doUpdate();\n}\n",
+                                                                                                            "expression": "foreach (update::all() as $update) {\n  \tif (strtolower($update->getStatus())!='update') continue;\n\tif ($update->getConfiguration('doNotUpdate')==1 && $update->getType()!='core') continue;\n    $update->doUpdate();\n}\n",
                                                                                                             "options": [],
                                                                                                             "order": "0"
                                                                                                         }
