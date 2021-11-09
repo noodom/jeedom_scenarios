@@ -1,0 +1,959 @@
+{
+    "name": "Exécution d actions sur plugins Jeemate",
+    "isActive": "1",
+    "group": "Gestion Plugins",
+    "mode": "provoke",
+    "schedule": "",
+    "trigger": [
+        ""
+    ],
+    "timeout": "0",
+    "isVisible": "0",
+    "display": {
+        "name": "",
+        "icon": ""
+    },
+    "order": "9999",
+    "description": "",
+    "configuration": {
+        "timeDependency": 0,
+        "has_return": 0,
+        "logmode": "default",
+        "allowMultiInstance": "0",
+        "syncmode": "0",
+        "timeline::enable": "0",
+        "timeline::folder": ""
+    },
+    "state": "stop",
+    "elements": [
+        {
+            "name": "",
+            "type": "code",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": "",
+                    "type": "code",
+                    "subtype": "action",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "code",
+                            "subtype": "",
+                            "expression": "\/* @noodom \/ Scénario de gestion des plugins Jeedom depuis Jeemate (Sauvegarde, Restauration, Mise à jour, Suppression de sauvegardes pour les plugins, Backup pour Jeedom)\nNom du scénario : Exécution d actions sur plugins\n\nInstallation du scénario : https:\/\/github.com\/noodom\/jeedom_scenarios\/blob\/master\/updatePlugins\/README.md\n(Appelé par le scénario \"Demande d actions sur plugins Jeemate\")\n\n\/!\\ ATTENTION \/!\\ Ce scénario modifie le contenu du répertoires contenant les plugins Jeedom. \n\/!\\ Je vous laisse seul juge de la pertinence et de votre confiance à utiliser ce scénario pour la gestion de l'installation de vos plugins.\n\/!\\ Je décline donc toute responsabilité pour tout problème créé suite à l'exécution de ce scénario.\/!\\ \n\n*\/\n\n$tags = $scenario->getTags();\n\n$tags['#redCircle#'] = \"\\u{1F534}\";\n$tags['#greenCircle#'] = \"\\u{1F7E2}\"; \/\/ 1F535 = bleu : Android toutes versions, 1F7E2 = vert : Android 10 ou plus\n$tags['#whiteCircle#'] = \"\\u{1F7E0}\"; \/\/ 26AA = blanc : Android toutes versions, 1F7E0 = orange: Android 10 ou plus\n$tags['#greenCheck#'] = \"\\u{2705}\";\n$tags['#whiteCheck#'] = \"\\u{2611}\";\n$tags['#arrow#'] = \"\\u{27A1}\";\n$tags['#disk#'] = \"\\u{1F4BE}\";\n$tags['#restore#'] = \"\\u{21AA}\";\n$tags['#remove#'] = \"\\u{274C}\";\n\n\/\/ Récupération de l'action demandée (passée en paramètre du scénario)\n(!isset($tags['#action#'])) ? $tags['#action#'] = \"\" : null;\n\/\/ Vérification des actions autorisées\n$allowedActions = array(\"backup\", \"restore\", \"remove\", \"begin_backup\", \"end_backup\");\nif (!in_array($tags['#action#'], $allowedActions)) {\n\t$tags['#action#'] = \"\";\n}\n\/\/ Récupération du plugin demandé (passé en paramètre du scénario)\n(!isset($tags['#plugin#'])) ? $tags['#plugin#'] = \"\" : null;\n\n\/\/ ID de la commande \"(N) Notif Général\" d'un équipement du plugin Jeemate\ndefine('MESSAGE_COMMAND_ID', $tags['#messageCommandId#']);\n\/\/ Signature du scénario pour messages Jeemate\n$scenarioName = 'Exécuté par le scénario \"' .$scenario->getName().'\"';\ndefine('SCENARIO_NAME', $scenarioName);\n\/\/ Ajout de signature en fin des messages envoyés\ndefine('ADD_SCENARIO_NAME', $tags['#addScenarioName#']);\n\nfunction sendMessage($titre = '', $description = '', $footer = '') {\n  try {\n    $footer = ($footer == '')?SCENARIO_NAME:$footer;\n    if (ADD_SCENARIO_NAME == 1) {\n      $description = $description . \"\\n\\n\" . $footer;\n    }\n    \n    $cmd = cmd::byId(MESSAGE_COMMAND_ID);\n    $options = array('title'=>$titre, 'message'=> $description);\n    $cmd->execCmd($options);\n  }\n  catch(Exception $e){\n    log::add('scenario', 'error', 'Erreur d\\'envoi de message');\n  }\n}\n\n$namescenario .= 'Exécuté par le scénario \"' .$scenario->getName().'\", le ' .date('d\/m\/Y');\n$tags['#nameScenario#'] = $namescenario;\n\n\/\/ définitions titres, descriptions\n$tags['#titreSauvegardeJeedom#'] = $tags['#disk#'].\" Sauvegarde de Jeedom\";\n$tags['#titreActionErreur#'] = $tags['#whiteCheck#'].\" Erreur sur intervention sur les plugins\";\n$tags['#titreBackupJeedom#'] = $tags['#disk#'].\" Sauvegarde de Jeedom\";\n\n$tags['#descriptionSauvegardeJeedom#'] = $tags['#greenCircle)#'].\" La sauvegarde de Jeedom vient d'être lancée, veuillez patienter..\";\n$tags['#descriptionActionErreur#'] = $tags['#redCircle)#'].\" Erreur : action non précisée ou non valide (actions possibles : <b>backup<\/b>, <b>restore<\/b> ou <b>remove<\/b>)\";\n$tags['#descriptionActionInconnue#'] = $tags['#redCircle)#'].\" Il y a eu un problème sur une action sur un plugin\";\n$tags['#descriptionBeginBackupJeedom#'] = $tags['#whiteCircle#'].\" La <b><span style='color:#ff7f00'>sauvegarde de Jeedom<\/span><\/b> vient de se lancer, merci de patienter..\";\n$tags['#descriptionEndBackupJeedom#'] = $tags['#greenCircle#'].\" La <b><span style='color:#00ff00'>sauvegarde de Jeedom<\/span><\/b> vient de se terminer\";\n\n$scenario->setTags($tags);",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "",
+            "type": "if",
+            "options": [],
+            "order": "0",
+            "subElements": [
+                {
+                    "name": "",
+                    "type": "if",
+                    "subtype": "condition",
+                    "options": {
+                        "collapse": "0",
+                        "enable": "1",
+                        "allowRepeatCondition": "0"
+                    },
+                    "order": "0",
+                    "expressions": [
+                        {
+                            "type": "condition",
+                            "subtype": "",
+                            "expression": "tag(action) != \"\" && tag(plugin) != \"\"",
+                            "options": [],
+                            "order": "0"
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "type": "then",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "1",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": "",
+                            "expression": "1634",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": "",
+                                "type": "if",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": "",
+                                        "type": "if",
+                                        "subtype": "condition",
+                                        "options": {
+                                            "collapse": "0",
+                                            "enable": "1",
+                                            "allowRepeatCondition": "0"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "condition",
+                                                "subtype": "",
+                                                "expression": "tag(action) == \"backup\"",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "",
+                                        "type": "then",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "1",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": "",
+                                                "expression": "1635",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": "",
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": "",
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": "",
+                                                                    "expression": "tag(plugin) === \"Jeedom\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1636",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "comment",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "comment",
+                                                                                "subtype": "comment",
+                                                                                "options": {
+                                                                                    "collapse": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "comment",
+                                                                                        "subtype": "",
+                                                                                        "expression": "Backup de Jeedom",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1637",
+                                                                    "options": [],
+                                                                    "order": "1",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": "",
+                                                                                        "expression": "$scenario->setLog(\"lancement du backup Jeedom..\");\njeedom::backup(true);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1638",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "comment",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "comment",
+                                                                                "subtype": "comment",
+                                                                                "options": {
+                                                                                    "collapse": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "comment",
+                                                                                        "subtype": "",
+                                                                                        "expression": "Sauvegarde du plugin sélectionné",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1639",
+                                                                    "options": [],
+                                                                    "order": "1",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": "",
+                                                                                        "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de sauvegarde des plugins si inexistant\nif (!is_dir($tags['#backupPath#'] . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire de sauvegarde '\" . $pluginDir .\"'\");\n  mkdir($tags['#backupPath#']);\n}\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ on crée le répertoire du plugin\n  $scenario->setLog(\"création du répertoire '\" . $pluginDir .\"'\");\n  mkdir($pluginDir);\n}\nelse {\n  \/\/ répertoire existant, on vide les sauvegardes existantes\n  $scenario->setLog(\"suppression de la sauvegarde précédente '\" . $pluginDir . '\/*.tar.gz\\'');\n  array_map('unlink', glob($pluginDir.'*.tar.gz'));\n}\n\n\/\/ backup du plugin\n$scenario->setLog('Backup => cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\nsystem('cd ' . $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'] . '; tar cfz \"' . $pluginDir . '\/' . $tags['#plugin#'] . '.tar.gz\" . > \/dev\/null');\n",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1640",
+                                                                    "options": [],
+                                                                    "order": "2",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": "",
+                                                                                        "expression": "$tags = $scenario->getTags();\n$scenario->setLog('Sauvegarde du plugin '.$tags['#plugin#']);\n\n$title = $tags['#disk#'].\" Sauvegarde du plugin <b>\".$tags['#plugin#'].\"<\/b>\";\n$message = $tags['#greenCircle#'].\" La <b><span style='color:#00ff00'>sauvegarde<\/span><\/b> du plugin <b><span style='color:#00ff00'>\".$tags['#plugin#'].\"<\/span><\/b> s'est bien passée\";\nsendMessage($title, $message);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "name": "",
+                                        "type": "else",
+                                        "subtype": "action",
+                                        "options": [],
+                                        "order": "2",
+                                        "expressions": [
+                                            {
+                                                "type": "element",
+                                                "subtype": "",
+                                                "expression": "1641",
+                                                "options": [],
+                                                "order": "0",
+                                                "element": {
+                                                    "name": "",
+                                                    "type": "if",
+                                                    "options": [],
+                                                    "order": "0",
+                                                    "subElements": [
+                                                        {
+                                                            "name": "",
+                                                            "type": "if",
+                                                            "subtype": "condition",
+                                                            "options": {
+                                                                "collapse": "0",
+                                                                "enable": "1",
+                                                                "allowRepeatCondition": "0"
+                                                            },
+                                                            "order": "0",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "condition",
+                                                                    "subtype": "",
+                                                                    "expression": "tag(action) == \"restore\"",
+                                                                    "options": [],
+                                                                    "order": "0"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "then",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "1",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1642",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "comment",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "comment",
+                                                                                "subtype": "comment",
+                                                                                "options": {
+                                                                                    "collapse": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "comment",
+                                                                                        "subtype": "",
+                                                                                        "expression": "Restauration du plugin sélectionné",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1643",
+                                                                    "options": [],
+                                                                    "order": "1",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": "",
+                                                                                        "expression": "$tags = $scenario->getTags();\n\n\/\/ création du dossier de destination si inexistant\n$pluginDir = $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'];\nif (is_dir($pluginDir . '\/.')) {\n  \/\/ répertoire existant, on le supprime\n  rrmdir($pluginDir);\n}\n\n\/\/ on crée le répertoire du plugin\n$scenario->setLog(\"création du répertoire \" . $pluginDir);\nmkdir($pluginDir);\n\n$pluginDir = $tags['#pluginsPath#'] . '\/' . $tags['#plugin#'];\n$scenario->setLog('Restore => cd ' . $pluginDir . '; tar xfz \"' . $tags['#backupPath#'] . '\/' . $tags['#plugin#'] . '\/' . $tags['#plugin#'] . '.tar.gz\"');\nsystem('cd ' . $pluginDir . '; tar xfz \"' . $tags['#backupPath#'] . '\/' . $tags['#plugin#'] . '\/' . $tags['#plugin#'] . '.tar.gz\"');\n",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1644",
+                                                                    "options": [],
+                                                                    "order": "2",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "code",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "code",
+                                                                                "subtype": "action",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "code",
+                                                                                        "subtype": "",
+                                                                                        "expression": "$tags = $scenario->getTags();\n$scenario->setLog('Restauration du plugin '.$tags['#plugin#']);\n\n$title = $tags['#restore#'].\" Restauration du plugin <b>\".$tags['#plugin#'].\"<\/b>\";\n$message = $tags['#greenCircle)#'].\" La <b><span style='color:#00ff00'>restauration<\/span><\/b> du plugin <b><span style='color:#00ff00'>\".$tags['#plugin#'].\"<\/span><\/b> s'est bien passée\";\nsendMessage($title, $message);",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "",
+                                                            "type": "else",
+                                                            "subtype": "action",
+                                                            "options": [],
+                                                            "order": "2",
+                                                            "expressions": [
+                                                                {
+                                                                    "type": "element",
+                                                                    "subtype": "",
+                                                                    "expression": "1645",
+                                                                    "options": [],
+                                                                    "order": "0",
+                                                                    "element": {
+                                                                        "name": "",
+                                                                        "type": "if",
+                                                                        "options": [],
+                                                                        "order": "0",
+                                                                        "subElements": [
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "if",
+                                                                                "subtype": "condition",
+                                                                                "options": {
+                                                                                    "collapse": "0",
+                                                                                    "enable": "1",
+                                                                                    "allowRepeatCondition": "0"
+                                                                                },
+                                                                                "order": "0",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "condition",
+                                                                                        "subtype": "",
+                                                                                        "expression": "tag(action) == \"remove\"",
+                                                                                        "options": [],
+                                                                                        "order": "0"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "then",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "1",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1646",
+                                                                                        "options": [],
+                                                                                        "order": "0",
+                                                                                        "element": {
+                                                                                            "name": "",
+                                                                                            "type": "comment",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": "",
+                                                                                                    "type": "comment",
+                                                                                                    "subtype": "comment",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "comment",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "Suppression de la sauvegarde du plugin sélectionné",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1647",
+                                                                                        "options": [],
+                                                                                        "order": "1",
+                                                                                        "element": {
+                                                                                            "name": "",
+                                                                                            "type": "code",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": "",
+                                                                                                    "type": "code",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "code",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "$tags = $scenario->getTags();\n\n\/\/ suppression du dossier du plugin à supprimer\n$pluginDir = $tags['#backupPath#'] . '\/' . $tags['#plugin#'];\nif (!is_dir($pluginDir . '\/.')) {\n  \/\/ pas de répertoire du plugin, on ne fait rien\n  $title = $tags['#remove#'].\" Suppression de la sauvegarde du plugin <b>\".$tags['#plugin#'].\"<\/b>\";\n  $message = $tags['#redCircle#'].'Pas de répertoire ' . $pluginDir . ' à supprimer, aucune action effectuée';\n  sendMessage($title, $message);\n}\nelse {\n  $scenario->setLog('Suppression du plugin '.$tags['#plugin#']);\n\n  \/\/ répertoire existant, on le supprime\n  rrmdir($pluginDir);\n\n  $title = $tags['#remove#'].\" Suppression de la sauvegarde du plugin <b>\".$tags['#plugin#'].\"<\/b>\";\n  $message = $tags['#greenCircle#'].\" La <b><span style='color:#00ff00'>Suppression<\/span><\/b> du plugin <b><span style='color:#00ff00'>\".$tags['#plugin#'].\"<\/span><\/b> s'est bien passée\";\n  sendMessage($title, $message);\n}\n\n$scenario->setTags($tags);",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "",
+                                                                                "type": "else",
+                                                                                "subtype": "action",
+                                                                                "options": [],
+                                                                                "order": "2",
+                                                                                "expressions": [
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "subtype": "",
+                                                                                        "expression": "1648",
+                                                                                        "options": [],
+                                                                                        "order": "0",
+                                                                                        "element": {
+                                                                                            "name": "",
+                                                                                            "type": "if",
+                                                                                            "options": [],
+                                                                                            "order": "0",
+                                                                                            "subElements": [
+                                                                                                {
+                                                                                                    "name": "",
+                                                                                                    "type": "if",
+                                                                                                    "subtype": "condition",
+                                                                                                    "options": {
+                                                                                                        "collapse": "0",
+                                                                                                        "enable": "1",
+                                                                                                        "allowRepeatCondition": "0"
+                                                                                                    },
+                                                                                                    "order": "0",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "condition",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "tag(action) == \"begin_backup\"",
+                                                                                                            "options": [],
+                                                                                                            "order": "0"
+                                                                                                        }
+                                                                                                    ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": "",
+                                                                                                    "type": "then",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": [],
+                                                                                                    "order": "1",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "element",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "1649",
+                                                                                                            "options": [],
+                                                                                                            "order": "0",
+                                                                                                            "element": {
+                                                                                                                "name": "",
+                                                                                                                "type": "comment",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "comment",
+                                                                                                                        "subtype": "comment",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "comment",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "Début du Backup Jeedom",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "type": "element",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "1650",
+                                                                                                            "options": [],
+                                                                                                            "order": "1",
+                                                                                                            "element": {
+                                                                                                                "name": "",
+                                                                                                                "type": "code",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "code",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0",
+                                                                                                                            "enable": "1"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "code",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "$tags = $scenario->getTags();\n$title = $tags['#titreBackupJeedom#'];\n$message = $tags['#descriptionBeginBackupJeedom#'];\nsendMessage($title, $message);",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ]
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": "",
+                                                                                                    "type": "else",
+                                                                                                    "subtype": "action",
+                                                                                                    "options": [],
+                                                                                                    "order": "2",
+                                                                                                    "expressions": [
+                                                                                                        {
+                                                                                                            "type": "element",
+                                                                                                            "subtype": "",
+                                                                                                            "expression": "1651",
+                                                                                                            "options": [],
+                                                                                                            "order": "0",
+                                                                                                            "element": {
+                                                                                                                "name": "",
+                                                                                                                "type": "if",
+                                                                                                                "options": [],
+                                                                                                                "order": "0",
+                                                                                                                "subElements": [
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "if",
+                                                                                                                        "subtype": "condition",
+                                                                                                                        "options": {
+                                                                                                                            "collapse": "0",
+                                                                                                                            "enable": "1",
+                                                                                                                            "allowRepeatCondition": "0"
+                                                                                                                        },
+                                                                                                                        "order": "0",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "condition",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "tag(action) == \"end_backup\"",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0"
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "then",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "1",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "element",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "1652",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0",
+                                                                                                                                "element": {
+                                                                                                                                    "name": "",
+                                                                                                                                    "type": "comment",
+                                                                                                                                    "options": [],
+                                                                                                                                    "order": "0",
+                                                                                                                                    "subElements": [
+                                                                                                                                        {
+                                                                                                                                            "name": "",
+                                                                                                                                            "type": "comment",
+                                                                                                                                            "subtype": "comment",
+                                                                                                                                            "options": {
+                                                                                                                                                "collapse": "0"
+                                                                                                                                            },
+                                                                                                                                            "order": "0",
+                                                                                                                                            "expressions": [
+                                                                                                                                                {
+                                                                                                                                                    "type": "comment",
+                                                                                                                                                    "subtype": "",
+                                                                                                                                                    "expression": "Fin du Backup Jeedom",
+                                                                                                                                                    "options": [],
+                                                                                                                                                    "order": "0"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "type": "element",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "1653",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "1",
+                                                                                                                                "element": {
+                                                                                                                                    "name": "",
+                                                                                                                                    "type": "code",
+                                                                                                                                    "options": [],
+                                                                                                                                    "order": "0",
+                                                                                                                                    "subElements": [
+                                                                                                                                        {
+                                                                                                                                            "name": "",
+                                                                                                                                            "type": "code",
+                                                                                                                                            "subtype": "action",
+                                                                                                                                            "options": {
+                                                                                                                                                "collapse": "0",
+                                                                                                                                                "enable": "1"
+                                                                                                                                            },
+                                                                                                                                            "order": "0",
+                                                                                                                                            "expressions": [
+                                                                                                                                                {
+                                                                                                                                                    "type": "code",
+                                                                                                                                                    "subtype": "",
+                                                                                                                                                    "expression": "$tags = $scenario->getTags();\n$title = $tags['#titreBackupJeedom#'];\n$message = $tags['#descriptionEndBackupJeedom#'];\nsendMessage($title, $message);",
+                                                                                                                                                    "options": [],
+                                                                                                                                                    "order": "0"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "name": "",
+                                                                                                                        "type": "else",
+                                                                                                                        "subtype": "action",
+                                                                                                                        "options": [],
+                                                                                                                        "order": "2",
+                                                                                                                        "expressions": [
+                                                                                                                            {
+                                                                                                                                "type": "element",
+                                                                                                                                "subtype": "",
+                                                                                                                                "expression": "1654",
+                                                                                                                                "options": [],
+                                                                                                                                "order": "0",
+                                                                                                                                "element": {
+                                                                                                                                    "name": "",
+                                                                                                                                    "type": "code",
+                                                                                                                                    "options": [],
+                                                                                                                                    "order": "0",
+                                                                                                                                    "subElements": [
+                                                                                                                                        {
+                                                                                                                                            "name": "",
+                                                                                                                                            "type": "code",
+                                                                                                                                            "subtype": "action",
+                                                                                                                                            "options": {
+                                                                                                                                                "collapse": "0",
+                                                                                                                                                "enable": "1"
+                                                                                                                                            },
+                                                                                                                                            "order": "0",
+                                                                                                                                            "expressions": [
+                                                                                                                                                {
+                                                                                                                                                    "type": "code",
+                                                                                                                                                    "subtype": "",
+                                                                                                                                                    "expression": "$tags = $scenario->getTags();\nsendMessage($tags['#titreActionErreur#'], \n            $tags['#descriptionActionErreur#']);",
+                                                                                                                                                    "options": [],
+                                                                                                                                                    "order": "0"
+                                                                                                                                                }
+                                                                                                                                            ]
+                                                                                                                                        }
+                                                                                                                                    ]
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                                    }
+                                                                                                                ]
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ]
+                                                                                                }
+                                                                                            ]
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "",
+                    "type": "else",
+                    "subtype": "action",
+                    "options": [],
+                    "order": "2",
+                    "expressions": [
+                        {
+                            "type": "element",
+                            "subtype": "",
+                            "expression": "1655",
+                            "options": [],
+                            "order": "0",
+                            "element": {
+                                "name": "",
+                                "type": "code",
+                                "options": [],
+                                "order": "0",
+                                "subElements": [
+                                    {
+                                        "name": "",
+                                        "type": "code",
+                                        "subtype": "action",
+                                        "options": {
+                                            "collapse": "0",
+                                            "enable": "1"
+                                        },
+                                        "order": "0",
+                                        "expressions": [
+                                            {
+                                                "type": "code",
+                                                "subtype": "",
+                                                "expression": "$tags = $scenario->getTags();\nsendMessage($tags['#titreActionErreur#'], \n            $tags['#descriptionActionInconnue#']);",
+                                                "options": [],
+                                                "order": "0"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
