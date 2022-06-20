@@ -47,7 +47,7 @@ if (sizeOf($scenarioElementList) > 1) {
   $scenario->setLog('fill second bloc code (id=' . $newScenarioElementId . ')');
   $scenarioSubElement = scenarioElement::byId($newScenarioElementId)->getSubElement('code');
   $scenarioExpression = $scenarioSubElement->getExpression()[0];
-  $expressionContent = file_get_contents('https://raw.githubusercontent.com/noodom/jeedom_scenarios/main/installations/installations.php');
+  $expressionContent = file_get_contents('https://raw.githubusercontent.com/noodom/jeedom_menus/master/installation/nooMenusAutomaticInstallation.php');
   $scenario->setLog('expressionContent = ' . $expressionContent);
   //eval($expressionContent);
   $scenarioExpression->setExpression($expressionContent);
