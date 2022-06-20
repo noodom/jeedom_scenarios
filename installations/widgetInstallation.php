@@ -4,7 +4,7 @@ $tags = $scenario->getTags();
 $tags['#tagsList#'] = '{"widgetName":"nooNeonButton"}';
 
 // bloc code to get
-$tags['#githubLink#'] = 'https://raw.githubusercontent.com/noodom/jeedom_menus/master/installation/nooWidgetsAutomaticInstallation.php';
+$tags['#githubLink#'] = 'https://raw.githubusercontent.com/noodom/jeedom_widgets/master/installation/nooWidgetsAutomaticInstallation.php';
 
 $scenario->setTags($tags);
   
