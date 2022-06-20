@@ -1,69 +1,90 @@
 $idScenario = $scenario->getId();
 $scenario->setLog('id scenario : ' . $idScenario);
 
-$scenarioElement = $scenario->getElement()[0];
-if (is_object($scenarioElement) && $scenarioElement->getType() == 'code') {
-  $idScenarioElement = $scenarioElement->getId();
-  $typeScenarioElement = $scenarioElement->getType();
-  $scenario->setLog('id scenario Element: ' . $idScenarioElement . ' de type ' . $typeScenarioElement);
-  
-  $scenarioSubElement = $scenarioElement->getSubElement('code');
-  if (is_object($scenarioSubElement) && $scenarioSubElement->getType() == 'code') {
-    $idScenarioSubElement = $scenarioSubElement->getId();
-  	$typeScenarioSubElement = $scenarioSubElement->getType();
-  	$scenario->setLog('id scenario SubElement: ' . $idScenarioSubElement . ' de type ' . $typeScenarioSubElement);
-    
-    $scenarioExpression = $scenarioSubElement->getExpression()[0];
-    $scenario->setLog('id scenarioExpression : ' . $scenarioExpression->getId());
-    if (is_object($scenarioExpression) && $scenarioExpression->getType() == 'code') {
-      $idScenarioExpression = $scenarioExpression->getId();
-      $typeScenarioExpression = $scenarioExpression->getType();
-      $expressionScenarioExpression = $scenarioExpression->getExpression();
-      $scenario->setLog('id scenario SubElement: ' . $idScenarioExpression . ' de type ' . $typeScenarioExpression);
-      //$scenario->setLog('id scenario Expression: ' . $idScenarioExpression . ' avec expression = ' . $expressionScenarioExpression);
+$scenarioElementList = $scenario->getScenarioElement();
+
+// remove all scenario elements except this one (for an update, remove last creation)
+$scenario->setLog('remove all scenario elements except first one');
+if (sizeOf($scenarioElementList) > 1) {
+  foreach (($scenario->getElement()) as $element) {
+    if ($element->getId() != $scenario->getElement()[0]->getId()) {
+      scenarioElement::byId($element->getId())->remove();
     }
   }
 }
-  
-// add bloc code
-//$scenario->setLog('scenario element list : ' . $scenario->getScenarioElement()[1]);
-$scenarioElementList = $scenario->getScenarioElement();
-$newScenarioElementId = -1;
-if (sizeOf($scenarioElementList) == 1) {
-  // add a second bloc code
-  $newScenarioElementId = $scenarioElement->copy();
-  $scenario->setLog('add a second bloc code (id=' . $newScenarioElementId . ')');
-  $scenarioElementList[] = $newScenarioElementId;
-  $scenario->setScenarioElement($scenarioElementList);
-  $scenario->save();
-}
-else {
-  // get the second bloc code
-  $newScenarioElementId = $scenario->getScenarioElement()[1];
-  $scenario->setLog('get the second bloc code (id=' . $newScenarioElementId . ')');
-}
-if (sizeOf($scenarioElementList) > 1) {
-  // fill second bloc code
-  $scenario->setLog('fill second bloc code (id=' . $newScenarioElementId . ')');
-  $scenarioSubElement = scenarioElement::byId($newScenarioElementId)->getSubElement('code');
-  $scenarioExpression = $scenarioSubElement->getExpression()[0];
-  $expressionContent = file_get_contents('https://raw.githubusercontent.com/noodom/jeedom_menus/master/installation/nooMenusAutomaticInstallation.php');
-  $scenario->setLog('expressionContent = ' . $expressionContent);
-  //eval($expressionContent);
-  $scenarioExpression->setExpression($expressionContent);
-  $scenarioExpression->save();
-  // enable second code
-  $scenario->setLog('enable second bloc code (id=' . $newScenarioElementId . ')');
-  $scenarioSubElement->setOptions('enable', 1);  
-  $scenarioSubElement->save();
-  
-  // disable first code
-  $firstScenarioElementId = $scenario->getScenarioElement()[0];
-  $scenario->setLog('disable first bloc code (id=' . $firstScenarioElementId . ')');
-  $scenarioSubElement = scenarioElement::byId($firstScenarioElementId)->getSubElement('code');
-  $scenarioSubElement->setOptions('enable', 0);
-  $scenarioSubElement->save();
-  // launch scenario
-  //$scenario->launch();
-}
 $scenario->save();
+
+// add action code
+$scenario->setLog('add action code');
+$newScenarioElement = new scenarioElement();
+$newScenarioElement->setType ('action');
+$newScenarioElement->save();
+$scenarioElementList[] = $newScenarioElement->getId();
+$scenario->setScenarioElement($scenarioElementList);
+$scenario->save();
+
+// add scenarioSubElement
+$scenario->setLog('add scenarioSubElement');
+$newScenarioSubElement = new scenarioSubElement();
+$newScenarioSubElement->setScenarioElement_id($newScenarioElement->getId());
+$newScenarioSubElement->setType('action');
+$newScenarioSubElement->setSubType('action');
+$newScenarioSubElement->save();
+
+// add scenarioExpressions (tags list)
+(!isset($tags['#tagsList#'])) ? $tags['#tagsList#'] = '{"menuName":"menuNavButton","menuDesignWidth":"1280","menuDesignHeight":"1000","designPrefixName":"noodom_","htmldisplayParent":"Design"}' : null;
+$scenario->setLog('get tags ' . $tags['#tagsList#']);
+$tagsList = json_decode ($tags['#tagsList#']);
+foreach($tagsList as $key=>$value){
+  $scenario->setLog('add scenarioExpression ( tag[' . $key . ']=' . $value. ')');
+  $newScenarioExpression = new scenarioExpression();
+  $newScenarioExpression->setScenarioSubElement_id($newScenarioSubElement->getId());
+  $newScenarioExpression->setType('action');
+  $newScenarioExpression->setOptions('name', $key);
+  $newScenarioExpression->setOptions('value', $value);
+  $newScenarioExpression->setExpression('tag');
+  $newScenarioExpression->setOrder(0);
+  $newScenarioExpression->save();
+}
+
+// add scenarioElement
+$scenario->setLog('add scenarioElement2');
+$newScenarioElement2 = new scenarioElement();
+$newScenarioElement2->setType ('code');
+$newScenarioElement2->save();
+
+// add scenarioSubElement
+$scenario->setLog('add scenarioSubElement2');
+$newScenarioSubElement2 = new scenarioSubElement();
+$newScenarioSubElement2->setScenarioElement_id($newScenarioElement2->getId());
+$newScenarioSubElement2->setType('code');
+$newScenarioSubElement2->setSubType('action');
+$newScenarioSubElement2->save();
+
+// add scenarioExpression
+$scenario->setLog('add scenarioExpression2');
+$newScenarioExpression2 = new scenarioExpression();
+$newScenarioExpression2->setScenarioSubElement_id($newScenarioSubElement2->getId());
+$newScenarioExpression2->setType('code');
+// get script
+$tags = $scenario->getTags();
+(!isset($tags['#githubLink#'])) ? $tags['#githubLink#'] = 'https://raw.githubusercontent.com/noodom/jeedom_menus/master/installation/nooMenusAutomaticInstallation.php' : null;
+$scenario->setLog('get script ' . $tags['#githubLink#']);
+$expressionContent2 = file_get_contents($tags['#githubLink#']);
+$newScenarioExpression2->setExpression($expressionContent2);
+$newScenarioExpression2->save();
+
+$scenario->setLog('add scenarioExpression');
+$newScenarioExpression = new scenarioExpression();
+$newScenarioExpression->setScenarioSubElement_id($newScenarioSubElement->getId());
+$newScenarioExpression->setType('element');
+$newScenarioExpression->setExpression($newScenarioElement2->getId());
+$newScenarioExpression->setOrder(5);
+$newScenarioExpression->save();
+
+// disable first code
+$firstScenarioElementId = $scenario->getScenarioElement()[0];
+$scenario->setLog('disable first bloc code (id=' . $firstScenarioElementId . ')');
+$scenarioSubElement = scenarioElement::byId($firstScenarioElementId)->getSubElement('code');
+$scenarioSubElement->setOptions('enable', 0);
+$scenarioSubElement->save();
