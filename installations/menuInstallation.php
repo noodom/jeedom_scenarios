@@ -1,7 +1,7 @@
 $tags = $scenario->getTags();
 
 // tags to get
-$tags['#tagsList#'] = '{"menuName":"menuNavButton","menuDesignWidth":"1280","menuDesignHeight":"1000","designPrefixName":"V1","htmldisplayParent":"Design"}';
+$tags['#tagsList#'] = '{"menuName":"menuNavButton","menuDesignWidth":"1280","menuDesignHeight":"1000","designSuffixName":"V1","htmldisplayParent":"Design"}';
 
 // bloc code to get
 $tags['#githubLink#'] = 'https://raw.githubusercontent.com/noodom/jeedom_menus/master/installation/nooMenusAutomaticInstallation.php';

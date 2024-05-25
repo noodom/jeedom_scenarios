@@ -32,7 +32,7 @@ $newScenarioSubElement->setSubType('action');
 $newScenarioSubElement->save();
 
 // add scenarioExpressions (tags list)
-(!isset($tags['#tagsList#'])) ? $tags['#tagsList#'] = '{"menuName":"menuNavButton","menuDesignWidth":"1280","menuDesignHeight":"1000","designPrefixName":"V1","htmldisplayParent":"Design"}' : null;
+(!isset($tags['#tagsList#'])) ? $tags['#tagsList#'] = '{"menuName":"menuNavButton","menuDesignWidth":"1280","menuDesignHeight":"1000","designSuffixName":"V1","htmldisplayParent":"Design"}' : null;
 $scenario->setLog('get tags ' . $tags['#tagsList#']);
 $tagsList = json_decode ($tags['#tagsList#']);
 foreach($tagsList as $key=>$value){
